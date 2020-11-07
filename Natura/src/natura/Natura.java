@@ -7,6 +7,11 @@ package natura;
 public class Natura {
 
     public static void main(String[] args) {
+        int num3 = 3;
+        int num4 = 4;
+        System.out.println("la suma es");
+        System.out.println(num3 + num4);
+        // TODO code application logic here
 
         System.out.println("Hola");
         
