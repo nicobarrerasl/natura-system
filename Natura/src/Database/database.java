@@ -10,5 +10,5 @@ package Database;
  * @author Nicolas
  */
 public class database {
-    
+    // Aca vamos a poner el codigo para conectarse a la base de datos de PostgreSQL
 }
