@@ -7,8 +7,14 @@ package natura;
 public class Natura {
 
     public static void main(String[] args) {
-
-        System.out.println("Hola");
+        int num3 = 3;
+        int num4 = 4;
+        System.out.println("la suma es");
+        
+        
+        System.out.println(num3 + num4);
+        System.out.println("te gusto la suma loco?");
+        
         
     }
 
