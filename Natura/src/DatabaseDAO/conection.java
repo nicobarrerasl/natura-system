@@ -3,12 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Database;
+package DatabaseDAO;
+
+import Clases.Cliente;
+import Clases.Producto;
+import java.util.List;
 
 /**
  *
  * @author Nicolas
  */
-public class database {
+public interface conection {
     // Aca vamos a poner el codigo para conectarse a la base de datos de PostgreSQL
+    
+    
+    
+    
+    
+    
+    
+    
 }
