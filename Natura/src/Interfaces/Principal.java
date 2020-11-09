@@ -23,13 +23,13 @@ public class Principal extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
+        JPanelCliente = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         JPanelPrincipal.setBackground(new java.awt.Color(0, 0, 0));
-        JPanelPrincipal.setForeground(new java.awt.Color(0, 0, 0));
         JPanelPrincipal.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         JPanelPrincipalsup.setBackground(new java.awt.Color(247, 247, 247));
@@ -49,6 +49,11 @@ public class Principal extends javax.swing.JFrame {
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Icon");
         jLabel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel4MouseClicked(evt);
+            }
+        });
         JPanelPrincipalIzq.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 200, 40, 40));
 
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -85,11 +90,21 @@ public class Principal extends javax.swing.JFrame {
 
         JPanelPrincipal.add(JPanelPrincipalDer, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 40, 1370, 960));
 
+        JPanelCliente.setBackground(new java.awt.Color(247, 247, 247));
+        JPanelCliente.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 1, new java.awt.Color(0, 0, 0)));
+        JPanelCliente.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        JPanelPrincipal.add(JPanelCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 40, 1370, 960));
+
         getContentPane().add(JPanelPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1700, 1000));
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
+        JPanelPrincipalDer.setVisible(false);
+        JPanelCliente.setVisible(true);
+    }//GEN-LAST:event_jLabel4MouseClicked
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -124,6 +139,7 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel JPanelCliente;
     private javax.swing.JPanel JPanelPrincipal;
     private javax.swing.JPanel JPanelPrincipalDer;
     private javax.swing.JPanel JPanelPrincipalIzq;
