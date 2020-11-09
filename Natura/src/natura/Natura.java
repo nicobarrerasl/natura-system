@@ -4,10 +4,14 @@
  * and open the template in the editor.
  */
 package natura;
+
+import Interfaces.Principal;
+
 public class Natura {
 
     public static void main(String[] args) {
-        
+        Principal p = new Principal();
+        p.setVisible(true);
     }
 
 }
