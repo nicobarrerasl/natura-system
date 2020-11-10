@@ -114,7 +114,7 @@ public class PostgreSQL_Cliente implements clienteDAO{
         short   cliente_edad =      rs.getShort ("cliente_edad");
         String  cliente_Fnac =      rs.getString("cliente_fnac");
         String  cliente_tel =       rs.getString("cliente_tel");
-        String  cliente_DV =        rs.getString("cliente_v");
+        String  cliente_DV =        rs.getString("cliente_dv");
         String  cliente_ZV =        rs.getString("cliente_zv");
         String  cliente_DT =        rs.getString("cliente_dt");
         String  cliente_ZT =        rs.getString("cliente_zt");
@@ -183,10 +183,9 @@ public class PostgreSQL_Cliente implements clienteDAO{
             
             List<Cliente> clientes = dao.obtener_todos();
             clientes.forEach((a) -> {
-                System.out.println(a.toString());
+                System.out.println(a.getCliente_apellido());
+                System.out.println(a.getCliente_nombre());
             });
-            
-            System.out.println("Hola");
             conn.close();
             
         }
