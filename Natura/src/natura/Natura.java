@@ -5,13 +5,24 @@
  */
 package natura;
 
+import DatabaseSingleton.PostgreSQL_Singleton;
 import Interfaces.Principal;
+import java.sql.SQLException;
 
 public class Natura {
 
     public static void main(String[] args) {
         Principal p = new Principal();
         p.setVisible(true);
+        try{
+            PostgreSQL_Singleton databaseConnection = PostgreSQL_Singleton.getInstance();
+            databaseConnection.getConnection();
+        }
+        catch(SQLException ex){
+            System.out.println("Conexion a la base de datos: ERROR:");
+            System.out.println(ex.getMessage());
+        }
+        
     }
 
 }
