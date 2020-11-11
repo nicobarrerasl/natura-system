@@ -1,4 +1,4 @@
-package DatabaseDAO.PostgreSQL;
+package DatabaseDAO.Postgre_SQL;
 import Clases.Cliente;
 import DatabaseDAO.clienteDAO;
 import java.sql.Connection;
@@ -41,7 +41,7 @@ public class PostgreSQL_Cliente implements clienteDAO{
             if(stat.executeUpdate()== 0){
                 // ERROR
             }
-
+            
             stat.close();
         }
         catch(SQLException ex){
@@ -173,7 +173,7 @@ public class PostgreSQL_Cliente implements clienteDAO{
         return a;
     }
     public static void main(String[] args){
-        Connection conn = null;
+        Connection conn;
         final String url = "jdbc:postgresql://localhost:5432/Natura_DB";
         final String user = "postgres";
         final String pass = "1234";

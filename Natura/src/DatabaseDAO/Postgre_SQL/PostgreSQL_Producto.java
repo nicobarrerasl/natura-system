@@ -1,4 +1,4 @@
-package DatabaseDAO.PostgreSQL;
+package DatabaseDAO.Postgre_SQL;
 import Clases.Producto;
 import DatabaseDAO.productoDAO;
 import java.sql.Connection;
@@ -35,6 +35,8 @@ public class PostgreSQL_Producto implements productoDAO{
     public Producto obtener_uno(Short a) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+   
 
 
     
