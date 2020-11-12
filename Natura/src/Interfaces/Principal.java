@@ -9,6 +9,7 @@ public class Principal extends javax.swing.JFrame {
     public Principal() {
         initComponents();
         JPanelCliente.setVisible(false);
+        JPanelCompra.setVisible(false);
         tablaClientes.getTableHeader().setFont(new Font("arial", Font.BOLD, 12));
         tablaClientes.getTableHeader().setOpaque(false);
         tablaClientes.getTableHeader().setBackground(Color.BLACK);
@@ -59,6 +60,20 @@ public class Principal extends javax.swing.JFrame {
         jComboBox1 = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaClientes = new javax.swing.JTable();
+        JPanelCompra = new javax.swing.JPanel();
+        jLabel20 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        jTextField2 = new javax.swing.JTextField();
+        jTextField3 = new javax.swing.JTextField();
+        jLabel24 = new javax.swing.JLabel();
+        jLabel25 = new javax.swing.JLabel();
+        jTextField4 = new javax.swing.JTextField();
+        jLabel26 = new javax.swing.JLabel();
+        jTextField5 = new javax.swing.JTextField();
+        jLabel23 = new javax.swing.JLabel();
+        jLabel27 = new javax.swing.JLabel();
+        fondoEtiquetaCliente = new javax.swing.JLabel();
         JPanelPrincipalDer = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -236,6 +251,11 @@ public class Principal extends javax.swing.JFrame {
         lblRegistrarCompra.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/registrarCompraIcon.png"))); // NOI18N
         lblRegistrarCompra.setText("  Registrar Compra");
         lblRegistrarCompra.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblRegistrarCompra.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblRegistrarCompraMouseClicked(evt);
+            }
+        });
         JPanelCliente.add(lblRegistrarCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(1060, 30, 170, 40));
 
         jLabel14.setBackground(new java.awt.Color(255, 255, 255));
@@ -382,6 +402,84 @@ public class Principal extends javax.swing.JFrame {
 
         JPanelPrincipal.add(JPanelCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 0, 1400, 1000));
 
+        JPanelCompra.setBackground(new java.awt.Color(247, 247, 247));
+        JPanelCompra.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 0, 1, 1, new java.awt.Color(0, 0, 0)));
+        JPanelCompra.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel20.setText("CLIENTE");
+        JPanelCompra.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, -1, -1));
+
+        jLabel21.setText("Nueva Compra");
+        JPanelCompra.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 60, -1, 20));
+
+        jLabel22.setText("Apellido");
+        JPanelCompra.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, -1, 20));
+
+        jTextField2.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jTextField2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField2.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        jTextField2.setOpaque(false);
+        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField2ActionPerformed(evt);
+            }
+        });
+        JPanelCompra.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 50, 190, 40));
+
+        jTextField3.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jTextField3.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField3.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        jTextField3.setOpaque(false);
+        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField3ActionPerformed(evt);
+            }
+        });
+        JPanelCompra.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 80, 300, 20));
+
+        jLabel24.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 0, 1, new java.awt.Color(0, 0, 0)));
+        JPanelCompra.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(872, 10, 10, 233));
+
+        jLabel25.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        JPanelCompra.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 233, 871, 10));
+
+        jTextField4.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jTextField4.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField4.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        jTextField4.setOpaque(false);
+        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField4ActionPerformed(evt);
+            }
+        });
+        JPanelCompra.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 160, 190, 40));
+
+        jLabel26.setText("Saldo Restante");
+        JPanelCompra.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 170, -1, 20));
+
+        jTextField5.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jTextField5.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField5.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        jTextField5.setOpaque(false);
+        jTextField5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField5ActionPerformed(evt);
+            }
+        });
+        JPanelCompra.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 130, 300, 20));
+
+        jLabel23.setText("Nombre");
+        JPanelCompra.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, -1, 20));
+
+        jLabel27.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 1, 0, 0, new java.awt.Color(0, 0, 0)));
+        JPanelCompra.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 40, 10, 160));
+
+        fondoEtiquetaCliente.setText("fondo");
+        fondoEtiquetaCliente.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 1, new java.awt.Color(0, 0, 0)));
+        JPanelCompra.add(fondoEtiquetaCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 890, 250));
+
+        JPanelPrincipal.add(JPanelCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 0, 1400, 1000));
+
         JPanelPrincipalDer.setBackground(new java.awt.Color(247, 247, 247));
         JPanelPrincipalDer.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 0, 1, 1, new java.awt.Color(0, 0, 0)));
         JPanelPrincipalDer.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -430,6 +528,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void lblclientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblclientesMouseClicked
         JPanelPrincipalDer.setVisible(false);
+        JPanelCompra.setVisible(false);
         JPanelCliente.setVisible(true);
     }//GEN-LAST:event_lblclientesMouseClicked
 
@@ -444,6 +543,27 @@ public class Principal extends javax.swing.JFrame {
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void lblRegistrarCompraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRegistrarCompraMouseClicked
+        JPanelCompra.setVisible(true);
+        JPanelCliente.setVisible(false);
+    }//GEN-LAST:event_lblRegistrarCompraMouseClicked
+
+    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField2ActionPerformed
+
+    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField3ActionPerformed
+
+    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField4ActionPerformed
+
+    private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField5ActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -479,9 +599,11 @@ public class Principal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel JPanelCliente;
+    private javax.swing.JPanel JPanelCompra;
     private javax.swing.JPanel JPanelPrincipal;
     private javax.swing.JPanel JPanelPrincipalDer;
     private javax.swing.JPanel JPanelPrincipalIzq;
+    private javax.swing.JLabel fondoEtiquetaCliente;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -495,6 +617,14 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -504,6 +634,10 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField jTextField5;
     private javax.swing.JLabel lblAgregarCliente;
     private javax.swing.JLabel lblBalance;
     private javax.swing.JLabel lblNaturalogo;
