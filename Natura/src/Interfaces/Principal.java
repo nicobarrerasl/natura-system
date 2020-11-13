@@ -15,6 +15,16 @@ public class Principal extends javax.swing.JFrame {
         tablaClientes.getTableHeader().setBackground(Color.BLACK);
         tablaClientes.getTableHeader().setForeground(Color.WHITE);
         tablaClientes.getTableHeader().setPreferredSize(new Dimension(40, 40));
+        tablaProdCompra.getTableHeader().setFont(new Font("arial", Font.BOLD, 12));
+        tablaProdCompra.getTableHeader().setOpaque(false);
+        tablaProdCompra.getTableHeader().setBackground(Color.BLACK);
+        tablaProdCompra.getTableHeader().setForeground(Color.WHITE);
+        tablaProdCompra.getTableHeader().setPreferredSize(new Dimension(40, 40));
+        tablaCompraP.getTableHeader().setFont(new Font("arial", Font.BOLD, 12));
+        tablaCompraP.getTableHeader().setOpaque(false);
+        tablaCompraP.getTableHeader().setBackground(Color.BLACK);
+        tablaCompraP.getTableHeader().setForeground(Color.WHITE);
+        tablaCompraP.getTableHeader().setPreferredSize(new Dimension(40, 40));
     }
 
     @SuppressWarnings("unchecked")
@@ -73,7 +83,41 @@ public class Principal extends javax.swing.JFrame {
         jTextField5 = new javax.swing.JTextField();
         jLabel23 = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tablaProdCompra = new javax.swing.JTable();
+        jTextField6 = new javax.swing.JTextField();
+        jLabel28 = new javax.swing.JLabel();
+        jComboBox2 = new javax.swing.JComboBox<>();
+        jLabel29 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tablaCompraP = new javax.swing.JTable();
+        jLabel30 = new javax.swing.JLabel();
+        jTextField7 = new javax.swing.JTextField();
+        jLabel31 = new javax.swing.JLabel();
+        jLabel32 = new javax.swing.JLabel();
+        jLabel33 = new javax.swing.JLabel();
+        jLabel34 = new javax.swing.JLabel();
+        jLabel35 = new javax.swing.JLabel();
+        jLabel36 = new javax.swing.JLabel();
+        jLabel41 = new javax.swing.JLabel();
+        jLabel38 = new javax.swing.JLabel();
+        jLabel39 = new javax.swing.JLabel();
+        jLabel40 = new javax.swing.JLabel();
+        jTextField9 = new javax.swing.JTextField();
+        jLabel42 = new javax.swing.JLabel();
+        jLabel37 = new javax.swing.JLabel();
+        jLabel43 = new javax.swing.JLabel();
+        jLabel44 = new javax.swing.JLabel();
+        jLabel45 = new javax.swing.JLabel();
+        jLabel47 = new javax.swing.JLabel();
+        jLabel48 = new javax.swing.JLabel();
         fondoEtiquetaCliente = new javax.swing.JLabel();
+        jLabel49 = new javax.swing.JLabel();
+        jTextField8 = new javax.swing.JTextField();
+        jTextField11 = new javax.swing.JTextField();
+        jLabel51 = new javax.swing.JLabel();
+        jLabel52 = new javax.swing.JLabel();
+        jLabel50 = new javax.swing.JLabel();
         JPanelPrincipalDer = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -331,53 +375,53 @@ public class Principal extends javax.swing.JFrame {
         tablaClientes.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         tablaClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Apellido", "Nombre", "Fecha de Nacimiento", "Edad", "Telefono", "Direccion de Vivienda", "Zona de Vivienda", "Direccion de Trabajo", "Zona de Trabajo", "Ocupacion"
+                "Apellido", "Nombre", "Fecha de Nacimiento", "Edad", "Telefono", "Direccion de Vivienda", "Zona de Vivienda", "Direccion de Trabajo", "Zona de Trabajo", "Ocupacion", "Saldo"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -398,85 +442,375 @@ public class Principal extends javax.swing.JFrame {
         tablaClientes.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tablaClientes);
 
-        JPanelCliente.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 307, 1320, 620));
+        JPanelCliente.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 307, 1320, 650));
 
         JPanelPrincipal.add(JPanelCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 0, 1400, 1000));
 
         JPanelCompra.setBackground(new java.awt.Color(247, 247, 247));
         JPanelCompra.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 0, 1, 1, new java.awt.Color(0, 0, 0)));
+        JPanelCompra.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         JPanelCompra.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel20.setText("CLIENTE");
-        JPanelCompra.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, -1, -1));
+        jLabel20.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jLabel20.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ticketIcon.png"))); // NOI18N
+        jLabel20.setText("  Registro de Compra");
+        JPanelCompra.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 300, 30));
 
-        jLabel21.setText("Nueva Compra");
-        JPanelCompra.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 60, -1, 20));
+        jLabel21.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel21.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel21.setText("Importe de Compra");
+        JPanelCompra.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(1123, 110, -1, 20));
 
-        jLabel22.setText("Apellido");
-        JPanelCompra.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, -1, 20));
+        jLabel22.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel22.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel22.setText("Saldo Actual");
+        JPanelCompra.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 100, 20));
 
         jTextField2.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jTextField2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField2.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        jTextField2.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
         jTextField2.setOpaque(false);
         jTextField2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField2ActionPerformed(evt);
             }
         });
-        JPanelCompra.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 50, 190, 40));
+        JPanelCompra.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 70, 140, 40));
 
         jTextField3.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jTextField3.setForeground(new java.awt.Color(255, 255, 255));
         jTextField3.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField3.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        jTextField3.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
         jTextField3.setOpaque(false);
         jTextField3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField3ActionPerformed(evt);
             }
         });
-        JPanelCompra.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 80, 300, 20));
+        JPanelCompra.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 70, 280, 30));
 
-        jLabel24.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 0, 1, new java.awt.Color(0, 0, 0)));
-        JPanelCompra.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(872, 10, 10, 233));
+        jLabel24.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 0, 0, 0, new java.awt.Color(0, 0, 0)));
+        JPanelCompra.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 840, 270, 10));
 
-        jLabel25.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
-        JPanelCompra.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 233, 871, 10));
+        jLabel25.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 0, 0, 0, new java.awt.Color(255, 255, 255)));
+        JPanelCompra.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 8, 1290, 10));
 
         jTextField4.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jTextField4.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField4.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        jTextField4.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
         jTextField4.setOpaque(false);
         jTextField4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField4ActionPerformed(evt);
             }
         });
-        JPanelCompra.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 160, 190, 40));
+        JPanelCompra.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1220, 170, 130, 40));
 
-        jLabel26.setText("Saldo Restante");
-        JPanelCompra.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 170, -1, 20));
+        jLabel26.setFont(new java.awt.Font("Arial", 1, 20)); // NOI18N
+        jLabel26.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel26.setText("Nuevo Saldo");
+        JPanelCompra.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 190, -1, 20));
 
         jTextField5.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jTextField5.setForeground(new java.awt.Color(255, 255, 255));
         jTextField5.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField5.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        jTextField5.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
         jTextField5.setOpaque(false);
         jTextField5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField5ActionPerformed(evt);
             }
         });
-        JPanelCompra.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 130, 300, 20));
+        JPanelCompra.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 180, 130, 30));
 
+        jLabel23.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel23.setForeground(new java.awt.Color(255, 255, 255));
         jLabel23.setText("Nombre");
-        JPanelCompra.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, -1, 20));
+        JPanelCompra.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, -1, 20));
 
-        jLabel27.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 1, 0, 0, new java.awt.Color(0, 0, 0)));
-        JPanelCompra.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 40, 10, 160));
+        jLabel27.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 1, 0, 0, new java.awt.Color(255, 255, 255)));
+        JPanelCompra.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 30, 10, 190));
 
-        fondoEtiquetaCliente.setText("fondo");
-        fondoEtiquetaCliente.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 1, new java.awt.Color(0, 0, 0)));
-        JPanelCompra.add(fondoEtiquetaCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 890, 250));
+        jScrollPane2.setPreferredSize(new java.awt.Dimension(452, 415));
+
+        tablaProdCompra.setBackground(new java.awt.Color(247, 247, 247));
+        tablaProdCompra.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        tablaProdCompra.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Codigo", "Nombre", "Cantidad", "$"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tablaProdCompra.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        tablaProdCompra.setFocusable(false);
+        tablaProdCompra.setGridColor(new java.awt.Color(0, 0, 0));
+        tablaProdCompra.setIntercellSpacing(new java.awt.Dimension(0, 0));
+        tablaProdCompra.setPreferredSize(new java.awt.Dimension(300, 135));
+        tablaProdCompra.setRowHeight(25);
+        tablaProdCompra.setSelectionBackground(new java.awt.Color(51, 204, 255));
+        tablaProdCompra.setShowVerticalLines(false);
+        tablaProdCompra.getTableHeader().setReorderingAllowed(false);
+        jScrollPane2.setViewportView(tablaProdCompra);
+        if (tablaProdCompra.getColumnModel().getColumnCount() > 0) {
+            tablaProdCompra.getColumnModel().getColumn(2).setPreferredWidth(10);
+        }
+
+        JPanelCompra.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 40, 450, 180));
+
+        jTextField6.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jTextField6.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        jTextField6.setOpaque(false);
+        jTextField6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField6ActionPerformed(evt);
+            }
+        });
+        JPanelCompra.add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 300, 370, 30));
+
+        jLabel28.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel28.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/filtroIcon.png"))); // NOI18N
+        JPanelCompra.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 300, -1, 30));
+
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox2ActionPerformed(evt);
+            }
+        });
+        JPanelCompra.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 300, 100, 30));
+
+        jLabel29.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
+        JPanelCompra.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 233, 1380, 10));
+
+        tablaCompraP.setBackground(new java.awt.Color(247, 247, 247));
+        tablaCompraP.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        tablaCompraP.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "Categoria", "Linea", "Nombre", "Descuento", "$", "Stock"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, true
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tablaCompraP.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        tablaCompraP.setFocusable(false);
+        tablaCompraP.setGridColor(new java.awt.Color(0, 0, 0));
+        tablaCompraP.setIntercellSpacing(new java.awt.Dimension(0, 0));
+        tablaCompraP.setRowHeight(25);
+        tablaCompraP.setSelectionBackground(new java.awt.Color(51, 204, 255));
+        tablaCompraP.setShowVerticalLines(false);
+        tablaCompraP.getTableHeader().setReorderingAllowed(false);
+        jScrollPane3.setViewportView(tablaCompraP);
+
+        JPanelCompra.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 370, 960, 590));
+
+        jLabel30.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel30.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel30.setText("Apellido");
+        JPanelCompra.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, -1, 20));
+
+        jTextField7.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jTextField7.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField7.setText("Año");
+        jTextField7.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        jTextField7.setOpaque(false);
+        jTextField7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField7ActionPerformed(evt);
+            }
+        });
+        JPanelCompra.add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(1280, 670, 70, 20));
+
+        jLabel31.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/dollarIcon.png"))); // NOI18N
+        JPanelCompra.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(1170, 170, 50, 50));
+
+        jLabel32.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/saldoIcon.png"))); // NOI18N
+        JPanelCompra.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 70, 30, 40));
+
+        jLabel33.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 1, 0, 0, new java.awt.Color(255, 255, 255)));
+        JPanelCompra.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 30, 10, 190));
+
+        jLabel34.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel34.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/agregarIcon.png"))); // NOI18N
+        jLabel34.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        JPanelCompra.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(1162, 330, -1, 80));
+
+        jLabel35.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/quitarIcon.png"))); // NOI18N
+        jLabel35.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        JPanelCompra.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(1162, 480, -1, 70));
+
+        jLabel36.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 0, 1, new java.awt.Color(255, 255, 255)));
+        JPanelCompra.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(1380, 52, 10, 190));
+
+        jLabel41.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/saldoIcon.png"))); // NOI18N
+        JPanelCompra.add(jLabel41, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 170, 30, 40));
+
+        jLabel38.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
+        jLabel38.setText("Cancelar Compra");
+        JPanelCompra.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 940, -1, -1));
+
+        jLabel39.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
+        jLabel39.setText("Registrar Compra");
+        JPanelCompra.add(jLabel39, new org.netbeans.lib.awtextra.AbsoluteConstraints(1240, 940, -1, -1));
+
+        jLabel40.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 0, 1, new java.awt.Color(0, 0, 0)));
+        JPanelCompra.add(jLabel40, new org.netbeans.lib.awtextra.AbsoluteConstraints(1200, 860, 10, 80));
+
+        jTextField9.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jTextField9.setForeground(new java.awt.Color(255, 255, 255));
+        jTextField9.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField9.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
+        jTextField9.setOpaque(false);
+        jTextField9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField9ActionPerformed(evt);
+            }
+        });
+        JPanelCompra.add(jTextField9, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 120, 280, 30));
+
+        jLabel42.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 0, 0, 0, new java.awt.Color(0, 0, 0)));
+        JPanelCompra.add(jLabel42, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 960, 270, 10));
+
+        jLabel37.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/quitarProductoIcon.png"))); // NOI18N
+        JPanelCompra.add(jLabel37, new org.netbeans.lib.awtextra.AbsoluteConstraints(1100, 850, -1, 80));
+
+        jLabel43.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel43.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/agregarProductoIcon.png"))); // NOI18N
+        jLabel43.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        JPanelCompra.add(jLabel43, new org.netbeans.lib.awtextra.AbsoluteConstraints(1250, 850, -1, 80));
+
+        jLabel44.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 0, 1, new java.awt.Color(0, 0, 0)));
+        JPanelCompra.add(jLabel44, new org.netbeans.lib.awtextra.AbsoluteConstraints(1251, 350, 10, 190));
+
+        jLabel45.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 0, 0, 0, new java.awt.Color(0, 0, 0)));
+        JPanelCompra.add(jLabel45, new org.netbeans.lib.awtextra.AbsoluteConstraints(1150, 440, 90, 10));
+
+        jLabel47.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
+        jLabel47.setText("Agregar Producto");
+        JPanelCompra.add(jLabel47, new org.netbeans.lib.awtextra.AbsoluteConstraints(1145, 410, -1, -1));
+
+        jLabel48.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
+        jLabel48.setText("Quitar Producto");
+        JPanelCompra.add(jLabel48, new org.netbeans.lib.awtextra.AbsoluteConstraints(1152, 460, -1, -1));
+
+        fondoEtiquetaCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ticketCompra.png"))); // NOI18N
+        fondoEtiquetaCliente.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 0, 1, 1, new java.awt.Color(0, 0, 0)));
+        JPanelCompra.add(fondoEtiquetaCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1400, 250));
+
+        jLabel49.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel49.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel49.setText("Fecha de Compra");
+        JPanelCompra.add(jLabel49, new org.netbeans.lib.awtextra.AbsoluteConstraints(1060, 700, 290, 30));
+
+        jTextField8.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jTextField8.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField8.setText("Dia");
+        jTextField8.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        jTextField8.setOpaque(false);
+        jTextField8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField8ActionPerformed(evt);
+            }
+        });
+        JPanelCompra.add(jTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(1060, 670, 70, 20));
+
+        jTextField11.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jTextField11.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField11.setText("Mes");
+        jTextField11.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        jTextField11.setOpaque(false);
+        jTextField11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField11ActionPerformed(evt);
+            }
+        });
+        JPanelCompra.add(jTextField11, new org.netbeans.lib.awtextra.AbsoluteConstraints(1170, 670, 70, 20));
+
+        jLabel51.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jLabel51.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel51.setText("/");
+        JPanelCompra.add(jLabel51, new org.netbeans.lib.awtextra.AbsoluteConstraints(1250, 670, 20, 20));
+
+        jLabel52.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jLabel52.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel52.setText("/");
+        JPanelCompra.add(jLabel52, new org.netbeans.lib.awtextra.AbsoluteConstraints(1140, 670, 20, 20));
+
+        jLabel50.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 0, 1, new java.awt.Color(0, 0, 0)));
+        JPanelCompra.add(jLabel50, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 350, 10, 190));
 
         JPanelPrincipal.add(JPanelCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 0, 1400, 1000));
 
@@ -565,6 +899,30 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField5ActionPerformed
 
+    private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField6ActionPerformed
+
+    private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField7ActionPerformed
+
+    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox2ActionPerformed
+
+    private void jTextField9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField9ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField9ActionPerformed
+
+    private void jTextField8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField8ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField8ActionPerformed
+
+    private void jTextField11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField11ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField11ActionPerformed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -605,6 +963,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JPanel JPanelPrincipalIzq;
     private javax.swing.JLabel fondoEtiquetaCliente;
     private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -625,19 +984,50 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
+    private javax.swing.JLabel jLabel34;
+    private javax.swing.JLabel jLabel35;
+    private javax.swing.JLabel jLabel36;
+    private javax.swing.JLabel jLabel37;
+    private javax.swing.JLabel jLabel38;
+    private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel40;
+    private javax.swing.JLabel jLabel41;
+    private javax.swing.JLabel jLabel42;
+    private javax.swing.JLabel jLabel43;
+    private javax.swing.JLabel jLabel44;
+    private javax.swing.JLabel jLabel45;
+    private javax.swing.JLabel jLabel47;
+    private javax.swing.JLabel jLabel48;
+    private javax.swing.JLabel jLabel49;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel50;
+    private javax.swing.JLabel jLabel51;
+    private javax.swing.JLabel jLabel52;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField11;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
+    private javax.swing.JTextField jTextField6;
+    private javax.swing.JTextField jTextField7;
+    private javax.swing.JTextField jTextField8;
+    private javax.swing.JTextField jTextField9;
     private javax.swing.JLabel lblAgregarCliente;
     private javax.swing.JLabel lblBalance;
     private javax.swing.JLabel lblNaturalogo;
@@ -657,5 +1047,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel lblfondopanelIzq;
     private javax.swing.JLabel lblminimizar;
     private javax.swing.JTable tablaClientes;
+    private javax.swing.JTable tablaCompraP;
+    private javax.swing.JTable tablaProdCompra;
     // End of variables declaration//GEN-END:variables
 }
