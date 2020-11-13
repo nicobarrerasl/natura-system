@@ -5,6 +5,14 @@
  */
 package Interfaces;
 
+import Clases.Cliente;
+import DatabaseDAO.Postgre_SQL.PostgreSQL_Cliente;
+import DatabaseSingleton.PostgreSQL_Singleton;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Franco
@@ -17,7 +25,7 @@ public class FormularioCliente extends javax.swing.JFrame {
     public FormularioCliente() {
         initComponents();
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -29,43 +37,43 @@ public class FormularioCliente extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        tf_tel = new javax.swing.JTextField();
         jSeparator3 = new javax.swing.JSeparator();
-        jTextField3 = new javax.swing.JTextField();
+        tf_dia = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
         lblminimizar = new javax.swing.JLabel();
-        lblcerrar = new javax.swing.JLabel();
+        jl_cerrar = new javax.swing.JLabel();
         lblTituloFC = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        tf_Apellido = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
+        tf_mes = new javax.swing.JTextField();
+        tf_anio = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
-        jTextField7 = new javax.swing.JTextField();
+        tf_Nombre = new javax.swing.JTextField();
+        tf_caract = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jSeparator4 = new javax.swing.JSeparator();
         jLabel9 = new javax.swing.JLabel();
         jSeparator5 = new javax.swing.JSeparator();
         jLabel10 = new javax.swing.JLabel();
-        jTextField8 = new javax.swing.JTextField();
-        jTextField9 = new javax.swing.JTextField();
+        tf_DT = new javax.swing.JTextField();
+        tf_ZT = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        jTextField10 = new javax.swing.JTextField();
+        tf_Ocup = new javax.swing.JTextField();
         jSeparator6 = new javax.swing.JSeparator();
         jLabel13 = new javax.swing.JLabel();
         jSeparator7 = new javax.swing.JSeparator();
         jLabel14 = new javax.swing.JLabel();
-        jTextField11 = new javax.swing.JTextField();
+        tf_DV = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
-        jTextField12 = new javax.swing.JTextField();
-        jLabel16 = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
+        tf_ZV = new javax.swing.JTextField();
+        jl_cancelar = new javax.swing.JLabel();
+        jl_registrar = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         fondoFormularioCliente = new javax.swing.JLabel();
@@ -84,35 +92,35 @@ public class FormularioCliente extends javax.swing.JFrame {
         jLabel3.setText("Apellido");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 220, 90, 30));
 
-        jTextField2.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        jTextField2.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField2.setText("Telefono sin 15");
-        jTextField2.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
-        jTextField2.setOpaque(false);
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        tf_tel.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        tf_tel.setForeground(new java.awt.Color(255, 255, 255));
+        tf_tel.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        tf_tel.setText("Telefono sin 15");
+        tf_tel.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
+        tf_tel.setOpaque(false);
+        tf_tel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                tf_telActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 310, 180, 20));
+        jPanel1.add(tf_tel, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 310, 180, 20));
 
         jSeparator3.setForeground(new java.awt.Color(255, 255, 255));
         jSeparator3.setFont(new java.awt.Font("Arial", 0, 3)); // NOI18N
         jPanel1.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 390, 200, 10));
 
-        jTextField3.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        jTextField3.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField3.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField3.setText("Dia");
-        jTextField3.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
-        jTextField3.setOpaque(false);
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+        tf_dia.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        tf_dia.setForeground(new java.awt.Color(255, 255, 255));
+        tf_dia.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        tf_dia.setText("Dia");
+        tf_dia.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
+        tf_dia.setOpaque(false);
+        tf_dia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+                tf_diaActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 280, 60, 20));
+        jPanel1.add(tf_dia, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 280, 60, 20));
 
         jLabel5.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
@@ -133,15 +141,15 @@ public class FormularioCliente extends javax.swing.JFrame {
         });
         jPanel1.add(lblminimizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 10, 30, 20));
 
-        lblcerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cerrarIconFC.png"))); // NOI18N
-        lblcerrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        lblcerrar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        lblcerrar.addMouseListener(new java.awt.event.MouseAdapter() {
+        jl_cerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cerrarIconFC.png"))); // NOI18N
+        jl_cerrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jl_cerrar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jl_cerrar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblcerrarMouseClicked(evt);
+                jl_cerrarMouseClicked(evt);
             }
         });
-        jPanel1.add(lblcerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 10, 30, 20));
+        jPanel1.add(jl_cerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 10, 30, 20));
 
         lblTituloFC.setFont(new java.awt.Font("Arial Black", 0, 28)); // NOI18N
         lblTituloFC.setForeground(new java.awt.Color(255, 255, 255));
@@ -150,17 +158,17 @@ public class FormularioCliente extends javax.swing.JFrame {
         lblTituloFC.setText("Formulario de Cliente");
         jPanel1.add(lblTituloFC, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 520, 90));
 
-        jTextField1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jTextField1.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
-        jTextField1.setOpaque(false);
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        tf_Apellido.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        tf_Apellido.setForeground(new java.awt.Color(255, 255, 255));
+        tf_Apellido.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        tf_Apellido.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
+        tf_Apellido.setOpaque(false);
+        tf_Apellido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                tf_ApellidoActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 220, 300, 20));
+        jPanel1.add(tf_Apellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 220, 300, 20));
 
         jLabel2.setFont(new java.awt.Font("Arial Black", 0, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
@@ -172,31 +180,31 @@ public class FormularioCliente extends javax.swing.JFrame {
         jLabel6.setText("Nombre");
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 250, 90, 30));
 
-        jTextField4.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        jTextField4.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField4.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField4.setText("Mes");
-        jTextField4.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
-        jTextField4.setOpaque(false);
-        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+        tf_mes.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        tf_mes.setForeground(new java.awt.Color(255, 255, 255));
+        tf_mes.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        tf_mes.setText("Mes");
+        tf_mes.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
+        tf_mes.setOpaque(false);
+        tf_mes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField4ActionPerformed(evt);
+                tf_mesActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 280, 60, 20));
+        jPanel1.add(tf_mes, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 280, 60, 20));
 
-        jTextField5.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        jTextField5.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField5.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField5.setText("Año");
-        jTextField5.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
-        jTextField5.setOpaque(false);
-        jTextField5.addActionListener(new java.awt.event.ActionListener() {
+        tf_anio.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        tf_anio.setForeground(new java.awt.Color(255, 255, 255));
+        tf_anio.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        tf_anio.setText("Año");
+        tf_anio.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
+        tf_anio.setOpaque(false);
+        tf_anio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField5ActionPerformed(evt);
+                tf_anioActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 280, 60, 20));
+        jPanel1.add(tf_anio, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 280, 60, 20));
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -215,30 +223,30 @@ public class FormularioCliente extends javax.swing.JFrame {
         jLabel7.setText("Fecha de Nacimiento");
         jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 280, 150, 30));
 
-        jTextField6.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jTextField6.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField6.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField6.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
-        jTextField6.setOpaque(false);
-        jTextField6.addActionListener(new java.awt.event.ActionListener() {
+        tf_Nombre.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        tf_Nombre.setForeground(new java.awt.Color(255, 255, 255));
+        tf_Nombre.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        tf_Nombre.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
+        tf_Nombre.setOpaque(false);
+        tf_Nombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField6ActionPerformed(evt);
+                tf_NombreActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 250, 300, 20));
+        jPanel1.add(tf_Nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 250, 300, 20));
 
-        jTextField7.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        jTextField7.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField7.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField7.setText("Caract.");
-        jTextField7.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
-        jTextField7.setOpaque(false);
-        jTextField7.addActionListener(new java.awt.event.ActionListener() {
+        tf_caract.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        tf_caract.setForeground(new java.awt.Color(255, 255, 255));
+        tf_caract.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        tf_caract.setText("caract");
+        tf_caract.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
+        tf_caract.setOpaque(false);
+        tf_caract.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField7ActionPerformed(evt);
+                tf_caractActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 310, 60, 20));
+        jPanel1.add(tf_caract, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 310, 60, 20));
 
         jLabel8.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
@@ -264,29 +272,29 @@ public class FormularioCliente extends javax.swing.JFrame {
         jLabel10.setText("Direccion de Trabajo");
         jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 420, 150, 30));
 
-        jTextField8.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jTextField8.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField8.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField8.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
-        jTextField8.setOpaque(false);
-        jTextField8.addActionListener(new java.awt.event.ActionListener() {
+        tf_DT.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        tf_DT.setForeground(new java.awt.Color(255, 255, 255));
+        tf_DT.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        tf_DT.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
+        tf_DT.setOpaque(false);
+        tf_DT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField8ActionPerformed(evt);
+                tf_DTActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 420, 390, 20));
+        jPanel1.add(tf_DT, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 420, 390, 20));
 
-        jTextField9.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jTextField9.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField9.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField9.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
-        jTextField9.setOpaque(false);
-        jTextField9.addActionListener(new java.awt.event.ActionListener() {
+        tf_ZT.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        tf_ZT.setForeground(new java.awt.Color(255, 255, 255));
+        tf_ZT.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        tf_ZT.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
+        tf_ZT.setOpaque(false);
+        tf_ZT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField9ActionPerformed(evt);
+                tf_ZTActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField9, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 450, 390, 20));
+        jPanel1.add(tf_ZT, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 450, 390, 20));
 
         jLabel11.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
@@ -298,17 +306,17 @@ public class FormularioCliente extends javax.swing.JFrame {
         jLabel12.setText("Ocupacion");
         jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 480, 150, 30));
 
-        jTextField10.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jTextField10.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField10.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField10.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
-        jTextField10.setOpaque(false);
-        jTextField10.addActionListener(new java.awt.event.ActionListener() {
+        tf_Ocup.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        tf_Ocup.setForeground(new java.awt.Color(255, 255, 255));
+        tf_Ocup.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        tf_Ocup.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
+        tf_Ocup.setOpaque(false);
+        tf_Ocup.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField10ActionPerformed(evt);
+                tf_OcupActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField10, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 480, 390, 20));
+        jPanel1.add(tf_Ocup, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 480, 390, 20));
 
         jSeparator6.setForeground(new java.awt.Color(255, 255, 255));
         jSeparator6.setFont(new java.awt.Font("Arial", 0, 3)); // NOI18N
@@ -328,17 +336,17 @@ public class FormularioCliente extends javax.swing.JFrame {
         jLabel14.setText("Direccion de Vivienda");
         jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 590, 160, 30));
 
-        jTextField11.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jTextField11.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField11.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField11.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
-        jTextField11.setOpaque(false);
-        jTextField11.addActionListener(new java.awt.event.ActionListener() {
+        tf_DV.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        tf_DV.setForeground(new java.awt.Color(255, 255, 255));
+        tf_DV.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        tf_DV.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
+        tf_DV.setOpaque(false);
+        tf_DV.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField11ActionPerformed(evt);
+                tf_DVActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField11, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 590, 390, 20));
+        jPanel1.add(tf_DV, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 590, 390, 20));
 
         jLabel15.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(255, 255, 255));
@@ -346,42 +354,42 @@ public class FormularioCliente extends javax.swing.JFrame {
         jLabel15.setText("Registrar");
         jPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(582, 758, 90, 30));
 
-        jTextField12.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jTextField12.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField12.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField12.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
-        jTextField12.setOpaque(false);
-        jTextField12.addActionListener(new java.awt.event.ActionListener() {
+        tf_ZV.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        tf_ZV.setForeground(new java.awt.Color(255, 255, 255));
+        tf_ZV.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        tf_ZV.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
+        tf_ZV.setOpaque(false);
+        tf_ZV.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField12ActionPerformed(evt);
+                tf_ZVActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField12, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 620, 390, 20));
+        jPanel1.add(tf_ZV, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 620, 390, 20));
 
-        jLabel16.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel16.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cancelarIcon.png"))); // NOI18N
-        jLabel16.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel16.addMouseListener(new java.awt.event.MouseAdapter() {
+        jl_cancelar.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jl_cancelar.setForeground(new java.awt.Color(255, 255, 255));
+        jl_cancelar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jl_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cancelarIcon.png"))); // NOI18N
+        jl_cancelar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jl_cancelar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel16MouseClicked(evt);
+                jl_cancelarMouseClicked(evt);
             }
         });
-        jPanel1.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 700, 60, 60));
+        jPanel1.add(jl_cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 700, 60, 60));
 
-        jLabel17.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel17.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/aceptarIcon.png"))); // NOI18N
-        jLabel17.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        jLabel17.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel17.addMouseListener(new java.awt.event.MouseAdapter() {
+        jl_registrar.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jl_registrar.setForeground(new java.awt.Color(255, 255, 255));
+        jl_registrar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jl_registrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/aceptarIcon.png"))); // NOI18N
+        jl_registrar.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        jl_registrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jl_registrar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel17MouseClicked(evt);
+                jl_registrarMouseClicked(evt);
             }
         });
-        jPanel1.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 700, 60, 60));
+        jPanel1.add(jl_registrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 700, 60, 60));
 
         jLabel18.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(255, 255, 255));
@@ -410,65 +418,91 @@ public class FormularioCliente extends javax.swing.JFrame {
         this.setState(FormularioCliente.ICONIFIED);
     }//GEN-LAST:event_lblminimizarMouseClicked
 
-    private void lblcerrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblcerrarMouseClicked
+    private void jl_cerrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jl_cerrarMouseClicked
         this.dispose();
-    }//GEN-LAST:event_lblcerrarMouseClicked
+    }//GEN-LAST:event_jl_cerrarMouseClicked
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void tf_ApellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_ApellidoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_tf_ApellidoActionPerformed
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void tf_telActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_telActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_tf_telActionPerformed
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+    private void tf_diaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_diaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    }//GEN-LAST:event_tf_diaActionPerformed
 
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+    private void tf_mesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_mesActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4ActionPerformed
+    }//GEN-LAST:event_tf_mesActionPerformed
 
-    private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
+    private void tf_anioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_anioActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField5ActionPerformed
+    }//GEN-LAST:event_tf_anioActionPerformed
 
-    private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
+    private void tf_NombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_NombreActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField6ActionPerformed
+    }//GEN-LAST:event_tf_NombreActionPerformed
 
-    private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
+    private void tf_caractActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_caractActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField7ActionPerformed
+    }//GEN-LAST:event_tf_caractActionPerformed
 
-    private void jTextField8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField8ActionPerformed
+    private void tf_DTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_DTActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField8ActionPerformed
+    }//GEN-LAST:event_tf_DTActionPerformed
 
-    private void jTextField9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField9ActionPerformed
+    private void tf_ZTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_ZTActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField9ActionPerformed
+    }//GEN-LAST:event_tf_ZTActionPerformed
 
-    private void jTextField10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField10ActionPerformed
+    private void tf_OcupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_OcupActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField10ActionPerformed
+    }//GEN-LAST:event_tf_OcupActionPerformed
 
-    private void jTextField11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField11ActionPerformed
+    private void tf_DVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_DVActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField11ActionPerformed
+    }//GEN-LAST:event_tf_DVActionPerformed
 
-    private void jTextField12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField12ActionPerformed
+    private void tf_ZVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_ZVActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField12ActionPerformed
+    }//GEN-LAST:event_tf_ZVActionPerformed
 
-    private void jLabel16MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel16MouseClicked
+    private void jl_cancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jl_cancelarMouseClicked
         this.dispose();
-    }//GEN-LAST:event_jLabel16MouseClicked
+    }//GEN-LAST:event_jl_cancelarMouseClicked
 
-    private void jLabel17MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel17MouseClicked
-        
-    }//GEN-LAST:event_jLabel17MouseClicked
+    private void jl_registrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jl_registrarMouseClicked
+        int flag = 1;
+        int age = 2020 - Integer.parseInt(tf_anio.getText());
+        Short cod = 0;
+        String  apel = tf_Apellido.getText();
+        String  nom = tf_Nombre.getText();
+        short   edad = (short)age;
+        String  Fnac = tf_anio.getText() + "-" + tf_mes.getText() + "-" + tf_dia.getText();
+        String  tel = tf_caract.getText().concat(tf_tel.getText());
+        String  DV = tf_DV.getText();
+        String  ZV = tf_ZV.getText();
+        String  DT = tf_DT.getText();
+        String  ZT = tf_ZT.getText();
+        String  ocup = tf_Ocup.getText();
+        Cliente nuevo_cliente;
+        nuevo_cliente = new Cliente(cod,apel,nom,edad,Fnac,tel,DV,ZV,DT,ZT,ocup);
+        try {
+            PostgreSQL_Cliente DAO_Cliente = new PostgreSQL_Cliente (PostgreSQL_Singleton.getInstance().getConnection());
+            DAO_Cliente.insertar(nuevo_cliente);
+        } catch (SQLException ex) {
+            Logger.getLogger(FormularioCliente.class.getName()).log(Level.SEVERE, null, ex);
+            flag = 0;
+        }
+        if(flag!=0){
+            JOptionPane.showMessageDialog(null, "El cliente " + apel + " fue dado de alta exitosamente");
+            this.dispose();
+        }
+
+    }//GEN-LAST:event_jl_registrarMouseClicked
 
     /**
      * @param args the command line arguments
@@ -514,8 +548,6 @@ public class FormularioCliente extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
@@ -533,20 +565,22 @@ public class FormularioCliente extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;
     private javax.swing.JSeparator jSeparator7;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField11;
-    private javax.swing.JTextField jTextField12;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
+    private javax.swing.JLabel jl_cancelar;
+    private javax.swing.JLabel jl_cerrar;
+    private javax.swing.JLabel jl_registrar;
     private javax.swing.JLabel lblTituloFC;
-    private javax.swing.JLabel lblcerrar;
     private javax.swing.JLabel lblminimizar;
+    private javax.swing.JTextField tf_Apellido;
+    private javax.swing.JTextField tf_DT;
+    private javax.swing.JTextField tf_DV;
+    private javax.swing.JTextField tf_Nombre;
+    private javax.swing.JTextField tf_Ocup;
+    private javax.swing.JTextField tf_ZT;
+    private javax.swing.JTextField tf_ZV;
+    private javax.swing.JTextField tf_anio;
+    private javax.swing.JTextField tf_caract;
+    private javax.swing.JTextField tf_dia;
+    private javax.swing.JTextField tf_mes;
+    private javax.swing.JTextField tf_tel;
     // End of variables declaration//GEN-END:variables
 }

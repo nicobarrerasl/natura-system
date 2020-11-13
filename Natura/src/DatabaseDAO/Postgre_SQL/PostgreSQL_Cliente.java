@@ -11,12 +11,12 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 public class PostgreSQL_Cliente implements clienteDAO{
-    final String INSERT = "INSERT INTO Cliente(codCliente, cliente_apellido, cliente_nombre, cliente_edad, cliente_Fnac, cliente_tel, cliente_DV, cliente_ZV, cliente_DT, cliente_ZT, cliente_ocup) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,)";                          
+    final String INSERT = "INSERT INTO Cliente(cliente_apellido, cliente_nombre, cliente_edad, cliente_Fnac, cliente_tel, cliente_DV, cliente_ZV, cliente_DT, cliente_ZT, cliente_ocup, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";                          
     final String UPDATE = "UPDATE Cliente SET codCliente = ?, cliente_apellido= ?, cliente_nombre= ?, cliente_edad= ?, cliente_Fnac= ?, cliente_tel= ?, cliente_DV= ?, cliente_ZV= ?, cliente_DT= ?, cliente_ZT= ?, cliente_ocup= ? WHERE codCliente = ?";
-    final String DELETE = "DELETE FROM Cliente WHERE codCliente = ?";
-    final String GETALL = "SELECT codCliente, cliente_apellido, cliente_nombre, cliente_edad, cliente_Fnac, cliente_tel, cliente_DV, cliente_ZV, cliente_DT, cliente_ZT, cliente_ocup FROM Cliente";
-    final String GETONE = "SELECT codCliente, cliente_apellido, cliente_nombre, cliente_edad, cliente_Fnac, cliente_tel, cliente_DV, cliente_ZV, cliente_DT, cliente_ZT, cliente_ocup FROM Cliente WHERE codCliente = ?";
-    private Connection conn;
+    final String DELETE = "UPDATE Cliente SET status = 0 WHERE codCliente = ?";
+    final String GETALL = "SELECT * FROM Cliente WHERE status = 1"; 
+    final String GETONE = "SELECT * FROM Cliente WHERE codCliente = ? AND status = 1";
+    private final Connection conn;
     public PostgreSQL_Cliente(Connection conn){
         this.conn = conn;
     }
@@ -26,17 +26,17 @@ public class PostgreSQL_Cliente implements clienteDAO{
         PreparedStatement stat;
         try{
             stat = conn.prepareStatement(INSERT);
-            stat.setShort   (1,  a.getCodCliente());
-            stat.setString  (2,  a.getCliente_apellido());
-            stat.setString  (3,  a.getCliente_nombre());
-            stat.setShort   (4,  a.getCliente_edad());
-            stat.setString  (5,  a.getCliente_Fnac());
-            stat.setString  (6,  a.getCliente_tel());
-            stat.setString  (7,  a.getCliente_DV());
-            stat.setString  (8,  a.getCliente_ZV());
-            stat.setString  (9,  a.getCliente_DT());
-            stat.setString  (10, a.getCliente_ZT());
-            stat.setString  (11, a.getCliente_ocup());
+            stat.setString  (1,  a.getCliente_apellido());
+            stat.setString  (2,  a.getCliente_nombre());
+            stat.setShort   (3,  a.getCliente_edad());
+            stat.setString  (4,  a.getCliente_Fnac());
+            stat.setString  (5,  a.getCliente_tel());
+            stat.setString  (6,  a.getCliente_DV());
+            stat.setString  (7,  a.getCliente_ZV());
+            stat.setString  (8,  a.getCliente_DT());
+            stat.setString  (9,  a.getCliente_ZT());
+            stat.setString  (10, a.getCliente_ocup());
+            stat.setShort   (11, (short)1);
             
             if(stat.executeUpdate()== 0){
                 // ERROR
@@ -171,27 +171,5 @@ public class PostgreSQL_Cliente implements clienteDAO{
             JOptionPane.showMessageDialog(null,"FAILED DATA BASE CONNECTION");
         }
         return a;
-    }
-    public static void main(String[] args){
-        Connection conn;
-        final String url = "jdbc:postgresql://localhost:5432/Natura_DB";
-        final String user = "postgres";
-        final String pass = "1234";
-        try {
-            conn = DriverManager.getConnection(url, user, pass);
-            clienteDAO dao = new PostgreSQL_Cliente(conn);
-            
-            List<Cliente> clientes = dao.obtener_todos();
-            clientes.forEach((a) -> {
-                System.out.println(a.getCliente_apellido());
-                System.out.println(a.getCliente_nombre());
-            });
-            conn.close();
-            
-        }
-        catch (SQLException ex){
-            System.out.println("error 7");
-            System.out.println(ex.getMessage());
-        }
     }
 }
