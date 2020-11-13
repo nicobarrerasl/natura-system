@@ -7,6 +7,7 @@ package natura;
 
 import DatabaseSingleton.PostgreSQL_Singleton;
 import Interfaces.Principal;
+import java.sql.Connection;
 import java.sql.SQLException;
 
 public class Natura {
@@ -16,7 +17,7 @@ public class Natura {
         p.setVisible(true);
         try{
             PostgreSQL_Singleton databaseConnection = PostgreSQL_Singleton.getInstance();
-            databaseConnection.getConnection();
+            Connection con = databaseConnection.getConnection();
         }
         catch(SQLException ex){
             System.out.println("Conexion a la base de datos: ERROR:");
