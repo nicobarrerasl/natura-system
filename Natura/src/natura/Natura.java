@@ -5,16 +5,19 @@
  */
 package natura;
 
+import Clases.*;
 import DatabaseSingleton.PostgreSQL_Singleton;
 import Interfaces.Principal;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class Natura {
-
+    
     public static void main(String[] args) {
         Principal p = new Principal();
         p.setVisible(true);
+        
         try{
             PostgreSQL_Singleton databaseConnection = PostgreSQL_Singleton.getInstance();
             Connection con = databaseConnection.getConnection();
