@@ -482,7 +482,7 @@ public class Principal extends javax.swing.JFrame {
 
         lblBarraHerramientaClienteFondo.setBackground(new java.awt.Color(61, 110, 255));
         lblBarraHerramientaClienteFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/barraHerramientaFondo.png"))); // NOI18N
-        lblBarraHerramientaClienteFondo.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 1, new java.awt.Color(0, 0, 0)));
+        lblBarraHerramientaClienteFondo.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 0, 1, 1, new java.awt.Color(0, 0, 0)));
         lblBarraHerramientaClienteFondo.setOpaque(true);
         JPanelCliente.add(lblBarraHerramientaClienteFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1120, 63));
 
