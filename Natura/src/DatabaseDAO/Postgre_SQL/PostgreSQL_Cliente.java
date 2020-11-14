@@ -1,8 +1,8 @@
 package DatabaseDAO.Postgre_SQL;
 import Clases.Cliente;
 import DatabaseDAO.clienteDAO;
+import java.math.BigDecimal;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,11 +11,12 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 public class PostgreSQL_Cliente implements clienteDAO{
-    final String INSERT = "INSERT INTO Cliente(cliente_apellido, cliente_nombre, cliente_edad, cliente_Fnac, cliente_tel, cliente_DV, cliente_ZV, cliente_DT, cliente_ZT, cliente_ocup, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";                          
-    final String UPDATE = "UPDATE Cliente SET codCliente = ?, cliente_apellido= ?, cliente_nombre= ?, cliente_edad= ?, cliente_Fnac= ?, cliente_tel= ?, cliente_DV= ?, cliente_ZV= ?, cliente_DT= ?, cliente_ZT= ?, cliente_ocup= ? WHERE codCliente = ?";
+    final String INSERT = "INSERT INTO Cliente(cliente_apellido, cliente_nombre, cliente_edad, cliente_Fnac, cliente_tel, cliente_DV, cliente_ZV, cliente_DT, cliente_ZT, cliente_ocup) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";                          
+    final String UPDATE = "UPDATE Cliente SET  cliente_apellido= ?, cliente_nombre= ?, cliente_edad= ?, cliente_Fnac= ?, cliente_tel= ?, cliente_DV= ?, cliente_ZV= ?, cliente_DT= ?, cliente_ZT= ?, cliente_ocup= ? WHERE codCliente = ?";
     final String DELETE = "UPDATE Cliente SET status = 0 WHERE codCliente = ?";
     final String GETALL = "SELECT * FROM Cliente WHERE status = 1"; 
     final String GETONE = "SELECT * FROM Cliente WHERE codCliente = ? AND status = 1";
+    final String ERR = "ERROR EN QUERY:DB";
     private final Connection conn;
     public PostgreSQL_Cliente(Connection conn){
         this.conn = conn;
@@ -26,17 +27,16 @@ public class PostgreSQL_Cliente implements clienteDAO{
         PreparedStatement stat;
         try{
             stat = conn.prepareStatement(INSERT);
-            stat.setString  (1,  a.getCliente_apellido());
-            stat.setString  (2,  a.getCliente_nombre());
-            stat.setShort   (3,  a.getCliente_edad());
-            stat.setString  (4,  a.getCliente_Fnac());
-            stat.setString  (5,  a.getCliente_tel());
-            stat.setString  (6,  a.getCliente_DV());
-            stat.setString  (7,  a.getCliente_ZV());
-            stat.setString  (8,  a.getCliente_DT());
-            stat.setString  (9,  a.getCliente_ZT());
-            stat.setString  (10, a.getCliente_ocup());
-            stat.setShort   (11, (short)1);
+            stat.setString  (1,  a.getCliente_apellido() );
+            stat.setString  (2,  a.getCliente_nombre()   );
+            stat.setShort   (3,  a.getCliente_edad()     );
+            stat.setString  (4,  a.getCliente_Fnac()     );
+            stat.setString  (5,  a.getCliente_tel()      );
+            stat.setString  (6,  a.getCliente_DV()       );
+            stat.setString  (7,  a.getCliente_ZV()       );
+            stat.setString  (8,  a.getCliente_DT()       );
+            stat.setString  (9,  a.getCliente_ZT()       );
+            stat.setString  (10, a.getCliente_ocup()     );
             
             if(stat.executeUpdate()== 0){
                 // ERROR
@@ -45,13 +45,10 @@ public class PostgreSQL_Cliente implements clienteDAO{
             stat.close();
         }
         catch(SQLException ex){
-            System.out.println("Fallo 1");
-            
+            System.out.println("Fallo en ALTA");
             System.out.println(ex.getMessage());
-            JOptionPane.showMessageDialog(null,"FAILED DATA BASE CONNECTION");
+            JOptionPane.showMessageDialog(null,ERR);
         }
-            
-
     }
 
     @Override
@@ -63,63 +60,59 @@ public class PostgreSQL_Cliente implements clienteDAO{
             if(stat.executeUpdate()== 0){
                 // ERROR
             }
-            
             stat.close();
         }
         catch(SQLException ex){
-            System.out.println("Fallo 2");
-            
+            System.out.println("Fallo en ELIMINACION");
             System.out.println(ex.getMessage());
-            JOptionPane.showMessageDialog(null,"FAILED DATA BASE CONNECTION");
+            JOptionPane.showMessageDialog(null,ERR);
         }
     }
-
     @Override
     public void modificar(Cliente a) {
          PreparedStatement stat;
         try{
             stat = conn.prepareStatement(UPDATE);
-            stat.setShort   (1,  a.getCodCliente());
-            stat.setString  (2,  a.getCliente_apellido());
-            stat.setString  (3,  a.getCliente_nombre());
-            stat.setShort   (4,  a.getCliente_edad());
-            stat.setString  (5,  a.getCliente_Fnac());
-            stat.setString  (6,  a.getCliente_tel());
-            stat.setString  (7,  a.getCliente_DV());
-            stat.setString  (8,  a.getCliente_ZV());
-            stat.setString  (9,  a.getCliente_DT());
-            stat.setString  (10, a.getCliente_ZT());
-            stat.setString  (11, a.getCliente_ocup());
+            stat.setString  (1,  a.getCliente_apellido());
+            stat.setString  (2,  a.getCliente_nombre());
+            stat.setShort   (3,  a.getCliente_edad());
+            stat.setString  (4,  a.getCliente_Fnac());
+            stat.setString  (5,  a.getCliente_tel());
+            stat.setString  (6,  a.getCliente_DV());
+            stat.setString  (7,  a.getCliente_ZV());
+            stat.setString  (8,  a.getCliente_DT());
+            stat.setString  (9,  a.getCliente_ZT());
+            stat.setString  (10, a.getCliente_ocup());
             
             if(stat.executeUpdate()== 0){
                 // ERROR
             }
-            
             stat.close();
         }
         catch(SQLException ex){
-            System.out.println("Fallo 3");
-            
+            System.out.println("Fallo en UPDATE");
             System.out.println(ex.getMessage());
-            JOptionPane.showMessageDialog(null,"FAILED DATA BASE CONNECTION");
+            JOptionPane.showMessageDialog(null,ERR);
         }
             
 
     }
     
-    private Cliente convertir(ResultSet rs) throws SQLException {
-        short   codCliente =        rs.getShort ("codCliente");
-        String  cliente_apellido =  rs.getString("cliente_apellido");
-        String  cliente_nombre =    rs.getString("cliente_nombre");
-        short   cliente_edad =      rs.getShort ("cliente_edad");
-        String  cliente_Fnac =      rs.getString("cliente_fnac");
-        String  cliente_tel =       rs.getString("cliente_tel");
-        String  cliente_DV =        rs.getString("cliente_dv");
-        String  cliente_ZV =        rs.getString("cliente_zv");
-        String  cliente_DT =        rs.getString("cliente_dt");
-        String  cliente_ZT =        rs.getString("cliente_zt");
-        String  cliente_ocup =      rs.getString("cliente_ocup");
-        Cliente cliente = new Cliente(codCliente,cliente_apellido,cliente_nombre,cliente_edad,cliente_Fnac,cliente_tel,cliente_DV,cliente_ZV,cliente_DT,cliente_ZT,cliente_ocup);
+    private Cliente convertir (ResultSet rs) throws SQLException {
+        short      cod=        rs.getShort ("codCliente");
+        String     ape =       rs.getString("cliente_apellido");
+        String     nom =       rs.getString("cliente_nombre");
+        short      edad =      rs.getShort ("cliente_edad");
+        String     fnac =      rs.getString("cliente_fnac");
+        String     tel =       rs.getString("cliente_tel");
+        String     DV =        rs.getString("cliente_dv");
+        String     ZV =        rs.getString("cliente_zv");
+        String     DT =        rs.getString("cliente_dt");
+        String     ZT =        rs.getString("cliente_zt");
+        String     ocup =      rs.getString("cliente_ocup");
+        BigDecimal saldo = rs.getBigDecimal("cliente_saldo");
+        
+        Cliente cliente = new Cliente(cod,ape,nom,edad,fnac,tel,DV,ZV,DT,ZT,ocup,saldo);
         return cliente;
     }
 
@@ -139,10 +132,9 @@ public class PostgreSQL_Cliente implements clienteDAO{
 
             
         }catch(SQLException ex){
-            System.out.println("Fallo 4");
-            
+            System.out.println("Fallo en Obtener_todos");
             System.out.println(ex.getMessage());
-            JOptionPane.showMessageDialog(null,"FAILED DATA BASE CONNECTION");
+            JOptionPane.showMessageDialog(null,ERR);
         }
         return a;
     }
@@ -159,16 +151,14 @@ public class PostgreSQL_Cliente implements clienteDAO{
             if(rs.next()){
                a = convertir(rs); 
             } else{
-                System.out.println("Fallo 5");
                 JOptionPane.showMessageDialog(null,"Resultado VACIO");
             }
             rs.close();
             stat.close();
         }catch(SQLException ex){
-            System.out.println("Fallo 6");
-            
+            System.out.println("Fallo en obtener 1");
             System.out.println(ex.getMessage());
-            JOptionPane.showMessageDialog(null,"FAILED DATA BASE CONNECTION");
+            JOptionPane.showMessageDialog(null,ERR);
         }
         return a;
     }

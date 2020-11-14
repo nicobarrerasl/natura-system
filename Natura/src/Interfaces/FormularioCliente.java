@@ -8,6 +8,7 @@ package Interfaces;
 import Clases.Cliente;
 import DatabaseDAO.Postgre_SQL.PostgreSQL_Cliente;
 import DatabaseSingleton.PostgreSQL_Singleton;
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -475,31 +476,28 @@ public class FormularioCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_jl_cancelarMouseClicked
 
     private void jl_registrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jl_registrarMouseClicked
-        int flag = 1;
-        int age = 2020 - Integer.parseInt(tf_anio.getText());
-        Short cod = 0;
+        int     flag = 1; // Este flag se utiliza para ver si se dio de alta o no, en caso afirmativo se cierra el panel, si no, se deja para arreglar los datos.
+        int     age = 2020 - Integer.parseInt(tf_anio.getText()); // se calcula la edad
+        Short   cod = 0; // se crea un short cod para pasar al constructor, pero luego no se utiliza, ya que la BD calcula el cod
         String  apel = tf_Apellido.getText();
-        String  nom = tf_Nombre.getText();
+        String  nom =  tf_Nombre.getText();
         short   edad = (short)age;
-        String  Fnac = tf_anio.getText() + "-" + tf_mes.getText() + "-" + tf_dia.getText();
-        String  tel = tf_caract.getText().concat(tf_tel.getText());
-        String  DV = tf_DV.getText();
-        String  ZV = tf_ZV.getText();
-        String  DT = tf_DT.getText();
-        String  ZT = tf_ZT.getText();
+        String  fnac = tf_anio.getText() + "-" + tf_mes.getText() + "-" + tf_dia.getText(); // YYYY-MM-DD
+        String  tel =  tf_caract.getText()+ "-" + tf_tel.getText(); // Caracteristica-Nro
+        String  DV =   tf_DV.getText();
+        String  ZV =   tf_ZV.getText();
+        String  DT =   tf_DT.getText();
+        String  ZT =   tf_ZT.getText();
         String  ocup = tf_Ocup.getText();
+        BigDecimal saldo = null;
+        
         Cliente nuevo_cliente;
-        nuevo_cliente = new Cliente(cod,apel,nom,edad,Fnac,tel,DV,ZV,DT,ZT,ocup);
+        nuevo_cliente = new Cliente(cod,apel,nom,edad,fnac,tel,DV,ZV,DT,ZT,ocup,saldo);
         try {
             PostgreSQL_Cliente DAO_Cliente = new PostgreSQL_Cliente (PostgreSQL_Singleton.getInstance().getConnection());
             DAO_Cliente.insertar(nuevo_cliente);
         } catch (SQLException ex) {
             Logger.getLogger(FormularioCliente.class.getName()).log(Level.SEVERE, null, ex);
-            flag = 0;
-        }
-        if(flag!=0){
-            JOptionPane.showMessageDialog(null, "El cliente " + apel + " fue dado de alta exitosamente");
-            this.dispose();
         }
 
     }//GEN-LAST:event_jl_registrarMouseClicked
