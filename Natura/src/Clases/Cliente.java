@@ -5,24 +5,14 @@
  */
 package Clases;
 
+import java.math.BigDecimal;
+
 /**
  *
  * @author Nicolas
  */
 public class Cliente {
-    /*
-      `codCliente` 			TINYINT 		UNSIGNED NOT NULL  AUTO_INCREMENT, --
-      `cliente_apellido` 		VARCHAR(30) 		NOT NULL, --
-      `cliente_nombre`                  VARCHAR(50) 		NOT NULL, --
-      `cliente_edad` 			INT 			DEFAULT NULL,
-      `cliente_Fnac`			DATE			DEFAULT NULL,
-      `cliente_tel`        		VARCHAR(11)             NOT NULL,       --
-      `cliente_DV`                      VARCHAR(50) 		DEFAULT NULL, -- Direccion Vivienda
-      `cliente_ZV`                      VARCHAR(50) 		DEFAULT NULL, -- Zona Vivienda
-      `cliente_DT`                      VARCHAR(50) 		DEFAULT NULL, -- Direccion de Trabajo
-      `cliente_ZT` 			VARCHAR(50) 		DEFAULT NULL, -- Zona de Trabajo
-      `cliente_ocup` 			VARCHAR(50) 		DEFAULT NULL, -- Zona de Trabajo
-    */
+
     private short   codCliente;
     private String  cliente_apellido;
     private String  cliente_nombre;
@@ -34,8 +24,9 @@ public class Cliente {
     private String  cliente_DT;
     private String  cliente_ZT;
     private String  cliente_ocup;
+    private BigDecimal cliente_saldo;
     
-    public Cliente(short codCliente, String cliente_apellido, String cliente_nombre, short cliente_edad, String cliente_Fnac, String cliente_tel, String cliente_DV, String cliente_ZV, String cliente_DT, String cliente_ZT, String cliente_ocup) {
+    public Cliente(short codCliente, String cliente_apellido, String cliente_nombre, short cliente_edad, String cliente_Fnac, String cliente_tel, String cliente_DV, String cliente_ZV, String cliente_DT, String cliente_ZT, String cliente_ocup, BigDecimal cliente_saldo) {
         this.codCliente = codCliente;
         this.cliente_apellido = cliente_apellido;
         this.cliente_nombre = cliente_nombre;
@@ -47,6 +38,15 @@ public class Cliente {
         this.cliente_DT = cliente_DT;
         this.cliente_ZT = cliente_ZT;
         this.cliente_ocup = cliente_ocup;
+        this.cliente_saldo = cliente_saldo;
+    }
+
+    public BigDecimal getCliente_saldo() {
+        return cliente_saldo;
+    }
+
+    public void setCliente_saldo(BigDecimal cliente_saldo) {
+        this.cliente_saldo = cliente_saldo;
     }
 
     public short getCodCliente() {
