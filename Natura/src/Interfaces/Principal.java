@@ -588,7 +588,15 @@ public class Principal extends javax.swing.JFrame {
         tablaProdCompra.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(tablaProdCompra);
         if (tablaProdCompra.getColumnModel().getColumnCount() > 0) {
-            tablaProdCompra.getColumnModel().getColumn(2).setPreferredWidth(10);
+            tablaProdCompra.getColumnModel().getColumn(0).setMinWidth(70);
+            tablaProdCompra.getColumnModel().getColumn(0).setPreferredWidth(70);
+            tablaProdCompra.getColumnModel().getColumn(0).setMaxWidth(70);
+            tablaProdCompra.getColumnModel().getColumn(2).setMinWidth(55);
+            tablaProdCompra.getColumnModel().getColumn(2).setPreferredWidth(55);
+            tablaProdCompra.getColumnModel().getColumn(2).setMaxWidth(55);
+            tablaProdCompra.getColumnModel().getColumn(3).setMinWidth(70);
+            tablaProdCompra.getColumnModel().getColumn(3).setPreferredWidth(70);
+            tablaProdCompra.getColumnModel().getColumn(3).setMaxWidth(70);
         }
 
         JPanelCompra.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 40, 450, 180));
@@ -688,6 +696,17 @@ public class Principal extends javax.swing.JFrame {
         tablaCompraP.setShowVerticalLines(false);
         tablaCompraP.getTableHeader().setReorderingAllowed(false);
         jScrollPane3.setViewportView(tablaCompraP);
+        if (tablaCompraP.getColumnModel().getColumnCount() > 0) {
+            tablaCompraP.getColumnModel().getColumn(3).setMinWidth(65);
+            tablaCompraP.getColumnModel().getColumn(3).setPreferredWidth(65);
+            tablaCompraP.getColumnModel().getColumn(3).setMaxWidth(65);
+            tablaCompraP.getColumnModel().getColumn(4).setMinWidth(60);
+            tablaCompraP.getColumnModel().getColumn(4).setPreferredWidth(60);
+            tablaCompraP.getColumnModel().getColumn(4).setMaxWidth(60);
+            tablaCompraP.getColumnModel().getColumn(5).setMinWidth(50);
+            tablaCompraP.getColumnModel().getColumn(5).setPreferredWidth(50);
+            tablaCompraP.getColumnModel().getColumn(5).setMaxWidth(50);
+        }
 
         JPanelCompra.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 370, 960, 590));
 
