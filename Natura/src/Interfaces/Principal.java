@@ -7,7 +7,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -394,20 +393,21 @@ public class Principal extends javax.swing.JFrame {
         JPanelCliente.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 170, 150, 30));
 
         tablaClientes.setBackground(new java.awt.Color(247, 247, 247));
+        tablaClientes.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         tablaClientes.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         tablaClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Apellido", "Nombre", "Nacimiento", "Edad", "Telefono", "Dir. Vivienda", "Zona de Vivienda", "Dir. de Trabajo", "Zona de Trabajo", "Ocupacion", "Saldo"
+                "Codigo", "Apellido", "Nombre", "Edad", "Nacimiento", "Telefono", "Dir. Vivienda", "Zona de Vivienda", "Saldo"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+                java.lang.Short.class, java.lang.String.class, java.lang.String.class, java.lang.Short.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -418,31 +418,38 @@ public class Principal extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tablaClientes.setToolTipText("");
+        tablaClientes.setAutoscrolls(false);
         tablaClientes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         tablaClientes.setFocusable(false);
         tablaClientes.setGridColor(new java.awt.Color(0, 0, 0));
-        tablaClientes.setIntercellSpacing(new java.awt.Dimension(0, 0));
         tablaClientes.setRowHeight(25);
         tablaClientes.setSelectionBackground(new java.awt.Color(51, 204, 255));
         tablaClientes.setShowVerticalLines(false);
         tablaClientes.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tablaClientes);
         if (tablaClientes.getColumnModel().getColumnCount() > 0) {
-            tablaClientes.getColumnModel().getColumn(2).setMinWidth(80);
-            tablaClientes.getColumnModel().getColumn(2).setPreferredWidth(80);
-            tablaClientes.getColumnModel().getColumn(2).setMaxWidth(80);
+            tablaClientes.getColumnModel().getColumn(0).setMinWidth(50);
+            tablaClientes.getColumnModel().getColumn(0).setPreferredWidth(50);
+            tablaClientes.getColumnModel().getColumn(0).setMaxWidth(50);
             tablaClientes.getColumnModel().getColumn(3).setMinWidth(40);
             tablaClientes.getColumnModel().getColumn(3).setPreferredWidth(40);
             tablaClientes.getColumnModel().getColumn(3).setMaxWidth(40);
-            tablaClientes.getColumnModel().getColumn(6).setMinWidth(90);
-            tablaClientes.getColumnModel().getColumn(6).setPreferredWidth(90);
-            tablaClientes.getColumnModel().getColumn(6).setMaxWidth(90);
-            tablaClientes.getColumnModel().getColumn(8).setMinWidth(90);
-            tablaClientes.getColumnModel().getColumn(8).setPreferredWidth(90);
-            tablaClientes.getColumnModel().getColumn(8).setMaxWidth(90);
-            tablaClientes.getColumnModel().getColumn(10).setMinWidth(70);
-            tablaClientes.getColumnModel().getColumn(10).setPreferredWidth(70);
-            tablaClientes.getColumnModel().getColumn(10).setMaxWidth(70);
+            tablaClientes.getColumnModel().getColumn(4).setMinWidth(120);
+            tablaClientes.getColumnModel().getColumn(4).setPreferredWidth(120);
+            tablaClientes.getColumnModel().getColumn(4).setMaxWidth(120);
+            tablaClientes.getColumnModel().getColumn(5).setMinWidth(120);
+            tablaClientes.getColumnModel().getColumn(5).setPreferredWidth(120);
+            tablaClientes.getColumnModel().getColumn(5).setMaxWidth(120);
+            tablaClientes.getColumnModel().getColumn(6).setMinWidth(200);
+            tablaClientes.getColumnModel().getColumn(6).setPreferredWidth(200);
+            tablaClientes.getColumnModel().getColumn(6).setMaxWidth(200);
+            tablaClientes.getColumnModel().getColumn(7).setMinWidth(150);
+            tablaClientes.getColumnModel().getColumn(7).setPreferredWidth(150);
+            tablaClientes.getColumnModel().getColumn(7).setMaxWidth(150);
+            tablaClientes.getColumnModel().getColumn(8).setMinWidth(70);
+            tablaClientes.getColumnModel().getColumn(8).setPreferredWidth(70);
+            tablaClientes.getColumnModel().getColumn(8).setMaxWidth(70);
         }
 
         JPanelCliente.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 307, 1320, 650));
@@ -913,10 +920,12 @@ public class Principal extends javax.swing.JFrame {
                 /// Populate JTable named tablaClientes
                 PostgreSQL_Cliente DAO_Cliente = new PostgreSQL_Cliente (PostgreSQL_Singleton.getInstance().getConnection());
                 a = DAO_Cliente.obtener_todos();
-                DefaultTableModel tblModel = (DefaultTableModel)tablaClientes.getModel();
+                DefaultTableModel tblModel = (DefaultTableModel) tablaClientes.getModel();
                 for(Cliente clt : a) {
-                    String edad = "" + clt.getCliente_edad();
-                    String datos[] = {clt.getCliente_apellido(), clt.getCliente_nombre(),clt.getCliente_Fnac(), edad,clt.getCliente_tel(), clt.getCliente_DV(), clt.getCliente_ZV(), clt.getCliente_DT() ,clt.getCliente_ZT(), clt.getCliente_ocup(), clt.getCliente_saldo().toString()};
+                    //String edad = "" + clt.getEdad();
+                    //String datos[] = {clt.getCliente_apellido(), clt.getCliente_nombre(),clt.getCliente_Fnac(), edad,clt.getCliente_tel(), clt.getCliente_DV(), clt.getCliente_ZV(), clt.getCliente_DT() ,clt.getCliente_ZT(), clt.getCliente_ocup(), clt.getCliente_saldo().toString()};
+                    //tblModel.addRow(datos);
+                    Object[] datos = {clt.getCodCliente(), clt.getApellido(), clt.getNombre(), clt.getEdad(), clt.getFechaNac(), clt.getTelefono(), clt.getDireccion(), clt.getZonaVivienda(), clt.getSaldo()};
                     tblModel.addRow(datos);
                 }
                 flag = 1;

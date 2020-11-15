@@ -16,10 +16,10 @@ public class Producto {
     private String categoria;
     private String linea;
     private String nombre;
-    private int precio;
-    private int cantidad;
+    private float precio;
+    private short cantidad;
 
-    public Producto(String codProducto, String categoria, String linea, String nombre, int precio, int cantidad) {
+    public Producto(String codProducto, String categoria, String linea, String nombre, float precio, short cantidad) {
         this.codProducto = codProducto;
         this.categoria = categoria;
         this.linea = linea;
@@ -44,11 +44,11 @@ public class Producto {
         return nombre;
     }
 
-    public int getPrecio() {
+    public float getPrecio() {
         return precio;
     }
 
-    public int getCantidad() {
+    public short getCantidad() {
         return cantidad;
     }
 
@@ -68,11 +68,11 @@ public class Producto {
         this.nombre = nombre;
     }
 
-    public void setPrecio(int precio) {
+    public void setPrecio(float precio) {
         this.precio = precio;
     }
 
-    public void setCantidad(int cantidad) {
+    public void setCantidad(short cantidad) {
         this.cantidad = cantidad;
     }
     

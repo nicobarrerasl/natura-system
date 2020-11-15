@@ -13,23 +13,28 @@ import java.util.ArrayList;
  */
 public class Compra {
     
-    private String codCompra;
+    private short codCompra = 0;
     private String compra_fecha;
-    private String compra_saldo;
+    private float compra_saldo;
+    private Cliente cliente;
     private ArrayList <Producto> prod;
 
-    public Compra(String codCompra, String compra_fecha, String compra_saldo, ArrayList<Producto> prod) {
+    public Compra(short codCompra, String compra_fecha, float compra_saldo, Cliente cliente, ArrayList<Producto> prod) {
         this.codCompra = codCompra;
         this.compra_fecha = compra_fecha;
         this.compra_saldo = compra_saldo;
+        this.cliente = cliente;
         this.prod = prod;
     }
 
-    public ArrayList<Producto> getProd() {
-        return prod;
+    public Compra(String compra_fecha, float compra_saldo, Cliente cliente, ArrayList<Producto> prod) {
+        this.compra_fecha = compra_fecha;
+        this.compra_saldo = compra_saldo;
+        this.cliente = cliente;
+        this.prod = prod;
     }
-
-    public String getCodCompra() {
+    
+    public short getCodCompra() {
         return codCompra;
     }
 
@@ -37,15 +42,19 @@ public class Compra {
         return compra_fecha;
     }
 
-    public String getCompra_saldo() {
+    public float getCompra_saldo() {
         return compra_saldo;
     }
-    
-     public void setProd(ArrayList<Producto> prod) {
-        this.prod = prod;
+
+    public Cliente getCliente() {
+        return cliente;
     }
 
-    public void setCodCompra(String codCompra) {
+    public ArrayList<Producto> getProd() {
+        return prod;
+    }
+
+    public void setCodCompra(short codCompra) {
         this.codCompra = codCompra;
     }
 
@@ -53,8 +62,16 @@ public class Compra {
         this.compra_fecha = compra_fecha;
     }
 
-    public void setCompra_saldo(String compra_saldo) {
+    public void setCompra_saldo(float compra_saldo) {
         this.compra_saldo = compra_saldo;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public void setProd(ArrayList<Producto> prod) {
+        this.prod = prod;
     }
     
 }

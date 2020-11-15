@@ -5,51 +5,155 @@
  */
 package DatabaseDAO.Postgre_SQL;
 
+import Clases.Cliente;
 import Clases.Compra;
+import Clases.Producto;
 import DatabaseDAO.compraDAO;
+import java.math.BigDecimal;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
-/**
- *
- * @author Franco
- */
 public class PostgreSQL_Compra implements compraDAO {
     
-    final String INSERT = "INSERT INTO Compra(compra_fecha, compra_saldo, codcliente) VALUES (?, ?, ?)";                          
-    final String UPDATE = "UPDATE Cliente SET  cliente_apellido= ?, cliente_nombre= ?, cliente_edad= ?, cliente_Fnac= ?, cliente_tel= ?, cliente_DV= ?, cliente_ZV= ?, cliente_DT= ?, cliente_ZT= ?, cliente_ocup= ? WHERE codCliente = ?";
-    final String DELETE = "UPDATE Cliente SET status = 0 WHERE codCliente = ?";
-    final String GETALL = "SELECT * FROM Cliente WHERE status = 1"; 
-    final String GETONE = "SELECT * FROM Cliente WHERE codCliente = ? AND status = 1";
+    final String INSERT = "INSERT INTO Compra(compra_fecha, compra_saldo, codCliente) VALUES (?, ?, ?)";                          
+    final String UPDATE = "UPDATE Compra SET  compra_fecha= ?, compra_saldo= ?, codCliente= ? WHERE codCompra = ?";
+    final String DELETE = "DELETE FROM Compra WHERE codCompra = ?";
+    final String GETALL = "SELECT * FROM Compra WHERE codCliente = ?"; 
+    final String GETONE = "SELECT * FROM Compra WHERE codCompra = ?";
     final String ERR = "ERROR EN QUERY:DB";
     private final Connection conn;
+    
     public PostgreSQL_Compra(Connection conn){
         this.conn = conn;
     }
 
     @Override
     public void insertar(Compra a) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        PreparedStatement stat;
+        try{
+            stat = conn.prepareStatement(INSERT);
+            stat.setString  (1, a.getCompra_fecha());
+            stat.setFloat   (2, a.getCompra_saldo());
+            stat.setShort   (3, a.getCliente().getCodCliente());
+            
+            if(stat.executeUpdate()== 0){
+                // ERROR
+            }
+            
+            stat.close();
+        }
+        catch(SQLException ex){
+            System.out.println("Fallo en ALTA");
+            System.out.println(ex.getMessage());
+            JOptionPane.showMessageDialog(null,ERR);
+        }
     }
 
     @Override
     public void eliminar(Compra a) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        PreparedStatement stat;
+        try{
+            stat = conn.prepareStatement(DELETE);
+            stat.setShort(1,  a.getCodCompra());
+            if(stat.executeUpdate()== 0){
+                // ERROR
+            }
+            stat.close();
+        }
+        catch(SQLException ex){
+            System.out.println("Fallo en ELIMINACION");
+            System.out.println(ex.getMessage());
+            JOptionPane.showMessageDialog(null,ERR);
+        }
     }
 
     @Override
     public void modificar(Compra a) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        PreparedStatement stat;
+        try{
+            stat = conn.prepareStatement(UPDATE);
+            stat.setString(1,  a.getCompra_fecha());
+            stat.setFloat(2,  a.getCompra_saldo());
+            stat.setShort(3,  a.getCliente().getCodCliente());
+            
+            if(stat.executeUpdate()== 0){
+                // ERROR
+            }
+            stat.close();
+        }
+        catch(SQLException ex){
+            System.out.println("Fallo en UPDATE");
+            System.out.println(ex.getMessage());
+            JOptionPane.showMessageDialog(null,ERR);
+        }
+        
+    }
+    
+    private Compra convertir (ResultSet rs) throws SQLException {
+        short      codCompra = rs.getShort ("codCompra");
+        String     fecha = rs.getString("compra_fecha");
+        float     saldo = rs.getFloat("compra_saldo");
+        short      codCliente = rs.getShort ("codCliente");
+        
+        Cliente cliente = new Cliente(codCliente);
+        ArrayList<Producto> prod = null;
+        Compra compra = new Compra(codCompra, fecha, saldo, cliente, prod);
+        return compra;
     }
 
     @Override
     public List<Compra> obtener_todos() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        PreparedStatement stat;
+        ResultSet rs;
+        List<Compra> a = new ArrayList<>();
+        try{
+            stat = conn.prepareStatement(GETALL);
+            rs = stat.executeQuery(); 
+            while(rs.next()){
+                a.add(convertir(rs));
+            }
+            rs.close();
+            stat.close();
+
+        }catch(SQLException ex){
+            System.out.println("Fallo en Obtener_todos");
+            System.out.println(ex.getMessage());
+            JOptionPane.showMessageDialog(null,ERR);
+        }
+        return a;
+      
     }
 
     @Override
-    public Compra obtener_uno(Short a) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Compra obtener_uno(Short id) {
+        
+        PreparedStatement stat;
+        ResultSet rs;
+        Compra a = null;
+        try{
+            stat = conn.prepareStatement(GETONE);
+            stat.setShort(1,id);
+            rs = stat.executeQuery(); 
+            if(rs.next()){
+               a = convertir(rs); 
+            } else{
+                JOptionPane.showMessageDialog(null,"Resultado VACIO");
+            }
+            rs.close();
+            stat.close();
+        }catch(SQLException ex){
+            System.out.println("Fallo en obtener 1");
+            System.out.println(ex.getMessage());
+            JOptionPane.showMessageDialog(null,ERR);
+        }
+        return a;
+        
     }
     
     
