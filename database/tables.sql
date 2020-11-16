@@ -1,8 +1,7 @@
 CREATE TABLE IF NOT EXISTS Cliente (
   codCliente 			    SMALLSERIAL 	UNIQUE, 
   cliente_apellido 		  	VARCHAR(30) 	NOT NULL, 
-  cliente_nombre 		    VARCHAR(50) 	NOT NULL, 
-  cliente_edad 			    SMALLINT 		DEFAULT NULL,
+  cliente_nombre 		    VARCHAR(50) 	NOT NULL,
   cliente_Fnac			    VARCHAR(12)		DEFAULT NULL,
   cliente_tel        		VARCHAR(15)     NOT NULL, 
   cliente_DV 				VARCHAR(50) 	NOT NULL, 

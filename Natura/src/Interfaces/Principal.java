@@ -1,6 +1,7 @@
 package Interfaces;
 
 import Clases.Cliente;
+import Clases_Utilidad.calcular_edad;
 import DatabaseDAO.Postgre_SQL.PostgreSQL_Cliente;
 import DatabaseSingleton.PostgreSQL_Singleton;
 import java.awt.Color;
@@ -926,7 +927,8 @@ public class Principal extends javax.swing.JFrame {
                     //String edad = "" + clt.getEdad();
                     //String datos[] = {clt.getCliente_apellido(), clt.getCliente_nombre(),clt.getCliente_Fnac(), edad,clt.getCliente_tel(), clt.getCliente_DV(), clt.getCliente_ZV(), clt.getCliente_DT() ,clt.getCliente_ZT(), clt.getCliente_ocup(), clt.getCliente_saldo().toString()};
                     //tblModel.addRow(datos);
-                    Object[] datos = {clt.getCodCliente(), clt.getApellido(), clt.getNombre(), clt.getEdad(), clt.getFechaNac(), clt.getTelefono(), clt.getDireccion(), clt.getZonaVivienda(), clt.getSaldo()};
+                    int age = new calcular_edad().calculatePeriod(clt.getFechaNac());
+                    Object[] datos = {clt.getCodCliente(), clt.getApellido(), clt.getNombre(), age, clt.getFechaNac(), clt.getTelefono(), clt.getDireccion(), clt.getZonaVivienda(), clt.getSaldo()};
                     tblModel.addRow(datos);
                 }
                 flag = 1;

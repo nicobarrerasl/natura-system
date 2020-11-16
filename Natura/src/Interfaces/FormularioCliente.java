@@ -513,23 +513,20 @@ public class FormularioCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_jl_cancelarMouseClicked
 
     private void jl_registrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jl_registrarMouseClicked
-        int     flag = 1; // Este flag se utiliza para ver si se dio de alta o no, en caso afirmativo se cierra el panel, si no, se deja para arreglar los datos.
+        int    flag; // Este flag se utiliza para ver si se dio de alta o no, en caso afirmativo se cierra el panel, si no, se deja para arreglar los datos.
         
-
         String  apel = tf_Apellido.getText();
         String  nom =  tf_Nombre.getText();
-        short   edad = (short)(2020 - Integer.parseInt(tf_anio.getText()));
         String  fnac = tf_anio.getText() + "-" + tf_mes.getText() + "-" + tf_dia.getText(); // YYYY-MM-DD
         String  tel =  tf_caract.getText()+ "-" + tf_tel.getText(); // Caracteristica-Nro
         String  dir =   tf_DV.getText();
         String  ZV =   tf_ZV.getText();
-        
-        String  DT =   tf_DT.getText();
-        String  ZT =   tf_ZT.getText();
-        String  ocup = tf_Ocup.getText();
+        // String  DT =   tf_DT.getText();
+        // String  ZT =   tf_ZT.getText();
+        // String  ocup = tf_Ocup.getText();
         
         Cliente nuevo_cliente;
-        nuevo_cliente = new Cliente(apel,nom,edad,fnac,tel,dir,ZV);
+        nuevo_cliente = new Cliente(apel,nom,fnac,tel,dir,ZV);
         try {
             PostgreSQL_Cliente DAO_Cliente = new PostgreSQL_Cliente (PostgreSQL_Singleton.getInstance().getConnection());
             DAO_Cliente.insertar(nuevo_cliente);
