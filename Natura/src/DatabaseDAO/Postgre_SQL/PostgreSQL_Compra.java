@@ -9,7 +9,6 @@ import Clases.Cliente;
 import Clases.Compra;
 import Clases.Producto;
 import DatabaseDAO.compraDAO;
-import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

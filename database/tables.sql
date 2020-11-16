@@ -18,8 +18,8 @@ CREATE TABLE IF NOT EXISTS Compra (
   compra_fecha			VARCHAR(12)		NOT NULL,
   compra_saldo			Decimal(10,2)	NOT NULL,
   codCliente			SMALLINT		NOT NULL,
-
-  FOREIGN KEY (codCliente) REFERENCES Cliente(codCliente)
+  status                SMALLINT        DEFAULT 1,
+  FOREIGN KEY (codCliente) REFERENCES Cliente(codCliente),
   PRIMARY KEY (codCompra)
 );
 
