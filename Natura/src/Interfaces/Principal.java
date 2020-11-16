@@ -939,7 +939,6 @@ public class Principal extends javax.swing.JFrame {
                 
                 for(int i = 0;i<tablaClientes.getColumnCount();i++){
                     tablaClientes.getColumnModel().getColumn(i).setCellRenderer(leftRenderer);
-                    System.out.println("vuelta nro " + i);
                 }
                 flag = 1;
             } catch (SQLException ex) {
