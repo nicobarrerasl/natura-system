@@ -1,14 +1,17 @@
 package Interfaces;
 
 import Clases.Cliente;
+import Clases.Producto;
 import Clases_Utilidad.calcular_edad;
 import DatabaseDAO.Postgre_SQL.PostgreSQL_Cliente;
+import DatabaseDAO.Postgre_SQL.PostgreSQL_Producto;
 import DatabaseSingleton.PostgreSQL_Singleton;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.SwingConstants;
@@ -18,6 +21,7 @@ import javax.swing.table.DefaultTableModel;
 public class Principal extends javax.swing.JFrame {
     
     int flag = 0;
+    short codCliente;
 
     public Principal() {
         initComponents();
@@ -91,7 +95,7 @@ public class Principal extends javax.swing.JFrame {
         JPanelCompra = new javax.swing.JPanel();
         jLabel20 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        lblNombreCliente = new javax.swing.JTextField();
         jLabel24 = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
         jTextField4 = new javax.swing.JTextField();
@@ -131,7 +135,7 @@ public class Principal extends javax.swing.JFrame {
         jLabel52 = new javax.swing.JLabel();
         jLabel50 = new javax.swing.JLabel();
         jLabel26 = new javax.swing.JLabel();
-        jTextField10 = new javax.swing.JTextField();
+        lblApellidoCliente = new javax.swing.JTextField();
         jLabel32 = new javax.swing.JLabel();
         fondoEtiquetaCliente = new javax.swing.JLabel();
         jLabel41 = new javax.swing.JLabel();
@@ -387,14 +391,14 @@ public class Principal extends javax.swing.JFrame {
                 jTextField1ActionPerformed(evt);
             }
         });
-        JPanelCliente.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 165, 450, 30));
+        JPanelCliente.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 170, 450, 30));
 
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/filtroIcon.png"))); // NOI18N
-        JPanelCliente.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 165, 40, 30));
+        JPanelCliente.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 170, 40, 30));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        JPanelCliente.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 170, 150, 30));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Apellido", "Nombre", "Edad", "Saldo" }));
+        JPanelCliente.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 170, 150, 30));
 
         tablaClientes.setBackground(new java.awt.Color(247, 247, 247));
         tablaClientes.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -509,18 +513,18 @@ public class Principal extends javax.swing.JFrame {
         jLabel21.setText("Descuento");
         JPanelCompra.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(1060, 80, -1, 20));
 
-        jTextField3.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jTextField3.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField3.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField3.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
-        jTextField3.setEnabled(false);
-        jTextField3.setOpaque(false);
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+        lblNombreCliente.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        lblNombreCliente.setForeground(new java.awt.Color(255, 255, 255));
+        lblNombreCliente.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        lblNombreCliente.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
+        lblNombreCliente.setEnabled(false);
+        lblNombreCliente.setOpaque(false);
+        lblNombreCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+                lblNombreClienteActionPerformed(evt);
             }
         });
-        JPanelCompra.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 70, 280, 30));
+        JPanelCompra.add(lblNombreCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 70, 280, 30));
 
         jLabel24.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 0, 0, 0, new java.awt.Color(0, 0, 0)));
         JPanelCompra.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 690, 270, 10));
@@ -553,18 +557,14 @@ public class Principal extends javax.swing.JFrame {
         tablaProdCompra.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         tablaProdCompra.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Codigo", "Nombre", "Cantidad", "$"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Short.class, java.lang.Float.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false
@@ -582,6 +582,7 @@ public class Principal extends javax.swing.JFrame {
         tablaProdCompra.setFocusable(false);
         tablaProdCompra.setGridColor(new java.awt.Color(0, 0, 0));
         tablaProdCompra.setIntercellSpacing(new java.awt.Dimension(0, 0));
+        tablaProdCompra.setOpaque(false);
         tablaProdCompra.setPreferredSize(new java.awt.Dimension(300, 135));
         tablaProdCompra.setRowHeight(25);
         tablaProdCompra.setSelectionBackground(new java.awt.Color(51, 204, 255));
@@ -589,9 +590,9 @@ public class Principal extends javax.swing.JFrame {
         tablaProdCompra.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(tablaProdCompra);
         if (tablaProdCompra.getColumnModel().getColumnCount() > 0) {
-            tablaProdCompra.getColumnModel().getColumn(0).setMinWidth(70);
-            tablaProdCompra.getColumnModel().getColumn(0).setPreferredWidth(70);
-            tablaProdCompra.getColumnModel().getColumn(0).setMaxWidth(70);
+            tablaProdCompra.getColumnModel().getColumn(0).setMinWidth(80);
+            tablaProdCompra.getColumnModel().getColumn(0).setPreferredWidth(80);
+            tablaProdCompra.getColumnModel().getColumn(0).setMaxWidth(80);
             tablaProdCompra.getColumnModel().getColumn(2).setMinWidth(55);
             tablaProdCompra.getColumnModel().getColumn(2).setPreferredWidth(55);
             tablaProdCompra.getColumnModel().getColumn(2).setMaxWidth(55);
@@ -631,53 +632,17 @@ public class Principal extends javax.swing.JFrame {
         tablaCompraP.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         tablaCompraP.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+
             },
             new String [] {
-                "Categoria", "Linea", "Nombre", "Descuento", "$", "Stock"
+                "Codigo", "Categoria", "Linea", "Nombre", "$", "Stock"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.Short.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, true
+                false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -696,14 +661,19 @@ public class Principal extends javax.swing.JFrame {
         tablaCompraP.setSelectionBackground(new java.awt.Color(51, 204, 255));
         tablaCompraP.setShowVerticalLines(false);
         tablaCompraP.getTableHeader().setReorderingAllowed(false);
+        tablaCompraP.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaCompraPMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(tablaCompraP);
         if (tablaCompraP.getColumnModel().getColumnCount() > 0) {
-            tablaCompraP.getColumnModel().getColumn(3).setMinWidth(65);
-            tablaCompraP.getColumnModel().getColumn(3).setPreferredWidth(65);
-            tablaCompraP.getColumnModel().getColumn(3).setMaxWidth(65);
-            tablaCompraP.getColumnModel().getColumn(4).setMinWidth(60);
-            tablaCompraP.getColumnModel().getColumn(4).setPreferredWidth(60);
-            tablaCompraP.getColumnModel().getColumn(4).setMaxWidth(60);
+            tablaCompraP.getColumnModel().getColumn(0).setMinWidth(80);
+            tablaCompraP.getColumnModel().getColumn(0).setPreferredWidth(80);
+            tablaCompraP.getColumnModel().getColumn(0).setMaxWidth(80);
+            tablaCompraP.getColumnModel().getColumn(4).setMinWidth(80);
+            tablaCompraP.getColumnModel().getColumn(4).setPreferredWidth(80);
+            tablaCompraP.getColumnModel().getColumn(4).setMaxWidth(80);
             tablaCompraP.getColumnModel().getColumn(5).setMinWidth(50);
             tablaCompraP.getColumnModel().getColumn(5).setPreferredWidth(50);
             tablaCompraP.getColumnModel().getColumn(5).setMaxWidth(50);
@@ -851,17 +821,18 @@ public class Principal extends javax.swing.JFrame {
         jLabel26.setText("Importe Total");
         JPanelCompra.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(1150, 210, -1, 20));
 
-        jTextField10.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jTextField10.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField10.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField10.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
-        jTextField10.setOpaque(false);
-        jTextField10.addActionListener(new java.awt.event.ActionListener() {
+        lblApellidoCliente.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        lblApellidoCliente.setForeground(new java.awt.Color(255, 255, 255));
+        lblApellidoCliente.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        lblApellidoCliente.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
+        lblApellidoCliente.setEnabled(false);
+        lblApellidoCliente.setOpaque(false);
+        lblApellidoCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField10ActionPerformed(evt);
+                lblApellidoClienteActionPerformed(evt);
             }
         });
-        JPanelCompra.add(jTextField10, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 120, 280, 30));
+        JPanelCompra.add(lblApellidoCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 120, 280, 30));
 
         jLabel32.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/saldoIcon.png"))); // NOI18N
         JPanelCompra.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(1170, 70, -1, -1));
@@ -931,8 +902,7 @@ public class Principal extends javax.swing.JFrame {
     private void lblclientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblclientesMouseClicked
         JPanelPrincipalDer.setVisible(false);
         JPanelCompra.setVisible(false);
-        JPanelCliente.setVisible(true);
-        tablaClientes.setAutoCreateRowSorter(true);
+        JPanelCliente.setVisible(true);        
         List<Cliente> a;
         try {
             PostgreSQL_Cliente DAO_Cliente = new PostgreSQL_Cliente (PostgreSQL_Singleton.getInstance().getConnection());
@@ -973,11 +943,34 @@ public class Principal extends javax.swing.JFrame {
     private void lblRegistrarCompraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRegistrarCompraMouseClicked
         JPanelCompra.setVisible(true);
         JPanelCliente.setVisible(false);
+        
+            List<Producto> a;
+            try {
+                PostgreSQL_Producto DAO_Producto = new PostgreSQL_Producto (PostgreSQL_Singleton.getInstance().getConnection());
+                a = DAO_Producto.obtener_todos();
+                DefaultTableModel tblModel = (DefaultTableModel) tablaCompraP.getModel();
+                tblModel.setRowCount(0);
+                DefaultTableModel tblModel2 = (DefaultTableModel) tablaProdCompra.getModel();
+                tblModel2.setRowCount(0);
+                for(Producto p : a) {       
+                    Object[] datos = {p.getCodProducto(), p.getCategoria(), p.getLinea(), p.getNombre(), "$ " + p.getPrecio(), p.getCantidad()};
+                    tblModel.addRow(datos);
+                  
+                }
+                DefaultTableCellRenderer leftRenderer = new DefaultTableCellRenderer();
+                leftRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+                
+                for(int i = 0;i<tablaCompraP.getColumnCount();i++){
+                    tablaCompraP.getColumnModel().getColumn(i).setCellRenderer(leftRenderer);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            }
     }//GEN-LAST:event_lblRegistrarCompraMouseClicked
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+    private void lblNombreClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblNombreClienteActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    }//GEN-LAST:event_lblNombreClienteActionPerformed
 
     private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
         // TODO add your handling code here:
@@ -1007,9 +1000,27 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField11ActionPerformed
 
-    private void jTextField10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField10ActionPerformed
+    private void lblApellidoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblApellidoClienteActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField10ActionPerformed
+    }//GEN-LAST:event_lblApellidoClienteActionPerformed
+
+    private void tablaClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaClientesMouseClicked
+        int Fila = tablaClientes.getSelectedRow();
+        codCliente = (short) tablaClientes.getValueAt(Fila, 0);
+        String apellido = (String) tablaClientes.getValueAt(Fila, 1);
+        String nombre = (String) tablaClientes.getValueAt(Fila, 2);
+        
+        lblNombreCliente.setText(nombre);
+        lblApellidoCliente.setText(apellido);
+    }//GEN-LAST:event_tablaClientesMouseClicked
+
+    private void tablaCompraPMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaCompraPMouseClicked
+        DefaultTableModel tblModel = (DefaultTableModel) tablaProdCompra.getModel();
+        
+        int Fila = tablaCompraP.getSelectedRow();  
+        Object[] datos = {tablaCompraP.getValueAt(Fila, 0), tablaCompraP.getValueAt(Fila, 3), 1, tablaCompraP.getValueAt(Fila, 4)};
+        tblModel.addRow(datos);
+    }//GEN-LAST:event_tablaCompraPMouseClicked
 
     private void tablaClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaClientesMouseClicked
         // TODO add your handling code here:
@@ -1148,19 +1159,19 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField11;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextField9;
     private javax.swing.JLabel lblAgregarCliente;
+    private javax.swing.JTextField lblApellidoCliente;
     private javax.swing.JLabel lblBalance;
     private javax.swing.JLabel lblBarraHerramientaClienteFondo;
     private javax.swing.JLabel lblFondoCliente;
     private javax.swing.JLabel lblNaturalogo;
+    private javax.swing.JTextField lblNombreCliente;
     private javax.swing.JLabel lblPedidos;
     private javax.swing.JLabel lblProductos;
     private javax.swing.JLabel lblPromociones;
