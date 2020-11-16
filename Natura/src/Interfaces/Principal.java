@@ -88,6 +88,7 @@ public class Principal extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaClientes = new javax.swing.JTable();
         jLabel53 = new javax.swing.JLabel();
+        lblactualizar = new javax.swing.JLabel();
         jLabel54 = new javax.swing.JLabel();
         lblBarraHerramientaClienteFondo = new javax.swing.JLabel();
         lblFondoCliente = new javax.swing.JLabel();
@@ -470,6 +471,15 @@ public class Principal extends javax.swing.JFrame {
         jLabel53.setBackground(new java.awt.Color(255, 255, 255));
         jLabel53.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 1, 0, 0, new java.awt.Color(255, 255, 255)));
         JPanelCliente.add(jLabel53, new org.netbeans.lib.awtextra.AbsoluteConstraints(922, 10, 10, 37));
+
+        lblactualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/actualizarIcon.png"))); // NOI18N
+        lblactualizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblactualizar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblactualizarMouseClicked(evt);
+            }
+        });
+        JPanelCliente.add(lblactualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1230, 210, -1, -1));
 
         jLabel54.setBackground(new java.awt.Color(255, 255, 255));
         jLabel54.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 1, 0, 0, new java.awt.Color(255, 255, 255)));
@@ -892,31 +902,28 @@ public class Principal extends javax.swing.JFrame {
     private void lblclientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblclientesMouseClicked
         JPanelPrincipalDer.setVisible(false);
         JPanelCompra.setVisible(false);
-        JPanelCliente.setVisible(true);
-        
-        if(flag == 0){
-            List<Cliente> a;
-            try {
-                PostgreSQL_Cliente DAO_Cliente = new PostgreSQL_Cliente (PostgreSQL_Singleton.getInstance().getConnection());
-                a = DAO_Cliente.obtener_todos();
-                DefaultTableModel tblModel = (DefaultTableModel) tablaClientes.getModel();
-                for(Cliente clt : a) {       
-                    int age = new calcular_edad().calculatePeriod(clt.getFechaNac());
-                    Object[] datos = {clt.getCodCliente(), clt.getApellido(), clt.getNombre(), clt.getFechaNac(), age, clt.getTelefono(), clt.getDireccion(), clt.getZonaVivienda(), "$ " + clt.getSaldo()};
-                    tblModel.addRow(datos);
-                  
-                }
-                DefaultTableCellRenderer leftRenderer = new DefaultTableCellRenderer();
-                leftRenderer.setHorizontalAlignment(SwingConstants.LEFT);
-                
-                for(int i = 0;i<tablaClientes.getColumnCount();i++){
-                    tablaClientes.getColumnModel().getColumn(i).setCellRenderer(leftRenderer);
-                }
-                flag = 1;
-            } catch (SQLException ex) {
-                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        JPanelCliente.setVisible(true);        
+        List<Cliente> a;
+        try {
+            PostgreSQL_Cliente DAO_Cliente = new PostgreSQL_Cliente (PostgreSQL_Singleton.getInstance().getConnection());
+            a = DAO_Cliente.obtener_todos();
+            
+            DefaultTableModel tblModel = (DefaultTableModel) tablaClientes.getModel();
+            tblModel.setRowCount(0);
+            for(Cliente clt : a) {
+                int age = new calcular_edad().calculatePeriod(clt.getFechaNac());
+                Object[] datos = {clt.getCodCliente(), clt.getApellido(), clt.getNombre(), clt.getFechaNac(), age, clt.getTelefono(), clt.getDireccion(), clt.getZonaVivienda(), "$ " + clt.getSaldo()};
+                tblModel.addRow(datos);
+
             }
-        
+            DefaultTableCellRenderer leftRenderer = new DefaultTableCellRenderer();
+            leftRenderer.setHorizontalAlignment(SwingConstants.LEFT);
+
+            for(int i = 0;i<tablaClientes.getColumnCount();i++){
+                tablaClientes.getColumnModel().getColumn(i).setCellRenderer(leftRenderer);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }//GEN-LAST:event_lblclientesMouseClicked
@@ -1014,6 +1021,43 @@ public class Principal extends javax.swing.JFrame {
         Object[] datos = {tablaCompraP.getValueAt(Fila, 0), tablaCompraP.getValueAt(Fila, 3), 1, tablaCompraP.getValueAt(Fila, 4)};
         tblModel.addRow(datos);
     }//GEN-LAST:event_tablaCompraPMouseClicked
+
+    private void tablaClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaClientesMouseClicked
+        // TODO add your handling code here:
+        DefaultTableModel a = (DefaultTableModel) tablaClientes.getModel();
+        System.out.println(a.getDataVector().elementAt(tablaClientes.getSelectedRow()));
+        
+    }//GEN-LAST:event_tablaClientesMouseClicked
+
+    private void lblactualizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblactualizarMouseClicked
+        try {
+            List<Cliente> a;
+            /// Populate JTable named tablaClientes
+            PostgreSQL_Cliente DAO_Cliente = new PostgreSQL_Cliente (PostgreSQL_Singleton.getInstance().getConnection());
+            a = DAO_Cliente.obtener_todos();
+            DefaultTableModel tblModel = (DefaultTableModel) tablaClientes.getModel();
+            tblModel.setRowCount(0);
+            for(Cliente clt : a) {
+                //String edad = "" + clt.getEdad();
+                //String datos[] = {clt.getCliente_apellido(), clt.getCliente_nombre(),clt.getCliente_Fnac(), edad,clt.getCliente_tel(), clt.getCliente_DV(), clt.getCliente_ZV(), clt.getCliente_DT() ,clt.getCliente_ZT(), clt.getCliente_ocup(), clt.getCliente_saldo().toString()};
+                //tblModel.addRow(datos);
+                int age = new calcular_edad().calculatePeriod(clt.getFechaNac());
+                Object[] datos = {clt.getCodCliente(), clt.getApellido(), clt.getNombre(), clt.getFechaNac(), age, clt.getTelefono(), clt.getDireccion(), clt.getZonaVivienda(), "$ " + clt.getSaldo()};
+                tblModel.addRow(datos);
+
+            }
+
+            DefaultTableCellRenderer leftRenderer = new DefaultTableCellRenderer();
+            leftRenderer.setHorizontalAlignment(SwingConstants.LEFT);
+
+            for(int i = 0;i<tablaClientes.getColumnCount();i++){
+                tablaClientes.getColumnModel().getColumn(i).setCellRenderer(leftRenderer);
+            }
+            flag = 1;
+        } catch (SQLException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_lblactualizarMouseClicked
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -1139,6 +1183,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel lblVisitas;
     private javax.swing.JLabel lblVisitas1;
     private javax.swing.JLabel lblVisitas2;
+    private javax.swing.JLabel lblactualizar;
     private javax.swing.JLabel lblcerrar;
     private javax.swing.JLabel lblclientes;
     private javax.swing.JLabel lblfondopanelIzq;
