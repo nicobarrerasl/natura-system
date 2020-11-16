@@ -7,7 +7,6 @@ public class Cliente {
     private short codCliente;
     private String apellido;
     private String nombre;
-    private short edad;
     private String fechaNac = "-";
     private String telefono;
     private float saldo = (float) 0.00; 
@@ -15,11 +14,10 @@ public class Cliente {
     private String zonaVivienda;
     private ArrayList <ZonaTrabajo> zt;
 
-    public Cliente(short codCliente, String apellido, String nombre, short edad, String fechaNac, String telefono, String direccion, String zonaVivienda, float saldo) {
+    public Cliente(short codCliente, String apellido, String nombre, String fechaNac, String telefono, String direccion, String zonaVivienda, float saldo) {
         this.codCliente = codCliente;
         this.apellido = apellido;
         this.nombre = nombre;
-        this.edad = edad;
         this.fechaNac = fechaNac;
         this.telefono = telefono;
         this.direccion = direccion;
@@ -27,10 +25,9 @@ public class Cliente {
         this.saldo = saldo;
     }
 
-    public Cliente(String apellido, String nombre, short edad, String fechaNac, String telefono, String direccion, String zonaVivienda) {
+    public Cliente(String apellido, String nombre, String fechaNac, String telefono, String direccion, String zonaVivienda) {
         this.apellido = apellido;
         this.nombre = nombre;
-        this.edad = edad;
         this.fechaNac = fechaNac;
         this.telefono = telefono;
         this.direccion = direccion;
@@ -59,10 +56,6 @@ public class Cliente {
 
     public String getNombre() {
         return nombre;
-    }
-
-    public short getEdad() {
-        return edad;
     }
 
     public String getFechaNac() {
@@ -100,11 +93,7 @@ public class Cliente {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-
-    public void setEdad(short edad) {
-        this.edad = edad;
-    }
-
+    
     public void setFechaNac(String fechaNac) {
         this.fechaNac = fechaNac;
     }

@@ -5,12 +5,10 @@
  */
 package natura;
 
-import Clases.*;
 import DatabaseSingleton.PostgreSQL_Singleton;
 import Interfaces.Principal;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 public class Natura {
     
@@ -26,7 +24,6 @@ public class Natura {
             System.out.println("Conexion a la base de datos: ERROR:");
             System.out.println(ex.getMessage());
         }
-        
     }
 
 }
