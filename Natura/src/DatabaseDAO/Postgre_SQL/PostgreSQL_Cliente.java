@@ -11,8 +11,8 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 public class PostgreSQL_Cliente implements clienteDAO{
-    final String INSERT = "INSERT INTO Cliente(cliente_apellido, cliente_nombre, cliente_edad, cliente_Fnac, cliente_tel, cliente_DV, cliente_ZV, cliente_DT, cliente_ZT, cliente_ocup) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";                          
-    final String UPDATE = "UPDATE Cliente SET  cliente_apellido= ?, cliente_nombre= ?, cliente_edad= ?, cliente_Fnac= ?, cliente_tel= ?, cliente_DV= ?, cliente_ZV= ?, cliente_DT= ?, cliente_ZT= ?, cliente_ocup= ? WHERE codCliente = ?";
+    final String INSERT = "INSERT INTO Cliente(cliente_apellido, cliente_nombre, cliente_edad, cliente_Fnac, cliente_tel, cliente_DV, cliente_ZV) VALUES (?, ?, ?, ?, ?, ?, ?)";                          
+    final String UPDATE = "UPDATE Cliente SET  cliente_apellido= ?, cliente_nombre= ?, cliente_edad= ?, cliente_Fnac= ?, cliente_tel= ?, cliente_DV= ?, cliente_ZV= ?, cliente_saldo= ? WHERE codCliente = ?";
     final String DELETE = "UPDATE Cliente SET status = 0 WHERE codCliente = ?";
     final String GETALL = "SELECT * FROM Cliente WHERE status = 1"; 
     final String GETONE = "SELECT * FROM Cliente WHERE codCliente = ? AND status = 1";
@@ -27,16 +27,13 @@ public class PostgreSQL_Cliente implements clienteDAO{
         PreparedStatement stat;
         try{
             stat = conn.prepareStatement(INSERT);
-            stat.setString  (1,  a.getCliente_apellido() );
-            stat.setString  (2,  a.getCliente_nombre()   );
-            stat.setShort   (3,  a.getCliente_edad()     );
-            stat.setString  (4,  a.getCliente_Fnac()     );
-            stat.setString  (5,  a.getCliente_tel()      );
-            stat.setString  (6,  a.getCliente_DV()       );
-            stat.setString  (7,  a.getCliente_ZV()       );
-            stat.setString  (8,  a.getCliente_DT()       );
-            stat.setString  (9,  a.getCliente_ZT()       );
-            stat.setString  (10, a.getCliente_ocup()     );
+            stat.setString  (1,  a.getApellido()         );
+            stat.setString  (2,  a.getNombre()           );
+            stat.setShort   (3,  a.getEdad()             );
+            stat.setString  (4,  a.getFechaNac()         );
+            stat.setString  (5,  a.getTelefono()         );
+            stat.setString  (6,  a.getDireccion()        );
+            stat.setString  (7,  a.getZonaVivienda()     );
             
             if(stat.executeUpdate()== 0){
                 // ERROR
@@ -73,16 +70,14 @@ public class PostgreSQL_Cliente implements clienteDAO{
          PreparedStatement stat;
         try{
             stat = conn.prepareStatement(UPDATE);
-            stat.setString  (1,  a.getCliente_apellido());
-            stat.setString  (2,  a.getCliente_nombre());
-            stat.setShort   (3,  a.getCliente_edad());
-            stat.setString  (4,  a.getCliente_Fnac());
-            stat.setString  (5,  a.getCliente_tel());
-            stat.setString  (6,  a.getCliente_DV());
-            stat.setString  (7,  a.getCliente_ZV());
-            stat.setString  (8,  a.getCliente_DT());
-            stat.setString  (9,  a.getCliente_ZT());
-            stat.setString  (10, a.getCliente_ocup());
+            stat.setString  (1,  a.getApellido());
+            stat.setString  (2,  a.getNombre());
+            stat.setShort   (3,  a.getEdad());
+            stat.setString  (4,  a.getFechaNac());
+            stat.setString  (5,  a.getTelefono());
+            stat.setString  (6,  a.getDireccion());
+            stat.setString  (7,  a.getZonaVivienda());
+            stat.setFloat   (8, a.getSaldo());
             
             if(stat.executeUpdate()== 0){
                 // ERROR
@@ -99,20 +94,17 @@ public class PostgreSQL_Cliente implements clienteDAO{
     }
     
     private Cliente convertir (ResultSet rs) throws SQLException {
-        short      cod=        rs.getShort ("codCliente");
-        String     ape =       rs.getString("cliente_apellido");
-        String     nom =       rs.getString("cliente_nombre");
-        short      edad =      rs.getShort ("cliente_edad");
-        String     fnac =      rs.getString("cliente_fnac");
-        String     tel =       rs.getString("cliente_tel");
-        String     DV =        rs.getString("cliente_dv");
-        String     ZV =        rs.getString("cliente_zv");
-        String     DT =        rs.getString("cliente_dt");
-        String     ZT =        rs.getString("cliente_zt");
-        String     ocup =      rs.getString("cliente_ocup");
-        BigDecimal saldo = rs.getBigDecimal("cliente_saldo");
+        short   cod=     rs.getShort ("codCliente");
+        String  ape =    rs.getString("cliente_apellido");
+        String  nom =    rs.getString("cliente_nombre");
+        short   edad =   rs.getShort ("cliente_edad");
+        String  fnac =   rs.getString("cliente_fnac");
+        String  tel =    rs.getString("cliente_tel");
+        String  DV =     rs.getString("cliente_dv");
+        String  ZV =     rs.getString("cliente_zv");
+        float   saldo =  rs.getFloat("cliente_saldo");
         
-        Cliente cliente = new Cliente(cod,ape,nom,edad,fnac,tel,DV,ZV,DT,ZT,ocup,saldo);
+        Cliente cliente = new Cliente(cod,ape,nom,edad,fnac,tel,DV,ZV,saldo);
         return cliente;
     }
 
@@ -130,7 +122,6 @@ public class PostgreSQL_Cliente implements clienteDAO{
             rs.close();
             stat.close();
 
-            
         }catch(SQLException ex){
             System.out.println("Fallo en Obtener_todos");
             System.out.println(ex.getMessage());

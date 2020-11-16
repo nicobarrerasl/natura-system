@@ -459,18 +459,6 @@ public class FormularioCliente extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_tf_ZTActionPerformed
 
-    private void tf_OcupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_OcupActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tf_OcupActionPerformed
-
-    private void tf_DVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_DVActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tf_DVActionPerformed
-
-    private void tf_ZVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_ZVActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tf_ZVActionPerformed
-
     private void jl_cancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jl_cancelarMouseClicked
         this.dispose();
     }//GEN-LAST:event_jl_cancelarMouseClicked
@@ -492,7 +480,7 @@ public class FormularioCliente extends javax.swing.JFrame {
         BigDecimal saldo = null;
         
         Cliente nuevo_cliente;
-        nuevo_cliente = new Cliente(cod,apel,nom,edad,fnac,tel,DV,ZV,DT,ZT,ocup,saldo);
+        nuevo_cliente = new Cliente(apel,nom,edad,fnac,tel,DV,ZV);
         try {
             PostgreSQL_Cliente DAO_Cliente = new PostgreSQL_Cliente (PostgreSQL_Singleton.getInstance().getConnection());
             DAO_Cliente.insertar(nuevo_cliente);
@@ -501,6 +489,18 @@ public class FormularioCliente extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_jl_registrarMouseClicked
+
+    private void tf_ZVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_ZVActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tf_ZVActionPerformed
+
+    private void tf_DVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_DVActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tf_DVActionPerformed
+
+    private void tf_OcupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_OcupActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tf_OcupActionPerformed
 
     /**
      * @param args the command line arguments
