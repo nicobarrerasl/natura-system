@@ -12,14 +12,14 @@ package Clases;
 
 public class Producto {
     
-    private String codProducto;
+    private int codProducto;
     private String categoria;
     private String linea;
     private String nombre;
     private float precio;
     private short cantidad;
 
-    public Producto(String codProducto, String categoria, String linea, String nombre, float precio, short cantidad) {
+    public Producto(int codProducto, String categoria, String linea, String nombre, float precio, short cantidad) {
         this.codProducto = codProducto;
         this.categoria = categoria;
         this.linea = linea;
@@ -27,8 +27,8 @@ public class Producto {
         this.precio = precio;
         this.cantidad = cantidad;
     }
-
-    public String getCodProducto() {
+    
+    public int getCodProducto() {
         return codProducto;
     }
 
@@ -52,7 +52,7 @@ public class Producto {
         return cantidad;
     }
 
-    public void setCodProducto(String codProducto) {
+    public void setCodProducto(int codProducto) {
         this.codProducto = codProducto;
     }
 

@@ -87,8 +87,7 @@ public class PostgreSQL_Cliente implements clienteDAO{
             System.out.println(ex.getMessage());
             JOptionPane.showMessageDialog(null,ERR);
         }
-            
-
+           
     }
     
     private Cliente convertir (ResultSet rs) throws SQLException {
