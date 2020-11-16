@@ -5,14 +5,18 @@
  */
 package Interfaces;
 
+import Clases_Utilidad.*;
 import Clases.Cliente;
 import DatabaseDAO.Postgre_SQL.PostgreSQL_Cliente;
 import DatabaseSingleton.PostgreSQL_Singleton;
-import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.PlainDocument;
 
 /**
  *
@@ -23,8 +27,14 @@ public class FormularioCliente extends javax.swing.JFrame {
     /**
      * Creates new form FormularioCliente
      */
+    int flagdia,flagmes,flaganio,flagcaract,flagtel;
     public FormularioCliente() {
         initComponents();
+        flagdia = 0;
+        flagmes = 0;
+        flaganio = 0;
+        flagcaract = 0;
+        flagtel = 0;
     }
     
     /**
@@ -99,6 +109,11 @@ public class FormularioCliente extends javax.swing.JFrame {
         tf_tel.setText("Telefono sin 15");
         tf_tel.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
         tf_tel.setOpaque(false);
+        tf_tel.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                tf_telFocusGained(evt);
+            }
+        });
         tf_tel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tf_telActionPerformed(evt);
@@ -116,6 +131,11 @@ public class FormularioCliente extends javax.swing.JFrame {
         tf_dia.setText("Dia");
         tf_dia.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
         tf_dia.setOpaque(false);
+        tf_dia.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                tf_diaFocusGained(evt);
+            }
+        });
         tf_dia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tf_diaActionPerformed(evt);
@@ -164,6 +184,14 @@ public class FormularioCliente extends javax.swing.JFrame {
         tf_Apellido.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         tf_Apellido.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
         tf_Apellido.setOpaque(false);
+        tf_Apellido.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                tf_ApellidoFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                tf_ApellidoFocusLost(evt);
+            }
+        });
         tf_Apellido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tf_ApellidoActionPerformed(evt);
@@ -173,8 +201,8 @@ public class FormularioCliente extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Arial Black", 0, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Datos de Trabajo");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(261, 370, 180, 30));
+        jLabel2.setText("Datos de Vivienda");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 370, 180, 30));
 
         jLabel6.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
@@ -187,6 +215,11 @@ public class FormularioCliente extends javax.swing.JFrame {
         tf_mes.setText("Mes");
         tf_mes.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
         tf_mes.setOpaque(false);
+        tf_mes.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                tf_mesFocusGained(evt);
+            }
+        });
         tf_mes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tf_mesActionPerformed(evt);
@@ -200,6 +233,11 @@ public class FormularioCliente extends javax.swing.JFrame {
         tf_anio.setText("Año");
         tf_anio.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
         tf_anio.setOpaque(false);
+        tf_anio.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                tf_anioFocusGained(evt);
+            }
+        });
         tf_anio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tf_anioActionPerformed(evt);
@@ -229,6 +267,11 @@ public class FormularioCliente extends javax.swing.JFrame {
         tf_Nombre.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         tf_Nombre.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
         tf_Nombre.setOpaque(false);
+        tf_Nombre.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                tf_NombreFocusGained(evt);
+            }
+        });
         tf_Nombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tf_NombreActionPerformed(evt);
@@ -242,6 +285,11 @@ public class FormularioCliente extends javax.swing.JFrame {
         tf_caract.setText("caract");
         tf_caract.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
         tf_caract.setOpaque(false);
+        tf_caract.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                tf_caractFocusGained(evt);
+            }
+        });
         tf_caract.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tf_caractActionPerformed(evt);
@@ -271,7 +319,7 @@ public class FormularioCliente extends javax.swing.JFrame {
         jLabel10.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("Direccion de Trabajo");
-        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 420, 150, 30));
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 550, 150, 30));
 
         tf_DT.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         tf_DT.setForeground(new java.awt.Color(255, 255, 255));
@@ -283,7 +331,7 @@ public class FormularioCliente extends javax.swing.JFrame {
                 tf_DTActionPerformed(evt);
             }
         });
-        jPanel1.add(tf_DT, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 420, 390, 20));
+        jPanel1.add(tf_DT, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 560, 390, 20));
 
         tf_ZT.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         tf_ZT.setForeground(new java.awt.Color(255, 255, 255));
@@ -295,17 +343,17 @@ public class FormularioCliente extends javax.swing.JFrame {
                 tf_ZTActionPerformed(evt);
             }
         });
-        jPanel1.add(tf_ZT, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 450, 390, 20));
+        jPanel1.add(tf_ZT, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 600, 390, 20));
 
         jLabel11.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("Zona de Trabajo");
-        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 450, 150, 30));
+        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 600, 150, 30));
 
         jLabel12.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setText("Ocupacion");
-        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 480, 150, 30));
+        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 640, 150, 30));
 
         tf_Ocup.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         tf_Ocup.setForeground(new java.awt.Color(255, 255, 255));
@@ -317,25 +365,25 @@ public class FormularioCliente extends javax.swing.JFrame {
                 tf_OcupActionPerformed(evt);
             }
         });
-        jPanel1.add(tf_Ocup, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 480, 390, 20));
+        jPanel1.add(tf_Ocup, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 640, 390, 20));
 
         jSeparator6.setForeground(new java.awt.Color(255, 255, 255));
         jSeparator6.setFont(new java.awt.Font("Arial", 0, 3)); // NOI18N
-        jPanel1.add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 560, 200, 10));
+        jPanel1.add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 530, 200, 10));
 
         jLabel13.setFont(new java.awt.Font("Arial Black", 0, 18)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel13.setText("Datos de Vivienda");
-        jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(256, 540, 180, 30));
+        jLabel13.setText("Datos de Trabajo");
+        jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 510, 180, 30));
 
         jSeparator7.setForeground(new java.awt.Color(255, 255, 255));
         jSeparator7.setFont(new java.awt.Font("Arial", 0, 3)); // NOI18N
-        jPanel1.add(jSeparator7, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 560, 200, 10));
+        jPanel1.add(jSeparator7, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 530, 200, 10));
 
         jLabel14.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(255, 255, 255));
         jLabel14.setText("Direccion de Vivienda");
-        jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 590, 160, 30));
+        jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 420, 160, 30));
 
         tf_DV.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         tf_DV.setForeground(new java.awt.Color(255, 255, 255));
@@ -347,7 +395,7 @@ public class FormularioCliente extends javax.swing.JFrame {
                 tf_DVActionPerformed(evt);
             }
         });
-        jPanel1.add(tf_DV, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 590, 390, 20));
+        jPanel1.add(tf_DV, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 430, 390, -1));
 
         jLabel15.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(255, 255, 255));
@@ -365,7 +413,7 @@ public class FormularioCliente extends javax.swing.JFrame {
                 tf_ZVActionPerformed(evt);
             }
         });
-        jPanel1.add(tf_ZV, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 620, 390, 20));
+        jPanel1.add(tf_ZV, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 460, 390, 20));
 
         jl_cancelar.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jl_cancelar.setForeground(new java.awt.Color(255, 255, 255));
@@ -395,7 +443,7 @@ public class FormularioCliente extends javax.swing.JFrame {
         jLabel18.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(255, 255, 255));
         jLabel18.setText("Zona de Vivienda");
-        jPanel1.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 620, 150, 30));
+        jPanel1.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 460, 150, 30));
 
         jLabel19.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(255, 255, 255));
@@ -425,6 +473,7 @@ public class FormularioCliente extends javax.swing.JFrame {
 
     private void tf_ApellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_ApellidoActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_tf_ApellidoActionPerformed
 
     private void tf_telActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_telActionPerformed
@@ -465,29 +514,35 @@ public class FormularioCliente extends javax.swing.JFrame {
 
     private void jl_registrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jl_registrarMouseClicked
         int     flag = 1; // Este flag se utiliza para ver si se dio de alta o no, en caso afirmativo se cierra el panel, si no, se deja para arreglar los datos.
-        int     age = 2020 - Integer.parseInt(tf_anio.getText()); // se calcula la edad
-        Short   cod = 0; // se crea un short cod para pasar al constructor, pero luego no se utiliza, ya que la BD calcula el cod
+        
+
         String  apel = tf_Apellido.getText();
         String  nom =  tf_Nombre.getText();
-        short   edad = (short)age;
+        short   edad = (short)(2020 - Integer.parseInt(tf_anio.getText()));
         String  fnac = tf_anio.getText() + "-" + tf_mes.getText() + "-" + tf_dia.getText(); // YYYY-MM-DD
         String  tel =  tf_caract.getText()+ "-" + tf_tel.getText(); // Caracteristica-Nro
-        String  DV =   tf_DV.getText();
+        String  dir =   tf_DV.getText();
         String  ZV =   tf_ZV.getText();
+        
         String  DT =   tf_DT.getText();
         String  ZT =   tf_ZT.getText();
         String  ocup = tf_Ocup.getText();
-        BigDecimal saldo = null;
         
         Cliente nuevo_cliente;
-        nuevo_cliente = new Cliente(apel,nom,edad,fnac,tel,DV,ZV);
+        nuevo_cliente = new Cliente(apel,nom,edad,fnac,tel,dir,ZV);
         try {
             PostgreSQL_Cliente DAO_Cliente = new PostgreSQL_Cliente (PostgreSQL_Singleton.getInstance().getConnection());
             DAO_Cliente.insertar(nuevo_cliente);
+            flag = 1;
         } catch (SQLException ex) {
             Logger.getLogger(FormularioCliente.class.getName()).log(Level.SEVERE, null, ex);
+            flag = 0;
         }
-
+        this.dispose();
+        if(flag == 1)
+            JOptionPane.showMessageDialog(null,"La alta del cliente " + apel + " fue exitosa");
+        else
+            JOptionPane.showMessageDialog(null,"La alta del cliente " + apel + " no se pudo realizar");
     }//GEN-LAST:event_jl_registrarMouseClicked
 
     private void tf_ZVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_ZVActionPerformed
@@ -501,6 +556,68 @@ public class FormularioCliente extends javax.swing.JFrame {
     private void tf_OcupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_OcupActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tf_OcupActionPerformed
+
+    private void tf_diaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tf_diaFocusGained
+        // TODO add your handling code here:
+        
+        if (flagdia == 0){
+            tf_dia.setText("");
+            flagdia=1;
+        }
+        ((AbstractDocument)tf_dia.getDocument()).setDocumentFilter(new Filtro_enteros());
+       
+    }//GEN-LAST:event_tf_diaFocusGained
+
+    private void tf_mesFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tf_mesFocusGained
+        // TODO add your handling code here:
+        if (flagmes == 0){
+            tf_mes.setText("");
+            flagmes=1;
+        }
+        ((AbstractDocument)tf_mes.getDocument()).setDocumentFilter(new Filtro_enteros());
+    }//GEN-LAST:event_tf_mesFocusGained
+
+    private void tf_anioFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tf_anioFocusGained
+        // TODO add your handling code here:
+        if (flaganio == 0){
+            tf_anio.setText("");
+            flaganio=1;
+        }       
+        ((AbstractDocument)tf_anio.getDocument()).setDocumentFilter(new Filtro_enteros());
+    }//GEN-LAST:event_tf_anioFocusGained
+
+    private void tf_caractFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tf_caractFocusGained
+        // TODO add your handling code here:
+        if (flagcaract == 0){
+            tf_caract.setText("");
+            flagcaract=1;
+        }
+        ((AbstractDocument)tf_caract.getDocument()).setDocumentFilter(new Filtro_enteros());
+    }//GEN-LAST:event_tf_caractFocusGained
+
+    private void tf_telFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tf_telFocusGained
+        // TODO add your handling code here:
+        if (flagtel == 0){
+            tf_tel.setText("");
+            flagtel=1;
+        }
+        ((AbstractDocument)tf_tel.getDocument()).setDocumentFilter(new Filtro_enteros());
+    }//GEN-LAST:event_tf_telFocusGained
+
+    private void tf_ApellidoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tf_ApellidoFocusLost
+        // TODO add your handling code here:
+        
+        
+    }//GEN-LAST:event_tf_ApellidoFocusLost
+
+    private void tf_ApellidoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tf_ApellidoFocusGained
+        // TODO add your handling code here:
+        ((AbstractDocument)tf_Apellido.getDocument()).setDocumentFilter(new Filtro_CHAR());
+    }//GEN-LAST:event_tf_ApellidoFocusGained
+
+    private void tf_NombreFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tf_NombreFocusGained
+        ((AbstractDocument)tf_Nombre.getDocument()).setDocumentFilter(new Filtro_CHAR());
+    }//GEN-LAST:event_tf_NombreFocusGained
 
     /**
      * @param args the command line arguments
