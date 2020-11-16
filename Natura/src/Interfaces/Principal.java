@@ -1004,7 +1004,7 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_lblApellidoClienteActionPerformed
 
-    private void tablaClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaClientesMouseClicked
+    private void tablaClientesMouseClicked(java.awt.event.MouseEvent evt) {                                           
         int Fila = tablaClientes.getSelectedRow();
         codCliente = (short) tablaClientes.getValueAt(Fila, 0);
         String apellido = (String) tablaClientes.getValueAt(Fila, 1);
@@ -1012,7 +1012,7 @@ public class Principal extends javax.swing.JFrame {
         
         lblNombreCliente.setText(nombre);
         lblApellidoCliente.setText(apellido);
-    }//GEN-LAST:event_tablaClientesMouseClicked
+    }//GEN-LAST:event_tablaClientesMouseClicked                                  
 
     private void tablaCompraPMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaCompraPMouseClicked
         DefaultTableModel tblModel = (DefaultTableModel) tablaProdCompra.getModel();
@@ -1021,13 +1021,6 @@ public class Principal extends javax.swing.JFrame {
         Object[] datos = {tablaCompraP.getValueAt(Fila, 0), tablaCompraP.getValueAt(Fila, 3), 1, tablaCompraP.getValueAt(Fila, 4)};
         tblModel.addRow(datos);
     }//GEN-LAST:event_tablaCompraPMouseClicked
-
-    private void tablaClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaClientesMouseClicked
-        // TODO add your handling code here:
-        DefaultTableModel a = (DefaultTableModel) tablaClientes.getModel();
-        System.out.println(a.getDataVector().elementAt(tablaClientes.getSelectedRow()));
-        
-    }//GEN-LAST:event_tablaClientesMouseClicked
 
     private void lblactualizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblactualizarMouseClicked
         try {
