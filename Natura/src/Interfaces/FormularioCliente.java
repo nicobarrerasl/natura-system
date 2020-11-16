@@ -9,14 +9,13 @@ import Clases_Utilidad.*;
 import Clases.Cliente;
 import DatabaseDAO.Postgre_SQL.PostgreSQL_Cliente;
 import DatabaseSingleton.PostgreSQL_Singleton;
+import java.sql.Array;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.text.AbstractDocument;
-import javax.swing.text.PlainDocument;
 
 /**
  *
@@ -35,6 +34,12 @@ public class FormularioCliente extends javax.swing.JFrame {
         flaganio = 0;
         flagcaract = 0;
         flagtel = 0;
+        w1.setVisible(false);
+        w2.setVisible(false);
+        w3.setVisible(false);
+        w4.setVisible(false);
+        w5.setVisible(false);
+        w6.setVisible(false);        
     }
     
     /**
@@ -75,6 +80,12 @@ public class FormularioCliente extends javax.swing.JFrame {
         tf_ZT = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
+        w1 = new javax.swing.JLabel();
+        w2 = new javax.swing.JLabel();
+        w3 = new javax.swing.JLabel();
+        w4 = new javax.swing.JLabel();
+        w5 = new javax.swing.JLabel();
+        w6 = new javax.swing.JLabel();
         tf_Ocup = new javax.swing.JTextField();
         jSeparator6 = new javax.swing.JSeparator();
         jLabel13 = new javax.swing.JLabel();
@@ -355,6 +366,36 @@ public class FormularioCliente extends javax.swing.JFrame {
         jLabel12.setText("Ocupacion");
         jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 640, 150, 30));
 
+        w1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        w1.setForeground(new java.awt.Color(255, 0, 0));
+        w1.setText("*");
+        jPanel1.add(w1, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 220, 50, 20));
+
+        w2.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        w2.setForeground(new java.awt.Color(255, 0, 51));
+        w2.setText("*");
+        jPanel1.add(w2, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 250, -1, -1));
+
+        w3.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        w3.setForeground(new java.awt.Color(255, 0, 0));
+        w3.setText("*");
+        jPanel1.add(w3, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 280, -1, -1));
+
+        w4.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        w4.setForeground(new java.awt.Color(255, 0, 51));
+        w4.setText("*");
+        jPanel1.add(w4, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 310, -1, -1));
+
+        w5.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        w5.setForeground(new java.awt.Color(255, 51, 51));
+        w5.setText("*");
+        jPanel1.add(w5, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 430, -1, -1));
+
+        w6.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        w6.setForeground(new java.awt.Color(255, 0, 51));
+        w6.setText("*");
+        jPanel1.add(w6, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 460, -1, -1));
+
         tf_Ocup.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         tf_Ocup.setForeground(new java.awt.Color(255, 255, 255));
         tf_Ocup.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -454,6 +495,7 @@ public class FormularioCliente extends javax.swing.JFrame {
         fondoFormularioCliente.setBackground(new java.awt.Color(255, 255, 255));
         fondoFormularioCliente.setForeground(new java.awt.Color(255, 255, 255));
         fondoFormularioCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondoFormCliente.png"))); // NOI18N
+        fondoFormularioCliente.setText("asd");
         fondoFormularioCliente.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel1.add(fondoFormularioCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 700, 800));
 
@@ -514,7 +556,6 @@ public class FormularioCliente extends javax.swing.JFrame {
 
     private void jl_registrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jl_registrarMouseClicked
         int    flag; // Este flag se utiliza para ver si se dio de alta o no, en caso afirmativo se cierra el panel, si no, se deja para arreglar los datos.
-        
         String  apel = tf_Apellido.getText();
         String  nom =  tf_Nombre.getText();
         String  fnac = tf_anio.getText() + "-" + tf_mes.getText() + "-" + tf_dia.getText(); // YYYY-MM-DD
@@ -524,22 +565,33 @@ public class FormularioCliente extends javax.swing.JFrame {
         // String  DT =   tf_DT.getText();
         // String  ZT =   tf_ZT.getText();
         // String  ocup = tf_Ocup.getText();
-        
-        Cliente nuevo_cliente;
-        nuevo_cliente = new Cliente(apel,nom,fnac,tel,dir,ZV);
-        try {
-            PostgreSQL_Cliente DAO_Cliente = new PostgreSQL_Cliente (PostgreSQL_Singleton.getInstance().getConnection());
-            DAO_Cliente.insertar(nuevo_cliente);
-            flag = 1;
-        } catch (SQLException ex) {
-            Logger.getLogger(FormularioCliente.class.getName()).log(Level.SEVERE, null, ex);
-            flag = 0;
+        Control_vacio a = new Control_vacio();
+        if(a.retorno(apel) || a.retorno(tf_anio.getText()) || a.retorno(tf_mes.getText()) || a.retorno(tf_dia.getText()) || a.retorno(tf_caract.getText()) || a.retorno(tf_tel.getText()) || a.retorno(nom) || a.retorno(dir) || a.retorno(ZV) ){
+            w1.setVisible(true);
+            w2.setVisible(true);
+            w3.setVisible(true);
+            w4.setVisible(true);
+            w5.setVisible(true);
+            w6.setVisible(true);  
+            JOptionPane.showMessageDialog(null,"Los campos marcados con asterisco son obligatorios");
         }
-        this.dispose();
-        if(flag == 1)
-            JOptionPane.showMessageDialog(null,"La alta del cliente " + apel + " fue exitosa");
-        else
-            JOptionPane.showMessageDialog(null,"La alta del cliente " + apel + " no se pudo realizar");
+        else{
+            Cliente nuevo_cliente;
+            nuevo_cliente = new Cliente(apel,nom,fnac,tel,dir,ZV);
+            try {
+                PostgreSQL_Cliente DAO_Cliente = new PostgreSQL_Cliente (PostgreSQL_Singleton.getInstance().getConnection());
+                DAO_Cliente.insertar(nuevo_cliente);
+                flag = 1;
+            } catch (SQLException ex) {
+                Logger.getLogger(FormularioCliente.class.getName()).log(Level.SEVERE, null, ex);
+                flag = 0;
+            }
+            this.dispose();
+            if(flag == 1)
+                JOptionPane.showMessageDialog(null,"La alta del cliente " + apel + " fue exitosa");
+            else
+                JOptionPane.showMessageDialog(null,"La alta del cliente " + apel + " no se pudo realizar");
+        }
     }//GEN-LAST:event_jl_registrarMouseClicked
 
     private void tf_ZVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_ZVActionPerformed
@@ -694,5 +746,11 @@ public class FormularioCliente extends javax.swing.JFrame {
     private javax.swing.JTextField tf_dia;
     private javax.swing.JTextField tf_mes;
     private javax.swing.JTextField tf_tel;
+    private javax.swing.JLabel w1;
+    private javax.swing.JLabel w2;
+    private javax.swing.JLabel w3;
+    private javax.swing.JLabel w4;
+    private javax.swing.JLabel w5;
+    private javax.swing.JLabel w6;
     // End of variables declaration//GEN-END:variables
 }
