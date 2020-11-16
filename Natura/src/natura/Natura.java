@@ -11,8 +11,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class Natura {
-    
     public static void main(String[] args) {
+        
         Principal p = new Principal();
         p.setVisible(true);
         
