@@ -400,14 +400,14 @@ public class Principal extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Codigo", "Apellido", "Nombre", "Edad", "Nacimiento", "Telefono", "Dir. Vivienda", "Zona de Vivienda", "Saldo"
+                "Codigo", "Apellido", "Nombre", "Nacimiento", "Telefono", "Dir. Vivienda", "Zona de Vivienda", "Saldo"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Short.class, java.lang.String.class, java.lang.String.class, java.lang.Short.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class
+                java.lang.Short.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -433,24 +433,21 @@ public class Principal extends javax.swing.JFrame {
             tablaClientes.getColumnModel().getColumn(0).setMinWidth(50);
             tablaClientes.getColumnModel().getColumn(0).setPreferredWidth(50);
             tablaClientes.getColumnModel().getColumn(0).setMaxWidth(50);
-            tablaClientes.getColumnModel().getColumn(3).setMinWidth(40);
-            tablaClientes.getColumnModel().getColumn(3).setPreferredWidth(40);
-            tablaClientes.getColumnModel().getColumn(3).setMaxWidth(40);
+            tablaClientes.getColumnModel().getColumn(3).setMinWidth(120);
+            tablaClientes.getColumnModel().getColumn(3).setPreferredWidth(120);
+            tablaClientes.getColumnModel().getColumn(3).setMaxWidth(120);
             tablaClientes.getColumnModel().getColumn(4).setMinWidth(120);
             tablaClientes.getColumnModel().getColumn(4).setPreferredWidth(120);
             tablaClientes.getColumnModel().getColumn(4).setMaxWidth(120);
-            tablaClientes.getColumnModel().getColumn(5).setMinWidth(120);
-            tablaClientes.getColumnModel().getColumn(5).setPreferredWidth(120);
-            tablaClientes.getColumnModel().getColumn(5).setMaxWidth(120);
-            tablaClientes.getColumnModel().getColumn(6).setMinWidth(200);
-            tablaClientes.getColumnModel().getColumn(6).setPreferredWidth(200);
-            tablaClientes.getColumnModel().getColumn(6).setMaxWidth(200);
-            tablaClientes.getColumnModel().getColumn(7).setMinWidth(150);
-            tablaClientes.getColumnModel().getColumn(7).setPreferredWidth(150);
-            tablaClientes.getColumnModel().getColumn(7).setMaxWidth(150);
-            tablaClientes.getColumnModel().getColumn(8).setMinWidth(70);
-            tablaClientes.getColumnModel().getColumn(8).setPreferredWidth(70);
-            tablaClientes.getColumnModel().getColumn(8).setMaxWidth(70);
+            tablaClientes.getColumnModel().getColumn(5).setMinWidth(200);
+            tablaClientes.getColumnModel().getColumn(5).setPreferredWidth(200);
+            tablaClientes.getColumnModel().getColumn(5).setMaxWidth(200);
+            tablaClientes.getColumnModel().getColumn(6).setMinWidth(150);
+            tablaClientes.getColumnModel().getColumn(6).setPreferredWidth(150);
+            tablaClientes.getColumnModel().getColumn(6).setMaxWidth(150);
+            tablaClientes.getColumnModel().getColumn(7).setMinWidth(70);
+            tablaClientes.getColumnModel().getColumn(7).setPreferredWidth(70);
+            tablaClientes.getColumnModel().getColumn(7).setMaxWidth(70);
         }
 
         JPanelCliente.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 307, 1320, 650));
