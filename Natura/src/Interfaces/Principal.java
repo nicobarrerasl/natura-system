@@ -11,6 +11,8 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 public class Principal extends javax.swing.JFrame {
@@ -401,14 +403,14 @@ public class Principal extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Codigo", "Apellido", "Nombre", "Nacimiento", "Telefono", "Dir. Vivienda", "Zona de Vivienda", "Saldo"
+                "Codigo", "Apellido", "Nombre", "Nacimiento", "Edad", "Telefono", "Dir. Vivienda", "Zona de Vivienda", "Saldo"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Short.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class
+                java.lang.Short.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -437,18 +439,21 @@ public class Principal extends javax.swing.JFrame {
             tablaClientes.getColumnModel().getColumn(3).setMinWidth(120);
             tablaClientes.getColumnModel().getColumn(3).setPreferredWidth(120);
             tablaClientes.getColumnModel().getColumn(3).setMaxWidth(120);
-            tablaClientes.getColumnModel().getColumn(4).setMinWidth(120);
-            tablaClientes.getColumnModel().getColumn(4).setPreferredWidth(120);
-            tablaClientes.getColumnModel().getColumn(4).setMaxWidth(120);
-            tablaClientes.getColumnModel().getColumn(5).setMinWidth(200);
-            tablaClientes.getColumnModel().getColumn(5).setPreferredWidth(200);
-            tablaClientes.getColumnModel().getColumn(5).setMaxWidth(200);
-            tablaClientes.getColumnModel().getColumn(6).setMinWidth(150);
-            tablaClientes.getColumnModel().getColumn(6).setPreferredWidth(150);
-            tablaClientes.getColumnModel().getColumn(6).setMaxWidth(150);
-            tablaClientes.getColumnModel().getColumn(7).setMinWidth(70);
-            tablaClientes.getColumnModel().getColumn(7).setPreferredWidth(70);
-            tablaClientes.getColumnModel().getColumn(7).setMaxWidth(70);
+            tablaClientes.getColumnModel().getColumn(4).setMinWidth(50);
+            tablaClientes.getColumnModel().getColumn(4).setPreferredWidth(50);
+            tablaClientes.getColumnModel().getColumn(4).setMaxWidth(50);
+            tablaClientes.getColumnModel().getColumn(5).setMinWidth(120);
+            tablaClientes.getColumnModel().getColumn(5).setPreferredWidth(120);
+            tablaClientes.getColumnModel().getColumn(5).setMaxWidth(120);
+            tablaClientes.getColumnModel().getColumn(6).setMinWidth(200);
+            tablaClientes.getColumnModel().getColumn(6).setPreferredWidth(200);
+            tablaClientes.getColumnModel().getColumn(6).setMaxWidth(200);
+            tablaClientes.getColumnModel().getColumn(7).setMinWidth(150);
+            tablaClientes.getColumnModel().getColumn(7).setPreferredWidth(150);
+            tablaClientes.getColumnModel().getColumn(7).setMaxWidth(150);
+            tablaClientes.getColumnModel().getColumn(8).setMinWidth(70);
+            tablaClientes.getColumnModel().getColumn(8).setPreferredWidth(70);
+            tablaClientes.getColumnModel().getColumn(8).setMaxWidth(70);
         }
 
         JPanelCliente.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 307, 1320, 650));
@@ -925,8 +930,15 @@ public class Principal extends javax.swing.JFrame {
                     //String datos[] = {clt.getCliente_apellido(), clt.getCliente_nombre(),clt.getCliente_Fnac(), edad,clt.getCliente_tel(), clt.getCliente_DV(), clt.getCliente_ZV(), clt.getCliente_DT() ,clt.getCliente_ZT(), clt.getCliente_ocup(), clt.getCliente_saldo().toString()};
                     //tblModel.addRow(datos);
                     int age = new calcular_edad().calculatePeriod(clt.getFechaNac());
-                    Object[] datos = {clt.getCodCliente(), clt.getApellido(), clt.getNombre(), age, clt.getFechaNac(), clt.getTelefono(), clt.getDireccion(), clt.getZonaVivienda(), clt.getSaldo()};
+                    Object[] datos = {clt.getCodCliente(), clt.getApellido(), clt.getNombre(), clt.getFechaNac(), age, clt.getTelefono(), clt.getDireccion(), clt.getZonaVivienda(), "$ " + clt.getSaldo()};
                     tblModel.addRow(datos);
+                    
+                }
+                DefaultTableCellRenderer leftRenderer = new DefaultTableCellRenderer();
+                leftRenderer.setHorizontalAlignment(SwingConstants.LEFT);
+                
+                for(int i = 0;i<tablaClientes.getColumnCount();i++){
+                    tablaClientes.getColumnModel().getColumn(i).setCellRenderer(leftRenderer);
                 }
                 flag = 1;
             } catch (SQLException ex) {
