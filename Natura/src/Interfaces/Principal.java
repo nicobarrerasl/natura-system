@@ -423,6 +423,7 @@ public class Principal extends javax.swing.JFrame {
         tablaClientes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         tablaClientes.setFocusable(false);
         tablaClientes.setGridColor(new java.awt.Color(0, 0, 0));
+        tablaClientes.setIntercellSpacing(new java.awt.Dimension(0, 0));
         tablaClientes.setRowHeight(25);
         tablaClientes.setSelectionBackground(new java.awt.Color(51, 204, 255));
         tablaClientes.setShowVerticalLines(false);
