@@ -41,7 +41,7 @@ public class PostgreSQL_Producto implements productoDAO{
             stat.close();
         }
         catch(SQLException ex){
-            System.out.println("Fallo en ALTA");
+            System.out.println("Fallo en ALTA Producto");
             System.out.println(ex.getMessage());
             JOptionPane.showMessageDialog(null,ERR);
         }
@@ -59,7 +59,7 @@ public class PostgreSQL_Producto implements productoDAO{
             stat.close();
         }
         catch(SQLException ex){
-            System.out.println("Fallo en ELIMINACION");
+            System.out.println("Fallo en ELIMINACION Producto");
             System.out.println(ex.getMessage());
             JOptionPane.showMessageDialog(null,ERR);
         }
@@ -70,12 +70,13 @@ public class PostgreSQL_Producto implements productoDAO{
         PreparedStatement stat;
         try{
             stat = conn.prepareStatement(UPDATE);
-            stat.setInt(1,  a.getCodProducto());
+            stat.setInt     (1,  a.getCodProducto());
             stat.setString  (2,  a.getCategoria());
-            stat.setString(3,  a.getLinea());
+            stat.setString  (3,  a.getLinea());
             stat.setString  (4,  a.getNombre());
-            stat.setFloat(5,  a.getPrecio());
-            stat.setShort(6,  a.getCantidad());
+            stat.setFloat   (5,  a.getPrecio());
+            stat.setShort   (6,  a.getCantidad());
+            stat.setInt     (7,  a.getCodProducto()); 
             
             if(stat.executeUpdate()== 0){
                 // ERROR
@@ -83,19 +84,19 @@ public class PostgreSQL_Producto implements productoDAO{
             stat.close();
         }
         catch(SQLException ex){
-            System.out.println("Fallo en UPDATE");
+            System.out.println("Fallo en UPDATE Producto");
             System.out.println(ex.getMessage());
             JOptionPane.showMessageDialog(null,ERR);
         }
     }
 
     private Producto convertir (ResultSet rs) throws SQLException {
-        int   cod=     rs.getInt("codProducto");
-        String  cat =    rs.getString("prod_cat");
-        String  lin =    rs.getString("prod_linea");
-        String   nom =   rs.getString("prod_nombre");
-        Float  pre =   rs.getFloat("prod_precio");
-        short  cant =    rs.getShort("prod_cant");
+        int      cod=      rs.getInt("codProducto");
+        String   cat =     rs.getString("prod_cat");
+        String   lin =     rs.getString("prod_linea");
+        String   nom =     rs.getString("prod_nombre");
+        Float    pre =     rs.getFloat("prod_precio");
+        short    cant =    rs.getShort("prod_cant");
         
         Producto producto = new Producto(cod,cat,lin,nom,pre,cant);
         return producto;
@@ -116,7 +117,7 @@ public class PostgreSQL_Producto implements productoDAO{
             stat.close();
 
         }catch(SQLException ex){
-            System.out.println("Fallo en Obtener_todos");
+            System.out.println("Fallo en Obtener_todos Producto");
             System.out.println(ex.getMessage());
             JOptionPane.showMessageDialog(null,ERR);
         }
@@ -135,12 +136,12 @@ public class PostgreSQL_Producto implements productoDAO{
             if(rs.next()){
                a = convertir(rs); 
             } else{
-                JOptionPane.showMessageDialog(null,"Resultado VACIO");
+                JOptionPane.showMessageDialog(null,"Resultado VACIO obtener_uno Producto");
             }
             rs.close();
             stat.close();
         }catch(SQLException ex){
-            System.out.println("Fallo en obtener 1");
+            System.out.println("Fallo en obtener 1 Producto");
             System.out.println(ex.getMessage());
             JOptionPane.showMessageDialog(null,ERR);
         }
