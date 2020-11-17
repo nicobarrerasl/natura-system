@@ -2,7 +2,6 @@ package Interfaces;
 
 import Clases.Cliente;
 import Clases.Producto;
-import Clases_Utilidad.ControlCodProducto;
 import Clases_Utilidad.calcular_edad;
 import DatabaseDAO.Postgre_SQL.PostgreSQL_Cliente;
 import DatabaseDAO.Postgre_SQL.PostgreSQL_Producto;
@@ -597,6 +596,11 @@ public class Principal extends javax.swing.JFrame {
         tablaCarrito.setSelectionBackground(new java.awt.Color(51, 204, 255));
         tablaCarrito.setShowVerticalLines(false);
         tablaCarrito.getTableHeader().setReorderingAllowed(false);
+        tablaCarrito.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaCarritoMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tablaCarrito);
         if (tablaCarrito.getColumnModel().getColumnCount() > 0) {
             tablaCarrito.getColumnModel().getColumn(0).setMinWidth(80);
@@ -759,11 +763,22 @@ public class Principal extends javax.swing.JFrame {
         JPanelCompra.add(jLabel42, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 930, 270, 10));
 
         lblCancelarCompra.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/quitarProductoIcon.png"))); // NOI18N
+        lblCancelarCompra.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblCancelarCompra.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblCancelarCompraMouseClicked(evt);
+            }
+        });
         JPanelCompra.add(lblCancelarCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 820, -1, 80));
 
         lblAceptarCompra.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblAceptarCompra.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/agregarProductoIcon.png"))); // NOI18N
         lblAceptarCompra.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblAceptarCompra.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblAceptarCompraMouseClicked(evt);
+            }
+        });
         JPanelCompra.add(lblAceptarCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(1240, 820, -1, 80));
 
         jLabel44.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 0, 1, new java.awt.Color(0, 0, 0)));
@@ -1043,25 +1058,22 @@ public class Principal extends javax.swing.JFrame {
         DefaultTableModel tblModel = (DefaultTableModel) tablaCarrito.getModel();
         
         int Fila = tablaStockProductos.getSelectedRow();
-        int carrito = tablaCarrito.getRowCount();
-        int i;
-        ArrayList codigos = new ArrayList();
-        
-        /*for (i = 0; i < carrito; i++){
-            codigos.add((int)tablaCarrito.getValueAt(i, 0));
+        int cantCarr = tablaCarrito.getRowCount();
+
+        boolean loencontro=false;
+        int cod_selec = (int)tablaStockProductos.getValueAt(Fila, 0);
+        for(int d = 0;  d < cantCarr;  d++){
+            if((int)tablaCarrito.getValueAt(d, 0) == cod_selec){
+                short w = (short)tablaCarrito.getValueAt(d, 2);
+                tablaCarrito.setValueAt((short)(w + 1), d, 2);
+                loencontro = true;
+                break;
+            }
         }
-        
-        if (1 == ControlCodProducto.seEncontro((int)tablaStockProductos.getValueAt(Fila, 0), codigos)){
-            
-            int cantidad = ControlCodProducto.controlCantidad((int)tablaStockProductos.getValueAt(Fila, 0), codigos);
-            tablaCarrito.setValueAt(cantidad, , 2);
-            
-        }*/
-        
-        
-        Object[] datos = {(int)tablaStockProductos.getValueAt(Fila, 0),(String)tablaStockProductos.getValueAt(Fila, 3), (short) 1/*(short)cantidad*/, (float)tablaStockProductos.getValueAt(Fila, 4)};
-        //datosProducto = datos;
-        tblModel.addRow(datos);
+        if(!loencontro){
+            Object[] datos = {(int)tablaStockProductos.getValueAt(Fila, 0),(String)tablaStockProductos.getValueAt(Fila, 3), (short) 1, (float)tablaStockProductos.getValueAt(Fila, 4)};
+            tblModel.addRow(datos);
+        }
     }//GEN-LAST:event_tablaStockProductosMouseClicked
 
     private void lblactualizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblactualizarMouseClicked
@@ -1100,7 +1112,6 @@ public class Principal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,"Necesita seleccionar un producto");
         }
         else{
-            System.out.println(datosProducto);
             DefaultTableModel tblModel = (DefaultTableModel) tablaCarrito.getModel();
             tblModel.addRow(datosProducto);
             
@@ -1112,6 +1123,38 @@ public class Principal extends javax.swing.JFrame {
     private void lblRegistrarPagoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRegistrarPagoMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_lblRegistrarPagoMouseClicked
+
+    private void tablaCarritoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaCarritoMouseClicked
+        // TODO add your handling code here:
+        
+        /// IMPLEMENTAR QUITAR PRODUCTO CANTIDAD
+    }//GEN-LAST:event_tablaCarritoMouseClicked
+
+    private void lblCancelarCompraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCancelarCompraMouseClicked
+       // TODO add your handling code here:
+       JPanelCompra.setVisible(false);
+       JPanelCliente.setVisible(true);
+    }//GEN-LAST:event_lblCancelarCompraMouseClicked
+
+    private void lblAceptarCompraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAceptarCompraMouseClicked
+        /// REGISTRAR LA COMPRA
+        /// Alta compra
+        /// Alta compraProducto
+        /// Obtener la cantidad de producto d Carrito
+        /// Crear un objeto por cada instancia de Carrito
+        /// Control de stock
+        /// Restar stock
+        /// control de que ingrese la fecha
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    }//GEN-LAST:event_lblAceptarCompraMouseClicked
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
