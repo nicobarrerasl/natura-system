@@ -2,5 +2,6 @@ package DatabaseDAO;
 
 import Clases.Producto;
 
-public interface productoDAO extends DAO<Producto,Short>{
+public interface productoDAO extends DAO<Producto,Integer>{
+    
 }
