@@ -817,7 +817,7 @@
                         <Column editable="false" title="Telefono" type="java.lang.String"/>
                         <Column editable="false" title="Dir. Vivienda" type="java.lang.String"/>
                         <Column editable="false" title="Zona de Vivienda" type="java.lang.String"/>
-                        <Column editable="false" title="Saldo" type="java.lang.Float"/>
+                        <Column editable="false" title="Saldo" type="java.lang.String"/>
                       </Table>
                     </Property>
                     <Property name="toolTipText" type="java.lang.String" value=""/>
