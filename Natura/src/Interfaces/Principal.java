@@ -99,7 +99,6 @@ public class Principal extends javax.swing.JFrame {
         jLabel20 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
         lblNombreCliente = new javax.swing.JTextField();
-        jLabel24 = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
         lblImporteTotal = new javax.swing.JTextField();
         jLabel23 = new javax.swing.JLabel();
@@ -116,34 +115,25 @@ public class Principal extends javax.swing.JFrame {
         lblAnioCompra = new javax.swing.JTextField();
         jLabel31 = new javax.swing.JLabel();
         jLabel33 = new javax.swing.JLabel();
-        lblAgregarProducto = new javax.swing.JLabel();
-        lblQuitarProducto = new javax.swing.JLabel();
         jLabel36 = new javax.swing.JLabel();
         jLabel38 = new javax.swing.JLabel();
         jLabel39 = new javax.swing.JLabel();
-        jLabel40 = new javax.swing.JLabel();
         lblDescuento = new javax.swing.JTextField();
         jLabel42 = new javax.swing.JLabel();
         lblCancelarCompra = new javax.swing.JLabel();
         lblAceptarCompra = new javax.swing.JLabel();
-        jLabel44 = new javax.swing.JLabel();
-        jLabel45 = new javax.swing.JLabel();
-        jLabel47 = new javax.swing.JLabel();
-        jLabel48 = new javax.swing.JLabel();
         jLabel46 = new javax.swing.JLabel();
         jLabel49 = new javax.swing.JLabel();
         lblDiaCompra = new javax.swing.JTextField();
         lblMesCompra = new javax.swing.JTextField();
         jLabel51 = new javax.swing.JLabel();
         jLabel52 = new javax.swing.JLabel();
-        jLabel50 = new javax.swing.JLabel();
         jLabel26 = new javax.swing.JLabel();
         lblApellidoCliente = new javax.swing.JTextField();
         jLabel32 = new javax.swing.JLabel();
         fondoEtiquetaCliente = new javax.swing.JLabel();
         lblAgregarPago = new javax.swing.JLabel();
         jLabel55 = new javax.swing.JLabel();
-        jLabel56 = new javax.swing.JLabel();
         JPanelPrincipalDer = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -525,6 +515,7 @@ public class Principal extends javax.swing.JFrame {
         lblNombreCliente.setForeground(new java.awt.Color(255, 255, 255));
         lblNombreCliente.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         lblNombreCliente.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
+        lblNombreCliente.setCaretColor(new java.awt.Color(255, 255, 255));
         lblNombreCliente.setEnabled(false);
         lblNombreCliente.setOpaque(false);
         lblNombreCliente.addActionListener(new java.awt.event.ActionListener() {
@@ -533,9 +524,6 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         JPanelCompra.add(lblNombreCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 70, 280, 30));
-
-        jLabel24.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 0, 0, 0, new java.awt.Color(0, 0, 0)));
-        JPanelCompra.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 690, 270, 10));
 
         jLabel25.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 0, 0, 0, new java.awt.Color(255, 255, 255)));
         JPanelCompra.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(8, 7, 1290, 10));
@@ -624,19 +612,19 @@ public class Principal extends javax.swing.JFrame {
                 jTextField6ActionPerformed(evt);
             }
         });
-        JPanelCompra.add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 300, 370, 30));
+        JPanelCompra.add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 300, 370, 30));
 
         jLabel28.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel28.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/filtroIcon.png"))); // NOI18N
-        JPanelCompra.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 300, -1, 30));
+        JPanelCompra.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 300, -1, 30));
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Codigo", "Categoria", "Linea", "Nombre" }));
         jComboBox2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox2ActionPerformed(evt);
             }
         });
-        JPanelCompra.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 300, 100, 30));
+        JPanelCompra.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 300, 100, 30));
 
         jLabel29.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
         JPanelCompra.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(7, 233, 1384, 10));
@@ -692,7 +680,7 @@ public class Principal extends javax.swing.JFrame {
             tablaStockProductos.getColumnModel().getColumn(5).setMaxWidth(50);
         }
 
-        JPanelCompra.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 370, 960, 590));
+        JPanelCompra.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 370, 1320, 440));
 
         jLabel30.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel30.setForeground(new java.awt.Color(255, 255, 255));
@@ -718,33 +706,18 @@ public class Principal extends javax.swing.JFrame {
         jLabel33.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 1, 0, 0, new java.awt.Color(255, 255, 255)));
         JPanelCompra.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 30, 10, 190));
 
-        lblAgregarProducto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblAgregarProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/agregarIcon.png"))); // NOI18N
-        lblAgregarProducto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        lblAgregarProducto.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblAgregarProductoMouseClicked(evt);
-            }
-        });
-        JPanelCompra.add(lblAgregarProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(1161, 370, -1, 80));
-
-        lblQuitarProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/quitarIcon.png"))); // NOI18N
-        lblQuitarProducto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        JPanelCompra.add(lblQuitarProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(1161, 520, -1, 70));
-
         jLabel36.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 1, 0, 0, new java.awt.Color(255, 255, 255)));
         JPanelCompra.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(7, 7, 10, 235));
 
-        jLabel38.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
+        jLabel38.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel38.setForeground(new java.awt.Color(0, 0, 0));
         jLabel38.setText("Cancelar Compra");
-        JPanelCompra.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 910, -1, -1));
+        JPanelCompra.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 960, -1, -1));
 
-        jLabel39.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
+        jLabel39.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel39.setForeground(new java.awt.Color(0, 0, 0));
         jLabel39.setText("Registrar Compra");
-        JPanelCompra.add(jLabel39, new org.netbeans.lib.awtextra.AbsoluteConstraints(1227, 910, -1, -1));
-
-        jLabel40.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 0, 1, new java.awt.Color(0, 0, 0)));
-        JPanelCompra.add(jLabel40, new org.netbeans.lib.awtextra.AbsoluteConstraints(1191, 830, 10, 80));
+        JPanelCompra.add(jLabel39, new org.netbeans.lib.awtextra.AbsoluteConstraints(1240, 960, -1, -1));
 
         lblDescuento.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         lblDescuento.setForeground(new java.awt.Color(255, 255, 255));
@@ -760,7 +733,7 @@ public class Principal extends javax.swing.JFrame {
         JPanelCompra.add(lblDescuento, new org.netbeans.lib.awtextra.AbsoluteConstraints(1200, 70, 120, 30));
 
         jLabel42.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 0, 0, 0, new java.awt.Color(0, 0, 0)));
-        JPanelCompra.add(jLabel42, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 930, 270, 10));
+        JPanelCompra.add(jLabel42, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 980, 1340, 10));
 
         lblCancelarCompra.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/quitarProductoIcon.png"))); // NOI18N
         lblCancelarCompra.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -769,7 +742,7 @@ public class Principal extends javax.swing.JFrame {
                 lblCancelarCompraMouseClicked(evt);
             }
         });
-        JPanelCompra.add(lblCancelarCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 820, -1, 80));
+        JPanelCompra.add(lblCancelarCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 870, -1, 80));
 
         lblAceptarCompra.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblAceptarCompra.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/agregarProductoIcon.png"))); // NOI18N
@@ -779,21 +752,7 @@ public class Principal extends javax.swing.JFrame {
                 lblAceptarCompraMouseClicked(evt);
             }
         });
-        JPanelCompra.add(lblAceptarCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(1240, 820, -1, 80));
-
-        jLabel44.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 0, 1, new java.awt.Color(0, 0, 0)));
-        JPanelCompra.add(jLabel44, new org.netbeans.lib.awtextra.AbsoluteConstraints(1250, 390, 10, 190));
-
-        jLabel45.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 0, 0, 0, new java.awt.Color(0, 0, 0)));
-        JPanelCompra.add(jLabel45, new org.netbeans.lib.awtextra.AbsoluteConstraints(1149, 480, 90, 10));
-
-        jLabel47.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
-        jLabel47.setText("Agregar Producto");
-        JPanelCompra.add(jLabel47, new org.netbeans.lib.awtextra.AbsoluteConstraints(1145, 450, -1, -1));
-
-        jLabel48.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
-        jLabel48.setText("Quitar Producto");
-        JPanelCompra.add(jLabel48, new org.netbeans.lib.awtextra.AbsoluteConstraints(1150, 500, -1, -1));
+        JPanelCompra.add(lblAceptarCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(1265, 870, -1, 80));
 
         jLabel46.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 0, 1, new java.awt.Color(255, 255, 255)));
         JPanelCompra.add(jLabel46, new org.netbeans.lib.awtextra.AbsoluteConstraints(1382, 53, 10, 190));
@@ -842,9 +801,6 @@ public class Principal extends javax.swing.JFrame {
         jLabel52.setText("/");
         JPanelCompra.add(jLabel52, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 180, 20, 20));
 
-        jLabel50.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 0, 1, new java.awt.Color(0, 0, 0)));
-        JPanelCompra.add(jLabel50, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 390, 10, 190));
-
         jLabel26.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel26.setForeground(new java.awt.Color(255, 255, 255));
         jLabel26.setText("Importe Total");
@@ -871,14 +827,12 @@ public class Principal extends javax.swing.JFrame {
         JPanelCompra.add(fondoEtiquetaCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1400, 250));
 
         lblAgregarPago.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/agregarPagoIcon.png"))); // NOI18N
-        JPanelCompra.add(lblAgregarPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(1167, 705, -1, -1));
+        JPanelCompra.add(lblAgregarPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 875, -1, -1));
 
-        jLabel55.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
+        jLabel55.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel55.setForeground(new java.awt.Color(0, 0, 0));
         jLabel55.setText("Agregar Pago");
-        JPanelCompra.add(jLabel55, new org.netbeans.lib.awtextra.AbsoluteConstraints(1164, 788, -1, -1));
-
-        jLabel56.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 0, 0, 0, new java.awt.Color(0, 0, 0)));
-        JPanelCompra.add(jLabel56, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 810, 270, 10));
+        JPanelCompra.add(jLabel55, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 960, -1, -1));
 
         JPanelPrincipal.add(JPanelCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 0, 1400, 1000));
 
@@ -1058,22 +1012,30 @@ public class Principal extends javax.swing.JFrame {
         DefaultTableModel tblModel = (DefaultTableModel) tablaCarrito.getModel();
         
         int Fila = tablaStockProductos.getSelectedRow();
-        int cantCarr = tablaCarrito.getRowCount();
-
-        boolean loencontro=false;
-        int cod_selec = (int)tablaStockProductos.getValueAt(Fila, 0);
-        for(int d = 0;  d < cantCarr;  d++){
-            if((int)tablaCarrito.getValueAt(d, 0) == cod_selec){
-                short w = (short)tablaCarrito.getValueAt(d, 2);
-                tablaCarrito.setValueAt((short)(w + 1), d, 2);
-                loencontro = true;
-                break;
+        short stock = (short) tablaStockProductos.getValueAt(Fila, 5);
+        
+        if(stock != 0){
+            
+            int cantCarr = tablaCarrito.getRowCount();
+        
+            tablaStockProductos.setValueAt((short)(stock - (short)1), Fila, 5);
+            boolean loencontro=false;
+            int cod_selec = (int)tablaStockProductos.getValueAt(Fila, 0);
+            for(int d = 0;  d < cantCarr;  d++){
+                if((int)tablaCarrito.getValueAt(d, 0) == cod_selec){
+                    short w = (short)tablaCarrito.getValueAt(d, 2);
+                    tablaCarrito.setValueAt((short)(w + 1), d, 2);
+                    loencontro = true;
+                    break;
+                }
             }
+            if(!loencontro){
+                Object[] datos = {(int)tablaStockProductos.getValueAt(Fila, 0),(String)tablaStockProductos.getValueAt(Fila, 3), (short) 1, (float)tablaStockProductos.getValueAt(Fila, 4)};
+                tblModel.addRow(datos);
+            }
+            
         }
-        if(!loencontro){
-            Object[] datos = {(int)tablaStockProductos.getValueAt(Fila, 0),(String)tablaStockProductos.getValueAt(Fila, 3), (short) 1, (float)tablaStockProductos.getValueAt(Fila, 4)};
-            tblModel.addRow(datos);
-        }
+        
     }//GEN-LAST:event_tablaStockProductosMouseClicked
 
     private void lblactualizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblactualizarMouseClicked
@@ -1106,28 +1068,37 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_lblactualizarMouseClicked
 
-    private void lblAgregarProductoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAgregarProductoMouseClicked
-        // TODO add your handling code here:
-        if(tablaStockProductos.getSelectedRow() == -1){
-            JOptionPane.showMessageDialog(null,"Necesita seleccionar un producto");
-        }
-        else{
-            DefaultTableModel tblModel = (DefaultTableModel) tablaCarrito.getModel();
-            tblModel.addRow(datosProducto);
-            
-        }
-        
-        
-    }//GEN-LAST:event_lblAgregarProductoMouseClicked
-
     private void lblRegistrarPagoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRegistrarPagoMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_lblRegistrarPagoMouseClicked
 
     private void tablaCarritoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaCarritoMouseClicked
-        // TODO add your handling code here:
         
-        /// IMPLEMENTAR QUITAR PRODUCTO CANTIDAD
+        DefaultTableModel tblModel = (DefaultTableModel) tablaCarrito.getModel();
+        //int Fila = (int) tablaCarrito.getSelectedRow();
+        //short cantidad = (short)tablaCarrito.getValueAt(Fila, 2);
+
+        int Fila = tablaCarrito.getSelectedRow();
+        if (Fila != - 1) {
+
+            int cantCarr = tablaStockProductos.getRowCount();
+
+            int cod_selec = (int) tablaCarrito.getValueAt(Fila, 0);
+            for (int d = 0; d < cantCarr; d++) {
+                if ((int) tablaStockProductos.getValueAt(d, 0) == cod_selec) {
+                    short w = (short) tablaStockProductos.getValueAt(d, 5);
+                    tablaStockProductos.setValueAt((short) (w + 1), d, 5);
+                    break;
+                }
+            }
+
+            tablaCarrito.setValueAt((short) (((short) tablaCarrito.getValueAt((int) tablaCarrito.getSelectedRow(), 2)) - 1), (int) tablaCarrito.getSelectedRow(), 2);
+            if ((short) tablaCarrito.getValueAt((int) tablaCarrito.getSelectedRow(), 2) == 0) {
+                tblModel.removeRow((int) tablaCarrito.getSelectedRow());
+            }
+
+        }
+
     }//GEN-LAST:event_tablaCarritoMouseClicked
 
     private void lblCancelarCompraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCancelarCompraMouseClicked
@@ -1212,7 +1183,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
@@ -1227,22 +1197,15 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel40;
     private javax.swing.JLabel jLabel42;
-    private javax.swing.JLabel jLabel44;
-    private javax.swing.JLabel jLabel45;
     private javax.swing.JLabel jLabel46;
-    private javax.swing.JLabel jLabel47;
-    private javax.swing.JLabel jLabel48;
     private javax.swing.JLabel jLabel49;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel50;
     private javax.swing.JLabel jLabel51;
     private javax.swing.JLabel jLabel52;
     private javax.swing.JLabel jLabel53;
     private javax.swing.JLabel jLabel54;
     private javax.swing.JLabel jLabel55;
-    private javax.swing.JLabel jLabel56;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -1255,7 +1218,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel lblAceptarCompra;
     private javax.swing.JLabel lblAgregarCliente;
     private javax.swing.JLabel lblAgregarPago;
-    private javax.swing.JLabel lblAgregarProducto;
     private javax.swing.JTextField lblAnioCompra;
     private javax.swing.JTextField lblApellidoCliente;
     private javax.swing.JLabel lblBalance;
@@ -1271,7 +1233,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel lblPedidos;
     private javax.swing.JLabel lblProductos;
     private javax.swing.JLabel lblPromociones;
-    private javax.swing.JLabel lblQuitarProducto;
     private javax.swing.JLabel lblRegistrarCompra;
     private javax.swing.JLabel lblRegistrarCompra1;
     private javax.swing.JLabel lblRegistrarCompra3;
