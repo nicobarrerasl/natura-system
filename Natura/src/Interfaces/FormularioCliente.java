@@ -328,7 +328,7 @@ public class FormularioCliente extends javax.swing.JFrame {
         jLabel10.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("Direccion de Trabajo");
-        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 550, 150, 30));
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 570, 150, 20));
 
         tf_DT.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         tf_DT.setForeground(new java.awt.Color(255, 255, 255));
@@ -340,7 +340,7 @@ public class FormularioCliente extends javax.swing.JFrame {
                 tf_DTActionPerformed(evt);
             }
         });
-        jPanel1.add(tf_DT, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 560, 390, 20));
+        jPanel1.add(tf_DT, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 570, 390, 20));
 
         tf_ZT.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         tf_ZT.setForeground(new java.awt.Color(255, 255, 255));
@@ -352,17 +352,17 @@ public class FormularioCliente extends javax.swing.JFrame {
                 tf_ZTActionPerformed(evt);
             }
         });
-        jPanel1.add(tf_ZT, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 600, 390, 20));
+        jPanel1.add(tf_ZT, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 610, 390, 20));
 
         jLabel11.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("Zona de Trabajo");
-        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 600, 150, 30));
+        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 610, 150, 20));
 
         jLabel12.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setText("Ocupacion");
-        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 640, 150, 30));
+        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 653, 150, -1));
 
         w1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         w1.setForeground(new java.awt.Color(255, 0, 0));
@@ -404,7 +404,7 @@ public class FormularioCliente extends javax.swing.JFrame {
                 tf_OcupActionPerformed(evt);
             }
         });
-        jPanel1.add(tf_Ocup, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 640, 390, 20));
+        jPanel1.add(tf_Ocup, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 650, 390, 20));
 
         jSeparator6.setForeground(new java.awt.Color(255, 255, 255));
         jSeparator6.setFont(new java.awt.Font("Arial", 0, 3)); // NOI18N
