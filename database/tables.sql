@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS Compra (
 
 CREATE TABLE IF NOT EXISTS Producto (
 
-  codProducto             INT 		UNIQUE,
+  codProducto             INT 		        UNIQUE,
   prod_cat                VARCHAR(30) 		NOT NULL, 
   prod_linea              VARCHAR(30) 		NOT NULL, 
   prod_nombre             VARCHAR(30) 		NOT NULL, 

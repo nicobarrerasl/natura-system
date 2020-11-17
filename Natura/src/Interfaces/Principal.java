@@ -11,7 +11,6 @@ import java.awt.Font;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -46,6 +45,10 @@ public class Principal extends javax.swing.JFrame {
         tablaStockProductos.getTableHeader().setBackground(Color.BLACK);
         tablaStockProductos.getTableHeader().setForeground(Color.WHITE);
         tablaStockProductos.getTableHeader().setPreferredSize(new Dimension(40, 40));
+        tablaClientes.setAutoCreateRowSorter(true);
+        tablaCarrito.setAutoCreateRowSorter(true);
+        tablaStockProductos.setAutoCreateRowSorter(true);
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -1111,8 +1114,8 @@ public class Principal extends javax.swing.JFrame {
         /// * Alta compraProducto
         /// * Obtener la cantidad de producto d Carrito
         /// * Crear un objeto por cada instancia de Carrito
-        /// Control de stock
-        /// Restar stock, actualizando la bd, obteniendo los valores de los campos en tablaProductoCompra
+        /// * Control de stock
+        /// * Restar stock, actualizando la bd, obteniendo los valores de los campos en tablaProductoCompra
         /// * control de que ingrese la fecha
         /// * Calcular el importe total
         /// * Tomar valor de descuento
@@ -1186,15 +1189,9 @@ public class Principal extends javax.swing.JFrame {
             
             
         }
-        
-        
-        
-        
-        
-        
-        
-        
-        
+        JPanelCompra.setVisible(false);
+        JPanelCliente.setVisible(true);
+        JOptionPane.showMessageDialog(this, "SE REALIZO LA COMPRA CORRECTAMENTE");
     }//GEN-LAST:event_lblAceptarCompraMouseClicked
 
     public static void main(String args[]) {
