@@ -25,7 +25,7 @@ public class Principal extends javax.swing.JFrame {
     short codCliente;
     public static int cantidadPedido;
     Object[] datosProducto;
-
+    
     public Principal() {
         initComponents();
         JPanelCliente.setVisible(false);
@@ -48,7 +48,6 @@ public class Principal extends javax.swing.JFrame {
         tablaClientes.setAutoCreateRowSorter(true);
         tablaCarrito.setAutoCreateRowSorter(true);
         tablaStockProductos.setAutoCreateRowSorter(true);
-        
     }
 
     @SuppressWarnings("unchecked")
@@ -534,6 +533,7 @@ public class Principal extends javax.swing.JFrame {
 
         lblImporteTotal.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         lblImporteTotal.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        lblImporteTotal.setText("0.0");
         lblImporteTotal.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
         lblImporteTotal.setOpaque(false);
         lblImporteTotal.addActionListener(new java.awt.event.ActionListener() {
@@ -726,7 +726,7 @@ public class Principal extends javax.swing.JFrame {
         lblDescuento.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         lblDescuento.setForeground(new java.awt.Color(255, 255, 255));
         lblDescuento.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        lblDescuento.setText("0");
+        lblDescuento.setText("0.0");
         lblDescuento.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
         lblDescuento.setOpaque(false);
         lblDescuento.addActionListener(new java.awt.event.ActionListener() {
@@ -765,7 +765,7 @@ public class Principal extends javax.swing.JFrame {
         jLabel49.setForeground(new java.awt.Color(255, 255, 255));
         jLabel49.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel49.setText("Fecha de Compra");
-        JPanelCompra.add(jLabel49, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 200, 290, 30));
+        JPanelCompra.add(jLabel49, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 200, 160, 30));
 
         lblDiaCompra.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         lblDiaCompra.setForeground(new java.awt.Color(255, 255, 255));
@@ -889,15 +889,15 @@ public class Principal extends javax.swing.JFrame {
     private void lblclientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblclientesMouseClicked
         JPanelPrincipalDer.setVisible(false);
         JPanelCompra.setVisible(false);
-        JPanelCliente.setVisible(true);        
+        JPanelCliente.setVisible(true);
         List<Cliente> a;
         try {
-            PostgreSQL_Cliente DAO_Cliente = new PostgreSQL_Cliente (PostgreSQL_Singleton.getInstance().getConnection());
+            PostgreSQL_Cliente DAO_Cliente = new PostgreSQL_Cliente(PostgreSQL_Singleton.getInstance().getConnection());
             a = DAO_Cliente.obtener_todos();
-            
+
             DefaultTableModel tblModel = (DefaultTableModel) tablaClientes.getModel();
             tblModel.setRowCount(0);
-            for(Cliente clt : a) {
+            for (Cliente clt : a) {
                 int age = new calcular_edad().calculatePeriod(clt.getFechaNac());
                 Object[] datos = {clt.getCodCliente(), clt.getApellido(), clt.getNombre(), clt.getFechaNac(), age, clt.getTelefono(), clt.getDireccion(), clt.getZonaVivienda(), "$ " + clt.getSaldo()};
                 tblModel.addRow(datos);
@@ -906,13 +906,12 @@ public class Principal extends javax.swing.JFrame {
             DefaultTableCellRenderer leftRenderer = new DefaultTableCellRenderer();
             leftRenderer.setHorizontalAlignment(SwingConstants.LEFT);
 
-            for(int i = 0;i<tablaClientes.getColumnCount();i++){
+            for (int i = 0; i < tablaClientes.getColumnCount(); i++) {
                 tablaClientes.getColumnModel().getColumn(i).setCellRenderer(leftRenderer);
             }
         } catch (SQLException ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
     }//GEN-LAST:event_lblclientesMouseClicked
 
     private void lblProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblProductosMouseClicked
@@ -1037,7 +1036,6 @@ public class Principal extends javax.swing.JFrame {
                 Object[] datos = {(int)tablaStockProductos.getValueAt(Fila, 0),(String)tablaStockProductos.getValueAt(Fila, 3), (short) 1, (float)tablaStockProductos.getValueAt(Fila, 4)};
                 tblModel.addRow(datos);
             }
-            
         }
         
     }//GEN-LAST:event_tablaStockProductosMouseClicked
@@ -1076,8 +1074,6 @@ public class Principal extends javax.swing.JFrame {
     private void tablaCarritoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaCarritoMouseClicked
         
         DefaultTableModel tblModel = (DefaultTableModel) tablaCarrito.getModel();
-        //int Fila = (int) tablaCarrito.getSelectedRow();
-        //short cantidad = (short)tablaCarrito.getValueAt(Fila, 2);
 
         int Fila = tablaCarrito.getSelectedRow();
         if (Fila != - 1) {
@@ -1092,12 +1088,11 @@ public class Principal extends javax.swing.JFrame {
                     break;
                 }
             }
-
+            
             tablaCarrito.setValueAt((short) (((short) tablaCarrito.getValueAt((int) tablaCarrito.getSelectedRow(), 2)) - 1), (int) tablaCarrito.getSelectedRow(), 2);
             if ((short) tablaCarrito.getValueAt((int) tablaCarrito.getSelectedRow(), 2) == 0) {
                 tblModel.removeRow((int) tablaCarrito.getSelectedRow());
             }
-
         }
 
     }//GEN-LAST:event_tablaCarritoMouseClicked
@@ -1146,11 +1141,6 @@ public class Principal extends javax.swing.JFrame {
 //
 // ------------- CantFilas contiene la cantidad de filas, si hay 3 filas, CantFilas = 3
 
-
-                //
-                //Producto producto = new Producto();
-                //CompraProducto compraP = new CompraProducto();
-                
                 Cliente comprador = DaoCliente.obtener_uno(codCliente);
                 
                 String fecha_compra = lblAnioCompra.getText() + "-" + lblMesCompra.getText() + "-" + lblDiaCompra.getText();
@@ -1181,6 +1171,9 @@ public class Principal extends javax.swing.JFrame {
                 }
                 comprador.setSaldo(Importe_Total - Float.parseFloat(lblDescuento.getText())); // Hay que ver que pija devuelve eso
                 DaoCliente.modificar(comprador);
+                JOptionPane.showMessageDialog(this, "SE REALIZO LA COMPRA CORRECTAMENTE");
+                JPanelCompra.setVisible(false);
+                JPanelCliente.setVisible(true);
                 
             } catch (SQLException ex) {
                 Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
@@ -1189,9 +1182,8 @@ public class Principal extends javax.swing.JFrame {
             
             
         }
-        JPanelCompra.setVisible(false);
-        JPanelCliente.setVisible(true);
-        JOptionPane.showMessageDialog(this, "SE REALIZO LA COMPRA CORRECTAMENTE");
+        
+        
     }//GEN-LAST:event_lblAceptarCompraMouseClicked
 
     public static void main(String args[]) {
@@ -1220,6 +1212,7 @@ public class Principal extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new Principal().setVisible(true);
             }
