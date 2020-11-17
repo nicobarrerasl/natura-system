@@ -11,5 +11,20 @@ VALUES (755895, 'MAMA y BEBE', 'TODO DIA', 'KAIAK', 999.1, 5),
        (945895, 'HOMBRE', 'VER PARA CREER', 'BODY SPLASH', 559.9, 10),
        (545854, 'MUJER', 'CREMAS', 'MANUSA', 1500, 7),
        (122357, 'MUJER', 'EKOS', 'ESSENSIAL', 230.5, 2)
+       
+INSERT INTO 
+    Compra (compra_fecha,compra_saldo,codCliente)
+VALUES ( '2020-11-16','4320.10',  '1'),
+       ( '2020-10-16','420.10',  '1')
 
-select * from cliente
+INSERT INTO 
+    CompraProducto (codProducto,codCompra,cantidad)
+VALUES  ( '755895','1',  '10'),
+        ( '945895','1',  '15'),
+        ( '545854','2',  '5'),
+        ( '122357','2',  '20')
+
+
+select * from Cliente
+
+select * from Compra

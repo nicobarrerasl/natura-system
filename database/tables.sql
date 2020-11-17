@@ -35,6 +35,18 @@ CREATE TABLE IF NOT EXISTS Producto (
   PRIMARY KEY (codProducto)
 );
 
+CREATE TABLE IF NOT EXISTS CompraProducto (
+
+  codProducto       INT             NOT NULL,
+  codCompra		    INT 	        NOT NULL,
+  cantidad          SMALLINT        NOT NULL,
+  status            SMALLINT          DEFAULT 1,
+  
+  FOREIGN KEY (codProducto) REFERENCES Producto(codProducto),
+  FOREIGN KEY (codCompra) REFERENCES Compra(codCompra),
+  PRIMARY KEY (codCompra,codProducto)
+);
+
 CREATE TABLE IF NOT EXISTS Pedido (
 
   codPedido               SMALLSERIAL 		UNIQUE,

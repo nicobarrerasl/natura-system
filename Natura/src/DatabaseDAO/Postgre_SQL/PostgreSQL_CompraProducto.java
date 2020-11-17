@@ -1,6 +1,7 @@
 package DatabaseDAO.Postgre_SQL;
+import Clases.CompraProducto;
 import Clases.Producto;
-import DatabaseDAO.productoDAO;
+import DatabaseDAO.CompraProductoDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,35 +10,31 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 
-public class PostgreSQL_Producto implements productoDAO{
+public class PostgreSQL_CompraProducto implements CompraProductoDAO{
     
-    final String INSERT = "INSERT INTO Producto(codProducto, prod_cat, prod_linea, prod_nombre, prod_precio, prod_cant) VALUES (?, ?, ?, ?, ?, ?)";                          
-    final String UPDATE = "UPDATE Producto SET  codProducto= ?, prod_cat= ?, prod_linea= ?, prod_nombre= ?, prod_precio= ?, prod_cant= ? WHERE codProducto = ?";
-    final String DELETE = "UPDATE Producto SET status = 0 WHERE codProducto = ?";
-    final String GETALL = "SELECT * FROM Producto WHERE status = 1"; 
-    final String GETONE = "SELECT * FROM Producto WHERE codProducto = ? AND status = 1";
-    final String ERR = "ERROR EN QUERY:DB";
+    final String INSERT = "INSERT INTO CompraProducto( codCompra, codProducto, cantidad) VALUES (?, ?, ?)";              // 3 ?  
+    final String DELETE = "UPDATE CompraProducto SET status = 0 WHERE codProducto = ? AND codCompra = ?";
+    final String UPDATE = "UPDATE CompraProducto SET  codCompra= ?, codProducto= ?, cantidad= ? WHERE codProducto = ? AND codCompra = ?"; // 5 ?
+    final String GETALL = "SELECT * FROM CompraProducto WHERE status = 1"; 
+    final String GETONE = "SELECT * FROM CompraProducto WHERE codProducto = ? AND codCompra = ? AND status = 1";
+    final String ERR    = "ERROR EN QUERY:DB";
     private Connection conn;
-    public PostgreSQL_Producto(Connection conn){
+    public PostgreSQL_CompraProducto(Connection conn){
         this.conn = conn;
     }
 
     @Override
-    public void insertar(Producto a) {
+    public void insertar(CompraProducto a) {
         PreparedStatement stat;
         try{
             stat = conn.prepareStatement(INSERT);
-            stat.setInt(1,  a.getCodProducto());
-            stat.setString(2,  a.getCategoria());
-            stat.setString(3,  a.getLinea());
-            stat.setString(4,  a.getNombre());
-            stat.setFloat(5,  a.getPrecio());
-            stat.setShort(6,  a.getCantidad());
+            stat.setShort(1,    a.getCodCompra());
+            stat.setInt  (2,    a.getCodProducto());
+            stat.setInt  (3,    a.getCantidad());
             
             if(stat.executeUpdate()== 0){
-                // ERROR
+                System.out.println(stat.getWarnings());// ERROR
             }
-            
             stat.close();
         }
         catch(SQLException ex){
@@ -48,11 +45,12 @@ public class PostgreSQL_Producto implements productoDAO{
     }
 
     @Override
-    public void eliminar(Producto a) {
+    public void eliminar(CompraProducto a) {
         PreparedStatement stat;
         try{
             stat = conn.prepareStatement(DELETE);
-            stat.setInt(1,  a.getCodProducto());
+            stat.setInt  (1,  a.getCodProducto());
+            stat.setShort(2,  a.getCodCompra());
             if(stat.executeUpdate()== 0){
                 // ERROR
             }
@@ -66,16 +64,13 @@ public class PostgreSQL_Producto implements productoDAO{
     }
 
     @Override
-    public void modificar(Producto a) {
+    public void modificar(CompraProducto a) {
         PreparedStatement stat;
         try{
             stat = conn.prepareStatement(UPDATE);
-            stat.setInt(1,  a.getCodProducto());
-            stat.setString  (2,  a.getCategoria());
-            stat.setString(3,  a.getLinea());
-            stat.setString  (4,  a.getNombre());
-            stat.setFloat(5,  a.getPrecio());
-            stat.setShort(6,  a.getCantidad());
+            stat.setShort(1,    a.getCodCompra());
+            stat.setInt  (2,    a.getCodProducto());
+            stat.setInt  (3,    a.getCantidad());
             
             if(stat.executeUpdate()== 0){
                 // ERROR
@@ -89,23 +84,20 @@ public class PostgreSQL_Producto implements productoDAO{
         }
     }
 
-    private Producto convertir (ResultSet rs) throws SQLException {
-        int   cod=     rs.getInt("codProducto");
-        String  cat =    rs.getString("prod_cat");
-        String  lin =    rs.getString("prod_linea");
-        String   nom =   rs.getString("prod_nombre");
-        Float  pre =   rs.getFloat("prod_precio");
-        short  cant =    rs.getShort("prod_cant");
+    private CompraProducto convertir (ResultSet rs) throws SQLException {
+        int   codprod =      rs.getInt("codProducto");
+        short codcomp =      rs.getShort("codProducto");
+        short cant =         rs.getShort("cantidad");
         
-        Producto producto = new Producto(cod,cat,lin,nom,pre,cant);
-        return producto;
+        CompraProducto compraprod = new CompraProducto(codcomp,codprod,cant);
+        return compraprod;
     }
     
     @Override
-    public List<Producto> obtener_todos() {
+    public List<CompraProducto> obtener_todos() {
         PreparedStatement stat;
         ResultSet rs;
-        List<Producto> a = new ArrayList<>();
+        List<CompraProducto> a = new ArrayList<>();
         try{
             stat = conn.prepareStatement(GETALL);
             rs = stat.executeQuery(); 
@@ -123,14 +115,14 @@ public class PostgreSQL_Producto implements productoDAO{
         return a;
     }
 
-    @Override
-    public Producto obtener_uno(Integer id) {
+    public CompraProducto obtener_uno(int codprod,short codcomp) {
         PreparedStatement stat;
         ResultSet rs;
-        Producto a = null;
+        CompraProducto a = null;
         try{
             stat = conn.prepareStatement(GETONE);
-            stat.setInt(1,id);
+            stat.setInt  (1,    codprod);
+            stat.setShort(2,    codcomp);
             rs = stat.executeQuery(); 
             if(rs.next()){
                a = convertir(rs); 
@@ -146,4 +138,10 @@ public class PostgreSQL_Producto implements productoDAO{
         }
         return a;
     }
+
+    @Override
+    public CompraProducto obtener_uno(Short a) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }
