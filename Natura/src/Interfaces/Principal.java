@@ -739,7 +739,7 @@ public class Principal extends javax.swing.JFrame {
         jLabel42.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 0, 0, 0, new java.awt.Color(0, 0, 0)));
         JPanelCompra.add(jLabel42, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 980, 1340, 10));
 
-        lblCancelarCompra.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/quitarProductoIcon.png"))); // NOI18N
+        lblCancelarCompra.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cancelarCompraIcon.png"))); // NOI18N
         lblCancelarCompra.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblCancelarCompra.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -749,7 +749,7 @@ public class Principal extends javax.swing.JFrame {
         JPanelCompra.add(lblCancelarCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 870, -1, 80));
 
         lblAceptarCompra.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblAceptarCompra.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/agregarProductoIcon.png"))); // NOI18N
+        lblAceptarCompra.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/registrarCompra.png"))); // NOI18N
         lblAceptarCompra.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblAceptarCompra.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
