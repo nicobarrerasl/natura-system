@@ -1,16 +1,17 @@
 package Interfaces;
 
-import Clases.Cliente;
-import Clases.Producto;
+import Clases.*;
+import Clases_Utilidad.Control_vacio;
 import Clases_Utilidad.calcular_edad;
-import DatabaseDAO.Postgre_SQL.PostgreSQL_Cliente;
-import DatabaseDAO.Postgre_SQL.PostgreSQL_Producto;
+import DatabaseDAO.Postgre_SQL.*;
 import DatabaseSingleton.PostgreSQL_Singleton;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -1085,9 +1086,6 @@ public class Principal extends javax.swing.JFrame {
             DefaultTableModel tblModel = (DefaultTableModel) tablaClientes.getModel();
             tblModel.setRowCount(0);
             for(Cliente clt : a) {
-                //String edad = "" + clt.getEdad();
-                //String datos[] = {clt.getCliente_apellido(), clt.getCliente_nombre(),clt.getCliente_Fnac(), edad,clt.getCliente_tel(), clt.getCliente_DV(), clt.getCliente_ZV(), clt.getCliente_DT() ,clt.getCliente_ZT(), clt.getCliente_ocup(), clt.getCliente_saldo().toString()};
-                //tblModel.addRow(datos);
                 int age = new calcular_edad().calculatePeriod(clt.getFechaNac());
                 Object[] datos = {clt.getCodCliente(), clt.getApellido(), clt.getNombre(), clt.getFechaNac(), age, clt.getTelefono(), clt.getDireccion(), clt.getZonaVivienda(), "$ " + clt.getSaldo()};
                 tblModel.addRow(datos);
@@ -1137,14 +1135,86 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_lblCancelarCompraMouseClicked
 
     private void lblAceptarCompraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAceptarCompraMouseClicked
-        /// REGISTRAR LA COMPRA
-        /// Alta compra
-        /// Alta compraProducto
-        /// Obtener la cantidad de producto d Carrito
-        /// Crear un objeto por cada instancia de Carrito
+        /// * REGISTRAR LA COMPRA
+        /// * Alta compra
+        /// * Alta compraProducto
+        /// * Obtener la cantidad de producto d Carrito
+        /// * Crear un objeto por cada instancia de Carrito
         /// Control de stock
-        /// Restar stock
-        /// control de que ingrese la fecha
+        /// Restar stock, actualizando la bd, obteniendo los valores de los campos en tablaProductoCompra
+        /// * control de que ingrese la fecha
+        /// * Calcular el importe total
+        /// * Tomar valor de descuento
+        Control_vacio a = new Control_vacio();
+        int CantFilas = tablaCarrito.getRowCount();
+        if( a.retorno(lblDiaCompra.getText()) || a.retorno(lblMesCompra.getText()) || a.retorno(lblAnioCompra.getText()) ){
+            //w1.setVisible(true);
+            JOptionPane.showMessageDialog(null,"Los campos marcados con asterisco son obligatorios");
+        }
+        else if( CantFilas == 0){
+            JOptionPane.showMessageDialog(null,"El carrito esta vacio");
+        }
+        else{
+            try {
+                Connection con = PostgreSQL_Singleton.getInstance().getConnection();
+                
+                PostgreSQL_Compra         DaoCompra    = new PostgreSQL_Compra(con);
+                PostgreSQL_Producto       DaoProd      = new PostgreSQL_Producto(con);
+                PostgreSQL_CompraProducto DaoCompraP   = new PostgreSQL_CompraProducto(con);
+                PostgreSQL_Cliente        DaoCliente   = new PostgreSQL_Cliente(con);
+                
+                
+// -------------Atributos Compra :   short codCompra /  String  compra_fecha / float  compra_saldo/  Cliente cliente / ArrayList <Producto> prod
+//
+// -------------Atributos Producto :  int codProducto / String categoria /    String linea /        String  nombre /  float     precio /   short cantidad
+//
+// -------------Atributos CompraProducto : short codCompra / int  codProducto / short cantidad
+//
+// ------------- CantFilas contiene la cantidad de filas, si hay 3 filas, CantFilas = 3
+
+
+                //
+                //Producto producto = new Producto();
+                //CompraProducto compraP = new CompraProducto();
+                
+                Cliente comprador = DaoCliente.obtener_uno(codCliente);
+                
+                String fecha_compra = lblAnioCompra.getText() + "-" + lblMesCompra.getText() + "-" + lblDiaCompra.getText();
+                
+                ArrayList <Producto> ArrayProd = new ArrayList();
+                
+                float Importe_Total = 0;
+                for(int d = 0;  d < CantFilas;  d++){
+                    
+                    Producto nuevo = DaoProd.obtener_uno((int)tablaCarrito.getValueAt(d, 0));
+                    short cant = ((short)tablaCarrito.getValueAt(d, 2));
+                    nuevo.setCantidad((short)(nuevo.getCantidad() - cant));
+                    DaoProd.modificar(nuevo);
+                    ArrayProd.add(nuevo); 
+                    float valor_unidad= (float)tablaCarrito.getValueAt(d, 3);
+                    Importe_Total += valor_unidad * cant;
+                }
+                
+                System.out.println(Importe_Total);
+                Compra compra = new Compra((short)0,fecha_compra,Importe_Total,comprador,ArrayProd);
+                
+                DaoCompra.insertar(compra);
+
+                short id = DaoCompra.lastid().shortValue(); // PROBAR SI DEVUELVE EL ID CORRECTO DE COMPRA
+                for(int d = 0;  d < CantFilas;  d++){
+                    CompraProducto f = new CompraProducto(id,ArrayProd.get(d).getCodProducto(),(short)tablaCarrito.getValueAt(d, 2));
+                    DaoCompraP.insertar(f);
+                }
+                comprador.setSaldo(Importe_Total - Float.parseFloat(lblDescuento.getText())); // Hay que ver que pija devuelve eso
+                DaoCliente.modificar(comprador);
+                
+            } catch (SQLException ex) {
+                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            
+            
+        }
         
         
         
