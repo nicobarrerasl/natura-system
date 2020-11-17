@@ -24,22 +24,22 @@ VALUES ('Barrera', 'Nicolas', '1995-05-23', '266-5033303', 'Sarmiento 790', 'Cen
 
 INSERT INTO 
     Producto(codProducto, prod_cat, prod_linea, prod_nombre, prod_precio, prod_cant) 
-VALUES (755895, 'MAMA y BEBE', 'TODO DIA', 'KAIAK', 999.1, 5),
-       (945895, 'HOMBRE', 'VER PARA CREER', 'SPLASH', 559.9, 10),
+VALUES (755295, 'MAMA y BEBE', 'TODO DIA', 'KAIAK', 999.1, 5),
+       (245895, 'HOMBRE', 'VER PARA CREER', 'SPLASH', 559.9, 10),
        (545854, 'MUJER', 'CREMAS', 'MANSA', 1500, 7),
        (122357, 'MUJER', 'EKOS', 'ESSENCIAL', 230.5, 2),
-       (857823, 'PERFUMERIA', 'MUJER', 'ESSENCIAL', 3300, 4),
+       (852823, 'PERFUMERIA', 'MUJER', 'ESSENCIAL', 3300, 4),
        (282833, 'CREMAS', 'HOMBRES', 'URBE', 320, 1),
        (157773, 'MAMA Y BEBE', 'CABELLO', 'SUPREME', 1200.2, 2),
-       (782333, 'TODODIA', 'EKOS', 'PECAN', 990, 5),
-       (85783, 'CHRONOS', 'MUJER', 'NUEZ', 3110, 5),
+       (722333, 'TODODIA', 'EKOS', 'PECAN', 990, 5),
+       (83783,  'CHRONOS', 'MUJER', 'NUEZ', 3110, 5),
        (857823, 'NATURE', 'SHAPOO', 'TOINTOIN', 760.50, 9),
-       (45463, 'FOTO EQUILIBRIO', 'FACES', 'IDRATANTE', 557.2, 8),
-       (858343, 'CREER PARA VER', 'PLANT', 'ANDIROBA', 1499, 11),
-       (83343, 'CREMAS', 'PLANT', 'CASTAÑA', 1700.5, 4),
-       (85343, 'IDRATACION Y CUIDADO', 'MUJER', 'CUMARU', 880, 4),
-       (823443, 'MAQUILLAJE', 'MUJER', 'MARACUYA', 3499, 10),
-       (806983, 'COLONIAS', 'MASCULINO', 'ASAI', 2300, 5)
+       (45463,  'FOTO EQUILIBRIO', 'FACES', 'IDRATANTE', 557.2, 8),
+       (858443, 'CREER PARA VER', 'PLANT', 'ANDIROBA', 1499, 11),
+       (83363,  'CREMAS', 'PLANT', 'CASTAÑA', 1700.5, 4),
+       (85323,  'IDRATACION Y CUIDADO', 'MUJER', 'CUMARU', 880, 4),
+       (823243, 'MAQUILLAJE', 'MUJER', 'MARACUYA', 3499, 10),
+       (806183, 'COLONIAS', 'MASCULINO', 'ASAI', 2300, 5)
 
        
 INSERT INTO 

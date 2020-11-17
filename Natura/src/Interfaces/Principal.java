@@ -106,7 +106,7 @@ public class Principal extends javax.swing.JFrame {
         lblImporteTotal = new javax.swing.JTextField();
         jLabel23 = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
+        ScrollPaneCarrito = new javax.swing.JScrollPane();
         tablaCarrito = new javax.swing.JTable();
         jTextField6 = new javax.swing.JTextField();
         jLabel28 = new javax.swing.JLabel();
@@ -138,11 +138,7 @@ public class Principal extends javax.swing.JFrame {
         lblAgregarPago = new javax.swing.JLabel();
         jLabel55 = new javax.swing.JLabel();
         JPanelPrincipalDer = new javax.swing.JPanel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
+        PanelPrinDerFondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Natura");
@@ -152,7 +148,7 @@ public class Principal extends javax.swing.JFrame {
         JPanelPrincipal.setBackground(new java.awt.Color(0, 0, 0));
         JPanelPrincipal.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lblminimizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/minimizarIcon.png"))); // NOI18N
+        lblminimizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/minimizarIconFC.png"))); // NOI18N
         lblminimizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblminimizar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         lblminimizar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -162,7 +158,7 @@ public class Principal extends javax.swing.JFrame {
         });
         JPanelPrincipal.add(lblminimizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1620, 10, 30, 20));
 
-        lblcerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cerrarIcon.png"))); // NOI18N
+        lblcerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cerrarIconFC.png"))); // NOI18N
         lblcerrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblcerrar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         lblcerrar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -551,7 +547,7 @@ public class Principal extends javax.swing.JFrame {
         jLabel27.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 1, 0, 0, new java.awt.Color(255, 255, 255)));
         JPanelCompra.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 30, 10, 190));
 
-        jScrollPane2.setPreferredSize(new java.awt.Dimension(452, 415));
+        ScrollPaneCarrito.setPreferredSize(new java.awt.Dimension(452, 415));
 
         tablaCarrito.setBackground(new java.awt.Color(247, 247, 247));
         tablaCarrito.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -593,7 +589,7 @@ public class Principal extends javax.swing.JFrame {
                 tablaCarritoMouseClicked(evt);
             }
         });
-        jScrollPane2.setViewportView(tablaCarrito);
+        ScrollPaneCarrito.setViewportView(tablaCarrito);
         if (tablaCarrito.getColumnModel().getColumnCount() > 0) {
             tablaCarrito.getColumnModel().getColumn(0).setMinWidth(80);
             tablaCarrito.getColumnModel().getColumn(0).setPreferredWidth(80);
@@ -606,7 +602,7 @@ public class Principal extends javax.swing.JFrame {
             tablaCarrito.getColumnModel().getColumn(3).setMaxWidth(70);
         }
 
-        JPanelCompra.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 40, 450, 180));
+        JPanelCompra.add(ScrollPaneCarrito, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 40, 450, 180));
 
         jTextField6.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jTextField6.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
@@ -844,22 +840,8 @@ public class Principal extends javax.swing.JFrame {
         JPanelPrincipalDer.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 0, 1, 1, new java.awt.Color(0, 0, 0)));
         JPanelPrincipalDer.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel9.setText("FOTO NATURA");
-        jLabel9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        JPanelPrincipalDer.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 150, 380, 260));
-
-        jLabel7.setText("Consultora # -----------");
-        JPanelPrincipalDer.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 440, -1, -1));
-
-        jLabel8.setText("Puntos: ----------");
-        JPanelPrincipalDer.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 500, -1, -1));
-
-        jLabel10.setText("Sector: ----------");
-        JPanelPrincipalDer.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 480, -1, -1));
-
-        jLabel11.setText("Gerencia: ----------");
-        JPanelPrincipalDer.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 460, -1, -1));
+        PanelPrinDerFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondoinicio.jpg"))); // NOI18N
+        JPanelPrincipalDer.add(PanelPrinDerFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1400, 1000));
 
         JPanelPrincipal.add(JPanelPrincipalDer, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 0, 1400, 1000));
 
@@ -935,7 +917,7 @@ public class Principal extends javax.swing.JFrame {
         
             JPanelCompra.setVisible(true);
             JPanelCliente.setVisible(false);
-
+            tablaCarrito.setAutoscrolls(true);
             List<Producto> a;
             try {
                 PostgreSQL_Producto DAO_Producto = new PostgreSQL_Producto (PostgreSQL_Singleton.getInstance().getConnection());
@@ -955,10 +937,17 @@ public class Principal extends javax.swing.JFrame {
                 centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
                 leftRenderer.setHorizontalAlignment(SwingConstants.LEFT);
 
-                for(int i = 0;i<tablaStockProductos.getColumnCount()-1;i++){
+                for(int i = 0;i<tablaStockProductos.getColumnCount()-2;i++){
                     tablaStockProductos.getColumnModel().getColumn(i).setCellRenderer(leftRenderer);
                 }
+                for(int i = 0;i<tablaCarrito.getColumnCount();i++){
+                    tablaCarrito.getColumnModel().getColumn(i).setCellRenderer(leftRenderer);
+                    
+                }
+                tablaCarrito.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
+                tablaCarrito.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
                 tablaStockProductos.getColumnModel().getColumn(5).setCellRenderer(centerRenderer);
+                tablaStockProductos.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
             } catch (SQLException ex) {
                 Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -1013,7 +1002,6 @@ public class Principal extends javax.swing.JFrame {
 
     private void tablaStockProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaStockProductosMouseClicked
         DefaultTableModel tblModel = (DefaultTableModel) tablaCarrito.getModel();
-        
         int Fila = tablaStockProductos.getSelectedRow();
         short stock = (short) tablaStockProductos.getValueAt(Fila, 5);
         
@@ -1074,7 +1062,6 @@ public class Principal extends javax.swing.JFrame {
     private void tablaCarritoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaCarritoMouseClicked
         
         DefaultTableModel tblModel = (DefaultTableModel) tablaCarrito.getModel();
-
         int Fila = tablaCarrito.getSelectedRow();
         if (Fila != - 1) {
 
@@ -1225,12 +1212,12 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JPanel JPanelPrincipal;
     private javax.swing.JPanel JPanelPrincipalDer;
     private javax.swing.JPanel JPanelPrincipalIzq;
+    private javax.swing.JLabel PanelPrinDerFondo;
+    private javax.swing.JScrollPane ScrollPaneCarrito;
     private javax.swing.JLabel fondoEtiquetaCliente;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
@@ -1267,11 +1254,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel54;
     private javax.swing.JLabel jLabel55;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField6;
