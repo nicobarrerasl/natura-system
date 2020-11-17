@@ -154,6 +154,29 @@ public class PostgreSQL_Compra implements compraDAO {
         return a;
         
     }
+    public Long lastid() {
+        PreparedStatement stat;
+        Long a = null;
+        ResultSet rs;
+        try{
+            stat = conn.prepareStatement("SELECT LASTVAL()");
+            rs = stat.executeQuery(); 
+            if(rs.next()){
+                a = rs.getLong(("lastval"));
+            } else{
+                JOptionPane.showMessageDialog(null,"Resultado VACIO");
+            }
+           
+            stat.close();
+            rs.close();
+            
+        }
+        catch(SQLException ex){
+            System.out.println(ex.getMessage());
+            JOptionPane.showMessageDialog(null,ERR);
+        }
+        return(a);
+    }
     
     
 }

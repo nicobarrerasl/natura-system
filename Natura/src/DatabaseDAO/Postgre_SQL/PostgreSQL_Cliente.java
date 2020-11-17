@@ -59,7 +59,7 @@ public class PostgreSQL_Cliente implements clienteDAO{
             stat.close();
         }
         catch(SQLException ex){
-            System.out.println("Fallo en ELIMINACION");
+            System.out.println("Fallo en ELIMINACION Cliente");
             System.out.println(ex.getMessage());
             JOptionPane.showMessageDialog(null,ERR);
         }
@@ -75,7 +75,8 @@ public class PostgreSQL_Cliente implements clienteDAO{
             stat.setString  (4,  a.getTelefono());
             stat.setString  (5,  a.getDireccion());
             stat.setString  (6,  a.getZonaVivienda());
-            stat.setFloat   (7, a.getSaldo());
+            stat.setFloat   (7,  a.getSaldo());
+            stat.setShort   (8,  a.getCodCliente());
             
             if(stat.executeUpdate()== 0){
                 // ERROR
@@ -83,7 +84,7 @@ public class PostgreSQL_Cliente implements clienteDAO{
             stat.close();
         }
         catch(SQLException ex){
-            System.out.println("Fallo en UPDATE");
+            System.out.println("Fallo en UPDATE Cliente");
             System.out.println(ex.getMessage());
             JOptionPane.showMessageDialog(null,ERR);
         }
@@ -98,7 +99,7 @@ public class PostgreSQL_Cliente implements clienteDAO{
         String  tel =    rs.getString("cliente_tel");
         String  DV =     rs.getString("cliente_dv");
         String  ZV =     rs.getString("cliente_zv");
-        float   saldo =  rs.getFloat("cliente_saldo");
+        float   saldo =  rs.getFloat ("cliente_saldo");
         
         Cliente cliente = new Cliente(cod,ape,nom,fnac,tel,DV,ZV,saldo);
         return cliente;
@@ -119,7 +120,7 @@ public class PostgreSQL_Cliente implements clienteDAO{
             stat.close();
 
         }catch(SQLException ex){
-            System.out.println("Fallo en Obtener_todos");
+            System.out.println("Fallo en Obtener_todos Cliente");
             System.out.println(ex.getMessage());
             JOptionPane.showMessageDialog(null,ERR);
         }
@@ -138,12 +139,12 @@ public class PostgreSQL_Cliente implements clienteDAO{
             if(rs.next()){
                a = convertir(rs); 
             } else{
-                JOptionPane.showMessageDialog(null,"Resultado VACIO");
+                JOptionPane.showMessageDialog(null,"Resultado VACIO obtener_uno Cliente");
             }
             rs.close();
             stat.close();
         }catch(SQLException ex){
-            System.out.println("Fallo en obtener 1");
+            System.out.println("Fallo en obtener 1 Cliente");
             System.out.println(ex.getMessage());
             JOptionPane.showMessageDialog(null,ERR);
         }

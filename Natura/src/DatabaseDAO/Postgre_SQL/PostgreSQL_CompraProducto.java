@@ -68,9 +68,11 @@ public class PostgreSQL_CompraProducto implements CompraProductoDAO{
         PreparedStatement stat;
         try{
             stat = conn.prepareStatement(UPDATE);
-            stat.setShort(1,    a.getCodCompra());
-            stat.setInt  (2,    a.getCodProducto());
-            stat.setInt  (3,    a.getCantidad());
+            stat.setShort  (1,    a.getCodCompra());
+            stat.setInt    (2,    a.getCodProducto());
+            stat.setInt    (3,    a.getCantidad());
+            stat.setInt    (4,    a.getCodProducto());
+            stat.setShort  (5,    a.getCodCompra());
             
             if(stat.executeUpdate()== 0){
                 // ERROR
