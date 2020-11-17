@@ -2,6 +2,7 @@ package Interfaces;
 
 import Clases.Cliente;
 import Clases.Producto;
+import Clases_Utilidad.ControlCodProducto;
 import Clases_Utilidad.calcular_edad;
 import DatabaseDAO.Postgre_SQL.PostgreSQL_Cliente;
 import DatabaseDAO.Postgre_SQL.PostgreSQL_Producto;
@@ -10,6 +11,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,6 +25,7 @@ public class Principal extends javax.swing.JFrame {
     int flag = 0;
     short codCliente;
     public static int cantidadPedido;
+    Object[] datosProducto;
 
     public Principal() {
         initComponents();
@@ -418,7 +421,7 @@ public class Principal extends javax.swing.JFrame {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Short.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class
+                java.lang.Short.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false, false, false, false
@@ -971,16 +974,19 @@ public class Principal extends javax.swing.JFrame {
                 DefaultTableModel tblModel2 = (DefaultTableModel) tablaCarrito.getModel();
                 tblModel2.setRowCount(0);
                 for(Producto p : a) {       
-                    Object[] datos = {p.getCodProducto(), p.getCategoria(), p.getLinea(), p.getNombre(), "$ " + p.getPrecio(), p.getCantidad()};
+                    Object[] datos = {p.getCodProducto(), p.getCategoria(), p.getLinea(), p.getNombre(), p.getPrecio(), p.getCantidad()};
                     tblModel.addRow(datos);
 
                 }
                 DefaultTableCellRenderer leftRenderer = new DefaultTableCellRenderer();
-                leftRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+                DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+                centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+                leftRenderer.setHorizontalAlignment(SwingConstants.LEFT);
 
-                for(int i = 0;i<tablaStockProductos.getColumnCount();i++){
+                for(int i = 0;i<tablaStockProductos.getColumnCount()-1;i++){
                     tablaStockProductos.getColumnModel().getColumn(i).setCellRenderer(leftRenderer);
                 }
+                tablaStockProductos.getColumnModel().getColumn(5).setCellRenderer(centerRenderer);
             } catch (SQLException ex) {
                 Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -1036,8 +1042,25 @@ public class Principal extends javax.swing.JFrame {
     private void tablaStockProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaStockProductosMouseClicked
         DefaultTableModel tblModel = (DefaultTableModel) tablaCarrito.getModel();
         
-        int Fila = tablaStockProductos.getSelectedRow();  
-        Object[] datos = {tablaStockProductos.getValueAt(Fila, 0), tablaStockProductos.getValueAt(Fila, 3), 1, tablaStockProductos.getValueAt(Fila, 4)};
+        int Fila = tablaStockProductos.getSelectedRow();
+        int carrito = tablaCarrito.getRowCount();
+        int i;
+        ArrayList codigos = new ArrayList();
+        
+        /*for (i = 0; i < carrito; i++){
+            codigos.add((int)tablaCarrito.getValueAt(i, 0));
+        }
+        
+        if (1 == ControlCodProducto.seEncontro((int)tablaStockProductos.getValueAt(Fila, 0), codigos)){
+            
+            int cantidad = ControlCodProducto.controlCantidad((int)tablaStockProductos.getValueAt(Fila, 0), codigos);
+            tablaCarrito.setValueAt(cantidad, , 2);
+            
+        }*/
+        
+        
+        Object[] datos = {(int)tablaStockProductos.getValueAt(Fila, 0),(String)tablaStockProductos.getValueAt(Fila, 3), (short) 1/*(short)cantidad*/, (float)tablaStockProductos.getValueAt(Fila, 4)};
+        //datosProducto = datos;
         tblModel.addRow(datos);
     }//GEN-LAST:event_tablaStockProductosMouseClicked
 
@@ -1077,6 +1100,9 @@ public class Principal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,"Necesita seleccionar un producto");
         }
         else{
+            System.out.println(datosProducto);
+            DefaultTableModel tblModel = (DefaultTableModel) tablaCarrito.getModel();
+            tblModel.addRow(datosProducto);
             
         }
         

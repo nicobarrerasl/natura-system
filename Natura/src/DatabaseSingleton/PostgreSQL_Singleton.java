@@ -13,7 +13,7 @@ public class PostgreSQL_Singleton {
 
     private static PostgreSQL_Singleton instance;
     private Connection connection;
-    final String url = "jdbc:postgresql://localhost:5432/Natura_DB";
+    final String url = "jdbc:postgresql://localhost:5433/Natura_DB";
     final String user = "postgres";
     final String pass = "1234";
 
