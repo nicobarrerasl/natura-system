@@ -22,8 +22,9 @@ public class PostgreSQL_Compra implements DAO_Compra {
     final String INSERT = "INSERT INTO Compra(compra_fecha, compra_saldo, codCliente) VALUES (?, ?, ?)";                          
     final String UPDATE = "UPDATE Compra SET  compra_fecha= ?, compra_saldo= ?, codCliente= ? WHERE codCompra = ?";
     final String DELETE = "DELETE FROM Compra WHERE codCompra = ?";
-    final String GETALL = "SELECT * FROM Compra WHERE codCliente = ?"; 
+    final String GETALL = "SELECT * FROM Compra WHERE status = 1"; 
     final String GETONE = "SELECT * FROM Compra WHERE codCompra = ?";
+    final String GETBYCUSTOMER = "SELECT * FROM Compra WHERE codcliente = ? AND status = 1";
     final String ERR = "ERROR EN QUERY:DB";
     private final Connection conn;
     
@@ -178,5 +179,28 @@ public class PostgreSQL_Compra implements DAO_Compra {
         return(a);
     }
     
+    public List<Compra> obtener_por_cliente(Short codcliente) {
+        
+        PreparedStatement stat;
+        ResultSet rs;
+        List<Compra> a = new ArrayList<>();
+        try{
+            stat = conn.prepareStatement(GETBYCUSTOMER);
+            stat.setShort(1,codcliente);
+            rs = stat.executeQuery(); 
+            while(rs.next()){
+                a.add(convertir(rs));
+            }
+            rs.close();
+            stat.close();
+
+        }catch(SQLException ex){
+            System.out.println("Fallo en Obtener_todos");
+            System.out.println(ex.getMessage());
+            JOptionPane.showMessageDialog(null,ERR);
+        }
+        return a;
+        
+    }
     
 }
