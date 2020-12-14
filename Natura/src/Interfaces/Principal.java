@@ -105,7 +105,6 @@ public class Principal extends javax.swing.JFrame {
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaClientes = new javax.swing.JTable();
         jLabel53 = new javax.swing.JLabel();
@@ -442,9 +441,6 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         JPanelCliente.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 260, 450, 30));
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Apellido", "Nombre", "Edad", "Saldo" }));
-        JPanelCliente.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 260, 150, 30));
 
         tablaClientes.setBackground(new java.awt.Color(247, 247, 247));
         tablaClientes.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -1582,7 +1578,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel PanelPrinDerFondo;
     private javax.swing.JScrollPane ScrollPaneCarrito;
     private javax.swing.JLabel fondoEtiquetaCliente;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
