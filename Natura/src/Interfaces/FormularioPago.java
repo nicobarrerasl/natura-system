@@ -5,6 +5,15 @@
  */
 package Interfaces;
 
+import Clases.Cliente;
+import Clases.Pago;
+import Clases_Utilidad.Control_vacio;
+import DatabaseControlador.Controlador;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Franco
@@ -14,10 +23,15 @@ public class FormularioPago extends javax.swing.JFrame {
     /**
      * Creates new form FormularioPago
      */
-    public FormularioPago() {
+    public static Cliente cliente_pago;
+    public FormularioPago(Cliente cliente) {
         initComponents();
+        cliente_pago = cliente;
+        lblNombre.setText(cliente_pago.getNombre());
+        lblApellido.setText(cliente_pago.getApellido());
+        lblSaldo.setText(Float.toString(cliente_pago.getSaldo()));
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -32,7 +46,7 @@ public class FormularioPago extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        lblAceptar = new javax.swing.JLabel();
         lblImporteTotal = new javax.swing.JTextField();
         jLabel31 = new javax.swing.JLabel();
         jLabel26 = new javax.swing.JLabel();
@@ -41,14 +55,14 @@ public class FormularioPago extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         jSeparator5 = new javax.swing.JSeparator();
         jSeparator6 = new javax.swing.JSeparator();
-        lblNombreCliente = new javax.swing.JTextField();
-        lblApellidoCliente = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
+        lblApellido = new javax.swing.JTextField();
+        lblSaldo = new javax.swing.JTextField();
+        lblCancelar = new javax.swing.JLabel();
         jSeparator7 = new javax.swing.JSeparator();
         jLabel11 = new javax.swing.JLabel();
         jSeparator8 = new javax.swing.JSeparator();
         jLabel12 = new javax.swing.JLabel();
-        lblApellidoCliente1 = new javax.swing.JTextField();
+        lblNombre = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         lblDiaCompra = new javax.swing.JTextField();
         jLabel52 = new javax.swing.JLabel();
@@ -65,7 +79,6 @@ public class FormularioPago extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(630, 750));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -93,9 +106,15 @@ public class FormularioPago extends javax.swing.JFrame {
         jLabel5.setText("      Formulario de Pago");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, 460, 100));
 
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/aceptarIcon.png"))); // NOI18N
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 665, 60, 60));
+        lblAceptar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblAceptar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/aceptarIcon.png"))); // NOI18N
+        lblAceptar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblAceptar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblAceptarMouseClicked(evt);
+            }
+        });
+        jPanel1.add(lblAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 665, 60, 60));
 
         lblImporteTotal.setBackground(new java.awt.Color(0, 0, 0));
         lblImporteTotal.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
@@ -147,36 +166,41 @@ public class FormularioPago extends javax.swing.JFrame {
         jSeparator6.setFont(new java.awt.Font("Arial", 0, 3)); // NOI18N
         jPanel1.add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 170, 210, 10));
 
-        lblNombreCliente.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        lblNombreCliente.setForeground(new java.awt.Color(255, 255, 255));
-        lblNombreCliente.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        lblNombreCliente.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
-        lblNombreCliente.setCaretColor(new java.awt.Color(255, 255, 255));
-        lblNombreCliente.setEnabled(false);
-        lblNombreCliente.setOpaque(false);
-        lblNombreCliente.addActionListener(new java.awt.event.ActionListener() {
+        lblApellido.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        lblApellido.setForeground(new java.awt.Color(255, 255, 255));
+        lblApellido.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        lblApellido.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
+        lblApellido.setCaretColor(new java.awt.Color(255, 255, 255));
+        lblApellido.setEnabled(false);
+        lblApellido.setOpaque(false);
+        lblApellido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                lblNombreClienteActionPerformed(evt);
+                lblApellidoActionPerformed(evt);
             }
         });
-        jPanel1.add(lblNombreCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 210, 310, 30));
+        jPanel1.add(lblApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 210, 310, 30));
 
-        lblApellidoCliente.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        lblApellidoCliente.setForeground(new java.awt.Color(255, 255, 255));
-        lblApellidoCliente.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        lblApellidoCliente.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
-        lblApellidoCliente.setEnabled(false);
-        lblApellidoCliente.setOpaque(false);
-        lblApellidoCliente.addActionListener(new java.awt.event.ActionListener() {
+        lblSaldo.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        lblSaldo.setForeground(new java.awt.Color(255, 255, 255));
+        lblSaldo.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        lblSaldo.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
+        lblSaldo.setEnabled(false);
+        lblSaldo.setOpaque(false);
+        lblSaldo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                lblApellidoClienteActionPerformed(evt);
+                lblSaldoActionPerformed(evt);
             }
         });
-        jPanel1.add(lblApellidoCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 320, 160, 30));
+        jPanel1.add(lblSaldo, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 320, 160, 30));
 
-        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cancelarIcon.png"))); // NOI18N
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 665, 60, 60));
+        lblCancelar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cancelarIcon.png"))); // NOI18N
+        lblCancelar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblCancelarMouseClicked(evt);
+            }
+        });
+        jPanel1.add(lblCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 665, 60, 60));
 
         jSeparator7.setForeground(new java.awt.Color(255, 255, 255));
         jSeparator7.setFont(new java.awt.Font("Arial", 0, 3)); // NOI18N
@@ -197,18 +221,18 @@ public class FormularioPago extends javax.swing.JFrame {
         jLabel12.setText("Nombre");
         jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 260, 90, 30));
 
-        lblApellidoCliente1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        lblApellidoCliente1.setForeground(new java.awt.Color(255, 255, 255));
-        lblApellidoCliente1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        lblApellidoCliente1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
-        lblApellidoCliente1.setEnabled(false);
-        lblApellidoCliente1.setOpaque(false);
-        lblApellidoCliente1.addActionListener(new java.awt.event.ActionListener() {
+        lblNombre.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        lblNombre.setForeground(new java.awt.Color(255, 255, 255));
+        lblNombre.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        lblNombre.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
+        lblNombre.setEnabled(false);
+        lblNombre.setOpaque(false);
+        lblNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                lblApellidoCliente1ActionPerformed(evt);
+                lblNombreActionPerformed(evt);
             }
         });
-        jPanel1.add(lblApellidoCliente1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 260, 310, 30));
+        jPanel1.add(lblNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 260, 310, 30));
 
         jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/saldoIcon.png"))); // NOI18N
         jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 320, -1, 30));
@@ -219,6 +243,11 @@ public class FormularioPago extends javax.swing.JFrame {
         lblDiaCompra.setText("Dia");
         lblDiaCompra.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
         lblDiaCompra.setOpaque(false);
+        lblDiaCompra.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblDiaCompraMouseClicked(evt);
+            }
+        });
         lblDiaCompra.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 lblDiaCompraActionPerformed(evt);
@@ -238,6 +267,11 @@ public class FormularioPago extends javax.swing.JFrame {
         lblMesCompra.setText("Mes");
         lblMesCompra.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
         lblMesCompra.setOpaque(false);
+        lblMesCompra.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblMesCompraMouseClicked(evt);
+            }
+        });
         lblMesCompra.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 lblMesCompraActionPerformed(evt);
@@ -257,6 +291,11 @@ public class FormularioPago extends javax.swing.JFrame {
         lblAnioCompra.setText("Año");
         lblAnioCompra.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
         lblAnioCompra.setOpaque(false);
+        lblAnioCompra.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblAnioCompraMouseClicked(evt);
+            }
+        });
         lblAnioCompra.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 lblAnioCompraActionPerformed(evt);
@@ -293,6 +332,11 @@ public class FormularioPago extends javax.swing.JFrame {
 
         lblfondoFormularioPago.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondoFormularioPago.png"))); // NOI18N
         lblfondoFormularioPago.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        lblfondoFormularioPago.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                lblfondoFormularioPagoFocusGained(evt);
+            }
+        });
         jPanel1.add(lblfondoFormularioPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 630, 750));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 630, 750));
@@ -305,17 +349,17 @@ public class FormularioPago extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_lblImporteTotalActionPerformed
 
-    private void lblNombreClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblNombreClienteActionPerformed
+    private void lblApellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblApellidoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_lblNombreClienteActionPerformed
+    }//GEN-LAST:event_lblApellidoActionPerformed
 
-    private void lblApellidoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblApellidoClienteActionPerformed
+    private void lblSaldoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblSaldoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_lblApellidoClienteActionPerformed
+    }//GEN-LAST:event_lblSaldoActionPerformed
 
-    private void lblApellidoCliente1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblApellidoCliente1ActionPerformed
+    private void lblNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblNombreActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_lblApellidoCliente1ActionPerformed
+    }//GEN-LAST:event_lblNombreActionPerformed
 
     private void lblDiaCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblDiaCompraActionPerformed
         // TODO add your handling code here:
@@ -332,6 +376,59 @@ public class FormularioPago extends javax.swing.JFrame {
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
         this.dispose();
     }//GEN-LAST:event_jLabel2MouseClicked
+
+    private void lblfondoFormularioPagoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_lblfondoFormularioPagoFocusGained
+
+    }//GEN-LAST:event_lblfondoFormularioPagoFocusGained
+
+    private void lblAceptarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAceptarMouseClicked
+        String[] a = {lblDiaCompra.getText(),lblMesCompra.getText(),lblAnioCompra.getText( ), lblImporteTotal.getText( )};
+        if(  Control_vacio.retorno(a[0])   || a[0].equals("Dia")){
+            JOptionPane.showMessageDialog(null,"Necesita seleccionar un dia");
+        }
+        else if(  Control_vacio.retorno(a[1]) || a[1].equals("Mes") ){
+            JOptionPane.showMessageDialog(null,"Necesita seleccionar un mes");
+        }
+        else if( Control_vacio.retorno(a[2]) || a[2].equals("Año") ){
+            JOptionPane.showMessageDialog(null,"Necesita seleccionar un año");
+        }
+        else if(Control_vacio.retorno(a[3]) || a[3].equals("0.0") ){
+            JOptionPane.showMessageDialog(null,"Necesita ingresar un importe");
+        }
+        else{
+            String fecha = a[2] + "-" + a[1] + "-" + a[0];
+            Pago nuevo_pago = new Pago(fecha,Float.parseFloat(a[3]),cliente_pago);
+            try {
+                Controlador.pago_insertar(nuevo_pago);
+                JOptionPane.showMessageDialog(null,"Pago con importe $" + a[3] + " registrado");
+                cliente_pago.setSaldo(cliente_pago.getSaldo() - Float.parseFloat(a[3]));
+                Controlador.cliente_modificar(cliente_pago);
+                this.dispose();
+            } catch (SQLException ex) {
+                Logger.getLogger(FormularioPago.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_lblAceptarMouseClicked
+
+    private void lblCancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCancelarMouseClicked
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_lblCancelarMouseClicked
+
+    private void lblDiaCompraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDiaCompraMouseClicked
+        // TODO add your handling code here:
+        lblDiaCompra.setText("");
+    }//GEN-LAST:event_lblDiaCompraMouseClicked
+
+    private void lblMesCompraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMesCompraMouseClicked
+        // TODO add your handling code here:
+        lblMesCompra.setText("");
+    }//GEN-LAST:event_lblMesCompraMouseClicked
+
+    private void lblAnioCompraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAnioCompraMouseClicked
+        // TODO add your handling code here:
+        lblAnioCompra.setText("");
+    }//GEN-LAST:event_lblAnioCompraMouseClicked
 
     /**
      * @param args the command line arguments
@@ -363,7 +460,7 @@ public class FormularioPago extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FormularioPago().setVisible(true);
+                //new FormularioPago().setVisible(true);
             }
         });
     }
@@ -387,8 +484,6 @@ public class FormularioPago extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel51;
     private javax.swing.JLabel jLabel52;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
@@ -396,13 +491,15 @@ public class FormularioPago extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator6;
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JSeparator jSeparator8;
+    private javax.swing.JLabel lblAceptar;
     private javax.swing.JTextField lblAnioCompra;
-    private javax.swing.JTextField lblApellidoCliente;
-    private javax.swing.JTextField lblApellidoCliente1;
+    private javax.swing.JTextField lblApellido;
+    private javax.swing.JLabel lblCancelar;
     private javax.swing.JTextField lblDiaCompra;
     private javax.swing.JTextField lblImporteTotal;
     private javax.swing.JTextField lblMesCompra;
-    private javax.swing.JTextField lblNombreCliente;
+    private javax.swing.JTextField lblNombre;
+    private javax.swing.JTextField lblSaldo;
     private javax.swing.JLabel lblfondoFormularioPago;
     // End of variables declaration//GEN-END:variables
 }

@@ -5,7 +5,6 @@
  */
 package Clases;
 
-import java.util.ArrayList;
 
 /**
  *
@@ -20,6 +19,11 @@ public class Pago {
 
     public Pago(long codPago, String pago_fecha, float pago_saldo, Cliente cliente) {
         this.codPago = codPago;
+        this.pago_fecha = pago_fecha;
+        this.pago_saldo = pago_saldo;
+        this.cliente = cliente;
+    }
+    public Pago(String pago_fecha, float pago_saldo, Cliente cliente) {
         this.pago_fecha = pago_fecha;
         this.pago_saldo = pago_saldo;
         this.cliente = cliente;
