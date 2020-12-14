@@ -96,6 +96,7 @@ public class Principal extends javax.swing.JFrame {
         jLabel53 = new javax.swing.JLabel();
         lblactualizar = new javax.swing.JLabel();
         jLabel54 = new javax.swing.JLabel();
+        jLabel34 = new javax.swing.JLabel();
         lblBarraHerramientaClienteFondo = new javax.swing.JLabel();
         lblFondoCliente = new javax.swing.JLabel();
         JPanelCompra = new javax.swing.JPanel();
@@ -137,6 +138,7 @@ public class Principal extends javax.swing.JFrame {
         fondoEtiquetaCliente = new javax.swing.JLabel();
         lblAgregarPago = new javax.swing.JLabel();
         jLabel55 = new javax.swing.JLabel();
+        lblFondoCliente1 = new javax.swing.JLabel();
         JPanelPrincipalDer = new javax.swing.JPanel();
         PanelPrinDerFondo = new javax.swing.JLabel();
 
@@ -381,21 +383,21 @@ public class Principal extends javax.swing.JFrame {
         JPanelCliente.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 10, 10, 46));
 
         jTextField1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jTextField1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        jTextField1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
         jTextField1.setOpaque(false);
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
             }
         });
-        JPanelCliente.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 170, 450, 30));
+        JPanelCliente.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 260, 450, 30));
 
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/filtroIcon.png"))); // NOI18N
         JPanelCliente.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 170, 40, 30));
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Apellido", "Nombre", "Edad", "Saldo" }));
-        JPanelCliente.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 170, 150, 30));
+        JPanelCliente.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 260, 150, 30));
 
         tablaClientes.setBackground(new java.awt.Color(247, 247, 247));
         tablaClientes.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -482,13 +484,17 @@ public class Principal extends javax.swing.JFrame {
         jLabel54.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 1, 0, 0, new java.awt.Color(255, 255, 255)));
         JPanelCliente.add(jLabel54, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 10, 10, 37));
 
+        jLabel34.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel34.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/filtroIconWhite.png"))); // NOI18N
+        JPanelCliente.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, -1, 30));
+
         lblBarraHerramientaClienteFondo.setBackground(new java.awt.Color(61, 110, 255));
         lblBarraHerramientaClienteFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/barraHerramientaFondo.png"))); // NOI18N
         lblBarraHerramientaClienteFondo.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 0, 1, 1, new java.awt.Color(0, 0, 0)));
         lblBarraHerramientaClienteFondo.setOpaque(true);
         JPanelCliente.add(lblBarraHerramientaClienteFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1120, 63));
 
-        lblFondoCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/FONDO.png"))); // NOI18N
+        lblFondoCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondoinicio.jpg"))); // NOI18N
         lblFondoCliente.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 0, 1, 1, new java.awt.Color(0, 0, 0)));
         JPanelCliente.add(lblFondoCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1400, 1000));
 
@@ -527,17 +533,21 @@ public class Principal extends javax.swing.JFrame {
         jLabel25.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 0, 0, 0, new java.awt.Color(255, 255, 255)));
         JPanelCompra.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(8, 7, 1290, 10));
 
-        lblImporteTotal.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        lblImporteTotal.setBackground(new java.awt.Color(0, 0, 0));
+        lblImporteTotal.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
+        lblImporteTotal.setForeground(new java.awt.Color(255, 255, 255));
         lblImporteTotal.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         lblImporteTotal.setText("0.0");
         lblImporteTotal.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
+        lblImporteTotal.setCaretColor(new java.awt.Color(255, 255, 255));
         lblImporteTotal.setOpaque(false);
+        lblImporteTotal.setSelectedTextColor(new java.awt.Color(255, 255, 255));
         lblImporteTotal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 lblImporteTotalActionPerformed(evt);
             }
         });
-        JPanelCompra.add(lblImporteTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(1130, 170, 135, 40));
+        JPanelCompra.add(lblImporteTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(1130, 170, 170, 40));
 
         jLabel23.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel23.setForeground(new java.awt.Color(255, 255, 255));
@@ -605,18 +615,18 @@ public class Principal extends javax.swing.JFrame {
         JPanelCompra.add(ScrollPaneCarrito, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 40, 450, 180));
 
         jTextField6.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jTextField6.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        jTextField6.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
         jTextField6.setOpaque(false);
         jTextField6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField6ActionPerformed(evt);
             }
         });
-        JPanelCompra.add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 300, 370, 30));
+        JPanelCompra.add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 320, 370, 30));
 
         jLabel28.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel28.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/filtroIcon.png"))); // NOI18N
-        JPanelCompra.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 300, -1, 30));
+        jLabel28.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/filtroIconWhite.png"))); // NOI18N
+        JPanelCompra.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 320, -1, 30));
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Codigo", "Categoria", "Linea", "Nombre" }));
         jComboBox2.addActionListener(new java.awt.event.ActionListener() {
@@ -624,7 +634,7 @@ public class Principal extends javax.swing.JFrame {
                 jComboBox2ActionPerformed(evt);
             }
         });
-        JPanelCompra.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 300, 100, 30));
+        JPanelCompra.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 320, 100, 30));
 
         jLabel29.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
         JPanelCompra.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(7, 233, 1384, 10));
@@ -701,7 +711,7 @@ public class Principal extends javax.swing.JFrame {
         JPanelCompra.add(lblAnioCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 180, 70, 20));
 
         jLabel31.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/dollarIcon.png"))); // NOI18N
-        JPanelCompra.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 170, 50, 50));
+        JPanelCompra.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 165, 50, 50));
 
         jLabel33.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 1, 0, 0, new java.awt.Color(255, 255, 255)));
         JPanelCompra.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 30, 10, 190));
@@ -710,12 +720,12 @@ public class Principal extends javax.swing.JFrame {
         JPanelCompra.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(7, 7, 10, 235));
 
         jLabel38.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel38.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel38.setForeground(new java.awt.Color(255, 255, 255));
         jLabel38.setText("Cancelar Compra");
         JPanelCompra.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 960, -1, -1));
 
         jLabel39.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel39.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel39.setForeground(new java.awt.Color(255, 255, 255));
         jLabel39.setText("Registrar Compra");
         JPanelCompra.add(jLabel39, new org.netbeans.lib.awtextra.AbsoluteConstraints(1240, 960, -1, -1));
 
@@ -732,7 +742,7 @@ public class Principal extends javax.swing.JFrame {
         });
         JPanelCompra.add(lblDescuento, new org.netbeans.lib.awtextra.AbsoluteConstraints(1200, 70, 120, 30));
 
-        jLabel42.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 0, 0, 0, new java.awt.Color(0, 0, 0)));
+        jLabel42.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 0, 0, 0, new java.awt.Color(255, 255, 255)));
         JPanelCompra.add(jLabel42, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 980, 1340, 10));
 
         lblCancelarCompra.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cancelarCompraIcon.png"))); // NOI18N
@@ -804,7 +814,7 @@ public class Principal extends javax.swing.JFrame {
         jLabel26.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel26.setForeground(new java.awt.Color(255, 255, 255));
         jLabel26.setText("Importe Total");
-        JPanelCompra.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(1150, 210, -1, 20));
+        JPanelCompra.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(1168, 210, -1, 20));
 
         lblApellidoCliente.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         lblApellidoCliente.setForeground(new java.awt.Color(255, 255, 255));
@@ -830,9 +840,13 @@ public class Principal extends javax.swing.JFrame {
         JPanelCompra.add(lblAgregarPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 875, -1, -1));
 
         jLabel55.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel55.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel55.setForeground(new java.awt.Color(255, 255, 255));
         jLabel55.setText("Agregar Pago");
         JPanelCompra.add(jLabel55, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 960, -1, -1));
+
+        lblFondoCliente1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondoinicio.jpg"))); // NOI18N
+        lblFondoCliente1.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 0, 1, 1, new java.awt.Color(0, 0, 0)));
+        JPanelCompra.add(lblFondoCliente1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1400, 1000));
 
         JPanelPrincipal.add(JPanelCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 0, 1400, 1000));
 
@@ -1057,7 +1071,8 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_lblactualizarMouseClicked
 
     private void lblRegistrarPagoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRegistrarPagoMouseClicked
-        // TODO add your handling code here:
+        FormularioPago p = new FormularioPago();
+        p.setVisible(true);
     }//GEN-LAST:event_lblRegistrarPagoMouseClicked
 
     private void tablaCarritoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaCarritoMouseClicked
@@ -1241,6 +1256,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
+    private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel39;
@@ -1270,6 +1286,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JTextField lblDescuento;
     private javax.swing.JTextField lblDiaCompra;
     private javax.swing.JLabel lblFondoCliente;
+    private javax.swing.JLabel lblFondoCliente1;
     private javax.swing.JTextField lblImporteTotal;
     private javax.swing.JTextField lblMesCompra;
     private javax.swing.JLabel lblNaturalogo;

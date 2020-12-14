@@ -12,6 +12,17 @@ CREATE TABLE IF NOT EXISTS Cliente (
   PRIMARY KEY (codCliente)
 );
 
+CREATE TABLE IF NOT EXISTS Pago (
+  codPago			    SMALLSERIAL 	UNIQUE,
+  pago_fecha			VARCHAR(12)		NOT NULL,
+  pago_saldo			Decimal(10,2)	NOT NULL,
+  codCliente			SMALLINT		NOT NULL,
+  status                SMALLINT        DEFAULT 1,
+  FOREIGN KEY (codCliente) REFERENCES Cliente(codCliente),
+  PRIMARY KEY (codPago)
+);
+
+
 CREATE TABLE IF NOT EXISTS Compra (
   codCompra			    SMALLSERIAL 	UNIQUE,
   compra_fecha			VARCHAR(12)		NOT NULL,
