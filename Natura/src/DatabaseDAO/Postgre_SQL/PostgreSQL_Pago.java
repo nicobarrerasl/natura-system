@@ -18,6 +18,7 @@ public class PostgreSQL_Pago implements DAO_Pago{
     final String DELETE = "UPDATE Pago SET status = 0 WHERE codPago = ?";
     final String GETALL = "SELECT * FROM Pago WHERE status = 1"; 
     final String GETONE = "SELECT * FROM Pago WHERE codPago = ? AND status = 1";
+    final String GETBYCUSTOMER = "SELECT * FROM Pago WHERE codcliente = ? AND status = 1";
     final String ERR    = "ERROR EN QUERY:DB";
     private final Connection conn;
     public PostgreSQL_Pago(Connection conn){
@@ -141,4 +142,29 @@ public class PostgreSQL_Pago implements DAO_Pago{
         }
         return a;
     }
+    
+    public List<Pago> obtener_por_cliente(Short codcliente) {
+        
+        PreparedStatement stat;
+        ResultSet rs;
+        List<Pago> a = new ArrayList<>();
+        try{
+            stat = conn.prepareStatement(GETBYCUSTOMER);
+            stat.setShort(1,codcliente);
+            rs = stat.executeQuery(); 
+            while(rs.next()){
+                a.add(convertir(rs));
+            }
+            rs.close();
+            stat.close();
+
+        }catch(SQLException ex){
+            System.out.println("Fallo en Obtener_por_cliente");
+            System.out.println(ex.getMessage());
+            JOptionPane.showMessageDialog(null,ERR);
+        }
+        return a;
+        
+    }
+    
 }

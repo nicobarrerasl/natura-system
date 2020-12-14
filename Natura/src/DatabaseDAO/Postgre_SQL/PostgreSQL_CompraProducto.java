@@ -16,6 +16,9 @@ public class PostgreSQL_CompraProducto implements DAO_CompraProducto{
     final String UPDATE = "UPDATE CompraProducto SET  codCompra= ?, codProducto= ?, cantidad= ? WHERE codProducto = ? AND codCompra = ?"; // 5 ?
     final String GETALL = "SELECT * FROM CompraProducto WHERE status = 1"; 
     final String GETONE = "SELECT * FROM CompraProducto WHERE codProducto = ? AND codCompra = ? AND status = 1";
+    final String GETBYPURCHASE = "SELECT producto.codproducto,prod_cat,prod_linea,prod_nombre,prod_precio,cantidad\n" +
+                                 "FROM compraproducto,producto\n" +
+                                 "WHERE codcompra = ? AND compraproducto.codproducto = producto.codproducto";
     final String ERR    = "ERROR EN QUERY:DB";
     private Connection conn;
     public PostgreSQL_CompraProducto(Connection conn){
@@ -93,6 +96,16 @@ public class PostgreSQL_CompraProducto implements DAO_CompraProducto{
         CompraProducto compraprod = new CompraProducto(codcomp,codprod,cant);
         return compraprod;
     }
+    private String[] convertir2 (ResultSet rs) throws SQLException {
+        int    codprod =      rs.getInt("codProducto");
+        String codcat =       rs.getString("prod_cat");
+        String linea =        rs.getString("prod_linea");
+        String nomb =         rs.getString("prod_nombre");
+        float  price =        rs.getFloat("prod_precio");
+        int    cant =         rs.getInt("cantidad");
+        String[] r = {String.valueOf(codprod),codcat,linea,nomb,String.valueOf(price),String.valueOf(cant)};
+        return r;
+    }
     
     @Override
     public List<CompraProducto> obtener_todos() {
@@ -143,6 +156,30 @@ public class PostgreSQL_CompraProducto implements DAO_CompraProducto{
     @Override
     public CompraProducto obtener_uno(Short a) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public List<String[]> obtener_por_compra(Short codcompra) {
+        
+        PreparedStatement stat;
+        ResultSet rs;
+        List<String[]> a =new ArrayList<>();
+        try{
+            stat = conn.prepareStatement(GETBYPURCHASE);
+            stat.setShort(1,codcompra);
+            rs = stat.executeQuery(); 
+            while(rs.next()){
+                a.add(convertir2(rs));
+            }
+            rs.close();
+            stat.close();
+
+        }catch(SQLException ex){
+            System.out.println("Fallo en Obtener_por_cliente");
+            System.out.println(ex.getMessage());
+            JOptionPane.showMessageDialog(null,ERR);
+        }
+        return a;
+        
     }
 
 }

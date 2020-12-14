@@ -68,13 +68,21 @@ public class Controlador {
         PostgreSQL_Compra DAO_Compra = new PostgreSQL_Compra (PostgreSQL_Singleton.getInstance().getConnection());
         return(DAO_Compra.lastid());
     }
-    
+    public static List<Compra> compra_traer_por_cliente(Short codCliente) throws SQLException{
+        PostgreSQL_Compra DAO_Compra = new PostgreSQL_Compra (PostgreSQL_Singleton.getInstance().getConnection());
+        return(DAO_Compra.obtener_por_cliente(codCliente));
+    }
     
     
     public static void comprap_insertar(CompraProducto nuevo) throws SQLException{
         PostgreSQL_CompraProducto DAO_CP = new PostgreSQL_CompraProducto (PostgreSQL_Singleton.getInstance().getConnection());
         DAO_CP.insertar(nuevo);
     }
+    public static List<String[]> comprap_obtener_por_compra(Short id) throws SQLException{
+        PostgreSQL_CompraProducto DAO_CP = new PostgreSQL_CompraProducto (PostgreSQL_Singleton.getInstance().getConnection());
+        return(DAO_CP.obtener_por_compra(id));
+    }
+
     
     
     
@@ -82,7 +90,10 @@ public class Controlador {
         PostgreSQL_Pago DAO_Pago = new PostgreSQL_Pago (PostgreSQL_Singleton.getInstance().getConnection());
         DAO_Pago.insertar(nuevo);
     }
-    
+     public static List<Pago> pago_traer_por_cliente(Short id) throws SQLException{
+        PostgreSQL_Pago DAO_Pago = new PostgreSQL_Pago (PostgreSQL_Singleton.getInstance().getConnection());
+        return(DAO_Pago.obtener_por_cliente(id));
+    }
 }
 
 
