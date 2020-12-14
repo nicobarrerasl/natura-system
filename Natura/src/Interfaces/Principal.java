@@ -30,6 +30,22 @@ public class Principal extends javax.swing.JFrame {
         initComponents();
         JPanelCliente.setVisible(false);
         JPanelCompra.setVisible(false);
+        JPanelPagoCompra.setVisible(false);
+        tablaCompra.getTableHeader().setFont(new Font("arial", Font.BOLD, 12));
+        tablaCompra.getTableHeader().setOpaque(false);
+        tablaCompra.getTableHeader().setBackground(Color.BLACK);
+        tablaCompra.getTableHeader().setForeground(Color.WHITE);
+        tablaCompra.getTableHeader().setPreferredSize(new Dimension(40, 40));
+        tablaCompraProducto.getTableHeader().setFont(new Font("arial", Font.BOLD, 12));
+        tablaCompraProducto.getTableHeader().setOpaque(false);
+        tablaCompraProducto.getTableHeader().setBackground(Color.BLACK);
+        tablaCompraProducto.getTableHeader().setForeground(Color.WHITE);
+        tablaCompraProducto.getTableHeader().setPreferredSize(new Dimension(40, 40));
+        tablaPago.getTableHeader().setFont(new Font("arial", Font.BOLD, 12));
+        tablaPago.getTableHeader().setOpaque(false);
+        tablaPago.getTableHeader().setBackground(Color.BLACK);
+        tablaPago.getTableHeader().setForeground(Color.WHITE);
+        tablaPago.getTableHeader().setPreferredSize(new Dimension(40, 40));
         tablaClientes.getTableHeader().setFont(new Font("arial", Font.BOLD, 12));
         tablaClientes.getTableHeader().setOpaque(false);
         tablaClientes.getTableHeader().setBackground(Color.BLACK);
@@ -89,7 +105,6 @@ public class Principal extends javax.swing.JFrame {
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
-        jLabel13 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaClientes = new javax.swing.JTable();
@@ -97,6 +112,7 @@ public class Principal extends javax.swing.JFrame {
         lblactualizar = new javax.swing.JLabel();
         jLabel54 = new javax.swing.JLabel();
         jLabel34 = new javax.swing.JLabel();
+        jLabel48 = new javax.swing.JLabel();
         lblBarraHerramientaClienteFondo = new javax.swing.JLabel();
         lblFondoCliente = new javax.swing.JLabel();
         JPanelCompra = new javax.swing.JPanel();
@@ -135,10 +151,36 @@ public class Principal extends javax.swing.JFrame {
         jLabel26 = new javax.swing.JLabel();
         lblApellidoCliente = new javax.swing.JTextField();
         jLabel32 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
         fondoEtiquetaCliente = new javax.swing.JLabel();
         lblAgregarPago = new javax.swing.JLabel();
         jLabel55 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
         lblFondoCliente1 = new javax.swing.JLabel();
+        JPanelPagoCompra = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        tablaCompraProducto = new javax.swing.JTable();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        tablaPago = new javax.swing.JTable();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        tablaCompra = new javax.swing.JTable();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
+        jLabel35 = new javax.swing.JLabel();
+        lblNombreCliente1 = new javax.swing.JTextField();
+        jLabel37 = new javax.swing.JLabel();
+        lblApellidoCliente1 = new javax.swing.JTextField();
+        jLabel40 = new javax.swing.JLabel();
+        jLabel41 = new javax.swing.JLabel();
+        jLabel43 = new javax.swing.JLabel();
+        jLabel44 = new javax.swing.JLabel();
+        jLabel45 = new javax.swing.JLabel();
+        jLabel47 = new javax.swing.JLabel();
+        lblFondoCompraPago = new javax.swing.JLabel();
         JPanelPrincipalDer = new javax.swing.JPanel();
         PanelPrinDerFondo = new javax.swing.JLabel();
 
@@ -150,6 +192,7 @@ public class Principal extends javax.swing.JFrame {
         JPanelPrincipal.setBackground(new java.awt.Color(0, 0, 0));
         JPanelPrincipal.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        lblminimizar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblminimizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/minimizarIconFC.png"))); // NOI18N
         lblminimizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblminimizar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -160,6 +203,7 @@ public class Principal extends javax.swing.JFrame {
         });
         JPanelPrincipal.add(lblminimizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1620, 10, 30, 20));
 
+        lblcerrar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblcerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cerrarIconFC.png"))); // NOI18N
         lblcerrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblcerrar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -333,8 +377,13 @@ public class Principal extends javax.swing.JFrame {
         lblRegistrarCompra1.setForeground(new java.awt.Color(255, 255, 255));
         lblRegistrarCompra1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblRegistrarCompra1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/verClienteIcon.png"))); // NOI18N
-        lblRegistrarCompra1.setText("  Detalles Cliente");
+        lblRegistrarCompra1.setText("  Historial Cliente");
         lblRegistrarCompra1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblRegistrarCompra1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblRegistrarCompra1MouseClicked(evt);
+            }
+        });
         JPanelCliente.add(lblRegistrarCompra1, new org.netbeans.lib.awtextra.AbsoluteConstraints(568, 8, -1, 40));
 
         lblRegistrarPago.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -383,6 +432,8 @@ public class Principal extends javax.swing.JFrame {
         JPanelCliente.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 10, 10, 46));
 
         jTextField1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jTextField1.setForeground(new java.awt.Color(255, 255, 255));
+        jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextField1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
         jTextField1.setOpaque(false);
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
@@ -391,10 +442,6 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         JPanelCliente.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 260, 450, 30));
-
-        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/filtroIcon.png"))); // NOI18N
-        JPanelCliente.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 170, 40, 30));
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Apellido", "Nombre", "Edad", "Saldo" }));
         JPanelCliente.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 260, 150, 30));
@@ -471,14 +518,14 @@ public class Principal extends javax.swing.JFrame {
         jLabel53.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 1, 0, 0, new java.awt.Color(255, 255, 255)));
         JPanelCliente.add(jLabel53, new org.netbeans.lib.awtextra.AbsoluteConstraints(922, 10, 10, 37));
 
-        lblactualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/actualizarIcon.png"))); // NOI18N
+        lblactualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/actualizarIconWhite.png"))); // NOI18N
         lblactualizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblactualizar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblactualizarMouseClicked(evt);
             }
         });
-        JPanelCliente.add(lblactualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1230, 210, -1, -1));
+        JPanelCliente.add(lblactualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1262, 213, -1, -1));
 
         jLabel54.setBackground(new java.awt.Color(255, 255, 255));
         jLabel54.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 1, 0, 0, new java.awt.Color(255, 255, 255)));
@@ -487,6 +534,11 @@ public class Principal extends javax.swing.JFrame {
         jLabel34.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel34.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/filtroIconWhite.png"))); // NOI18N
         JPanelCliente.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, -1, 30));
+
+        jLabel48.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel48.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel48.setText("ACTUALIZAR");
+        JPanelCliente.add(jLabel48, new org.netbeans.lib.awtextra.AbsoluteConstraints(1230, 270, 120, 30));
 
         lblBarraHerramientaClienteFondo.setBackground(new java.awt.Color(61, 110, 255));
         lblBarraHerramientaClienteFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/barraHerramientaFondo.png"))); // NOI18N
@@ -612,9 +664,11 @@ public class Principal extends javax.swing.JFrame {
             tablaCarrito.getColumnModel().getColumn(3).setMaxWidth(70);
         }
 
-        JPanelCompra.add(ScrollPaneCarrito, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 40, 450, 180));
+        JPanelCompra.add(ScrollPaneCarrito, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 60, 450, 160));
 
         jTextField6.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jTextField6.setForeground(new java.awt.Color(255, 255, 255));
+        jTextField6.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextField6.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
         jTextField6.setOpaque(false);
         jTextField6.addActionListener(new java.awt.event.ActionListener() {
@@ -622,11 +676,11 @@ public class Principal extends javax.swing.JFrame {
                 jTextField6ActionPerformed(evt);
             }
         });
-        JPanelCompra.add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 320, 370, 30));
+        JPanelCompra.add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 360, 370, 30));
 
         jLabel28.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel28.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/filtroIconWhite.png"))); // NOI18N
-        JPanelCompra.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 320, -1, 30));
+        JPanelCompra.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 360, -1, 30));
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Codigo", "Categoria", "Linea", "Nombre" }));
         jComboBox2.addActionListener(new java.awt.event.ActionListener() {
@@ -634,7 +688,7 @@ public class Principal extends javax.swing.JFrame {
                 jComboBox2ActionPerformed(evt);
             }
         });
-        JPanelCompra.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 320, 100, 30));
+        JPanelCompra.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 360, 100, 30));
 
         jLabel29.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
         JPanelCompra.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(7, 233, 1384, 10));
@@ -679,18 +733,17 @@ public class Principal extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(tablaStockProductos);
         if (tablaStockProductos.getColumnModel().getColumnCount() > 0) {
-            tablaStockProductos.getColumnModel().getColumn(0).setMinWidth(80);
             tablaStockProductos.getColumnModel().getColumn(0).setPreferredWidth(80);
-            tablaStockProductos.getColumnModel().getColumn(0).setMaxWidth(80);
-            tablaStockProductos.getColumnModel().getColumn(4).setMinWidth(80);
+            tablaStockProductos.getColumnModel().getColumn(1).setPreferredWidth(120);
+            tablaStockProductos.getColumnModel().getColumn(2).setPreferredWidth(80);
+            tablaStockProductos.getColumnModel().getColumn(4).setResizable(false);
             tablaStockProductos.getColumnModel().getColumn(4).setPreferredWidth(80);
-            tablaStockProductos.getColumnModel().getColumn(4).setMaxWidth(80);
-            tablaStockProductos.getColumnModel().getColumn(5).setMinWidth(50);
+            tablaStockProductos.getColumnModel().getColumn(5).setResizable(false);
             tablaStockProductos.getColumnModel().getColumn(5).setPreferredWidth(50);
-            tablaStockProductos.getColumnModel().getColumn(5).setMaxWidth(50);
+            tablaStockProductos.getColumnModel().getColumn(5).setHeaderValue("Stock");
         }
 
-        JPanelCompra.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 370, 1320, 440));
+        JPanelCompra.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 410, 1320, 440));
 
         jLabel30.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel30.setForeground(new java.awt.Color(255, 255, 255));
@@ -832,6 +885,12 @@ public class Principal extends javax.swing.JFrame {
         jLabel32.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/saldoIcon.png"))); // NOI18N
         JPanelCompra.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(1170, 70, -1, -1));
 
+        jLabel8.setFont(new java.awt.Font("Arial Black", 0, 18)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel8.setText("Carrito de Compra");
+        JPanelCompra.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 30, 550, 20));
+
         fondoEtiquetaCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ticketCompra.png"))); // NOI18N
         fondoEtiquetaCliente.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 0, 1, 1, new java.awt.Color(0, 0, 0)));
         JPanelCompra.add(fondoEtiquetaCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1400, 250));
@@ -844,11 +903,273 @@ public class Principal extends javax.swing.JFrame {
         jLabel55.setText("Agregar Pago");
         JPanelCompra.add(jLabel55, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 960, -1, -1));
 
+        jLabel7.setFont(new java.awt.Font("Arial Black", 0, 15)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel7.setText("Para QUITAR productos del Carrito, haga Click en la tabla de Carrito de Compra");
+        JPanelCompra.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 280, 670, 20));
+
+        jLabel9.setFont(new java.awt.Font("Arial Black", 0, 15)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel9.setText("Para AGREGAR productos al Carrito, haga Click en la tabla de Productos");
+        JPanelCompra.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 260, 610, 20));
+
         lblFondoCliente1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondoinicio.jpg"))); // NOI18N
         lblFondoCliente1.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 0, 1, 1, new java.awt.Color(0, 0, 0)));
         JPanelCompra.add(lblFondoCliente1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1400, 1000));
 
         JPanelPrincipal.add(JPanelCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 0, 1400, 1000));
+
+        JPanelPagoCompra.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel10.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cerrarIconFC.png"))); // NOI18N
+        jLabel10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel10MouseClicked(evt);
+            }
+        });
+        JPanelPagoCompra.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(1360, 10, 30, 20));
+
+        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/minimizarIconFC.png"))); // NOI18N
+        JPanelPagoCompra.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(1320, 10, 30, 20));
+
+        tablaCompraProducto.setBackground(new java.awt.Color(247, 247, 247));
+        tablaCompraProducto.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        tablaCompraProducto.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Codigo", "Categoria", "Linea", "Nombre", "Precio"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tablaCompraProducto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        tablaCompraProducto.setFocusable(false);
+        tablaCompraProducto.setGridColor(new java.awt.Color(0, 0, 0));
+        tablaCompraProducto.setIntercellSpacing(new java.awt.Dimension(0, 0));
+        tablaCompraProducto.setRowHeight(25);
+        tablaCompraProducto.setSelectionBackground(new java.awt.Color(51, 204, 255));
+        tablaCompraProducto.setShowVerticalLines(false);
+        tablaCompraProducto.getTableHeader().setReorderingAllowed(false);
+        tablaCompraProducto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaCompraProductoMouseClicked(evt);
+            }
+        });
+        jScrollPane6.setViewportView(tablaCompraProducto);
+        if (tablaCompraProducto.getColumnModel().getColumnCount() > 0) {
+            tablaCompraProducto.getColumnModel().getColumn(0).setPreferredWidth(80);
+            tablaCompraProducto.getColumnModel().getColumn(1).setPreferredWidth(120);
+            tablaCompraProducto.getColumnModel().getColumn(2).setPreferredWidth(80);
+            tablaCompraProducto.getColumnModel().getColumn(4).setResizable(false);
+            tablaCompraProducto.getColumnModel().getColumn(4).setPreferredWidth(80);
+        }
+
+        JPanelPagoCompra.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 680, 910, 280));
+
+        tablaPago.setBackground(new java.awt.Color(247, 247, 247));
+        tablaPago.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        tablaPago.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID Pago", "Fecha de Pago", "Importe"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tablaPago.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        tablaPago.setFocusable(false);
+        tablaPago.setGridColor(new java.awt.Color(0, 0, 0));
+        tablaPago.setIntercellSpacing(new java.awt.Dimension(0, 0));
+        tablaPago.setRowHeight(25);
+        tablaPago.setSelectionBackground(new java.awt.Color(51, 204, 255));
+        tablaPago.setShowVerticalLines(false);
+        tablaPago.getTableHeader().setReorderingAllowed(false);
+        tablaPago.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaPagoMouseClicked(evt);
+            }
+        });
+        jScrollPane5.setViewportView(tablaPago);
+        if (tablaPago.getColumnModel().getColumnCount() > 0) {
+            tablaPago.getColumnModel().getColumn(0).setPreferredWidth(80);
+            tablaPago.getColumnModel().getColumn(1).setPreferredWidth(120);
+            tablaPago.getColumnModel().getColumn(2).setPreferredWidth(80);
+        }
+
+        JPanelPagoCompra.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 210, 340, 400));
+
+        tablaCompra.setBackground(new java.awt.Color(247, 247, 247));
+        tablaCompra.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        tablaCompra.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID Compra", "Fecha de Compra", "Importe"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tablaCompra.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        tablaCompra.setFocusable(false);
+        tablaCompra.setGridColor(new java.awt.Color(0, 0, 0));
+        tablaCompra.setIntercellSpacing(new java.awt.Dimension(0, 0));
+        tablaCompra.setRowHeight(25);
+        tablaCompra.setSelectionBackground(new java.awt.Color(51, 204, 255));
+        tablaCompra.setShowVerticalLines(false);
+        tablaCompra.getTableHeader().setReorderingAllowed(false);
+        tablaCompra.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaCompraMouseClicked(evt);
+            }
+        });
+        jScrollPane4.setViewportView(tablaCompra);
+        if (tablaCompra.getColumnModel().getColumnCount() > 0) {
+            tablaCompra.getColumnModel().getColumn(0).setPreferredWidth(80);
+            tablaCompra.getColumnModel().getColumn(1).setPreferredWidth(120);
+            tablaCompra.getColumnModel().getColumn(2).setPreferredWidth(80);
+        }
+
+        JPanelPagoCompra.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 210, 340, 400));
+
+        jLabel13.setFont(new java.awt.Font("Arial Black", 0, 20)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel13.setText("Historial de Pagos");
+        jLabel13.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
+        JPanelPagoCompra.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 170, -1, -1));
+
+        jLabel22.setFont(new java.awt.Font("Arial Black", 0, 20)); // NOI18N
+        jLabel22.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel22.setText("Productos Comprados");
+        jLabel22.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
+        JPanelPagoCompra.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 640, -1, -1));
+
+        jLabel24.setFont(new java.awt.Font("Arial Black", 0, 20)); // NOI18N
+        jLabel24.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel24.setText("Historial de Compras");
+        jLabel24.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
+        JPanelPagoCompra.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 170, -1, -1));
+
+        jLabel35.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel35.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel35.setText("Apellido");
+        JPanelPagoCompra.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 40, 90, 30));
+
+        lblNombreCliente1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        lblNombreCliente1.setForeground(new java.awt.Color(255, 255, 255));
+        lblNombreCliente1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        lblNombreCliente1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
+        lblNombreCliente1.setCaretColor(new java.awt.Color(255, 255, 255));
+        lblNombreCliente1.setEnabled(false);
+        lblNombreCliente1.setOpaque(false);
+        lblNombreCliente1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lblNombreCliente1ActionPerformed(evt);
+            }
+        });
+        JPanelPagoCompra.add(lblNombreCliente1, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 40, 310, 30));
+
+        jLabel37.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel37.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel37.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel37.setText("Agregar Compra");
+        JPanelPagoCompra.add(jLabel37, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 550, 150, 30));
+
+        lblApellidoCliente1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        lblApellidoCliente1.setForeground(new java.awt.Color(255, 255, 255));
+        lblApellidoCliente1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        lblApellidoCliente1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
+        lblApellidoCliente1.setEnabled(false);
+        lblApellidoCliente1.setOpaque(false);
+        lblApellidoCliente1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lblApellidoCliente1ActionPerformed(evt);
+            }
+        });
+        JPanelPagoCompra.add(lblApellidoCliente1, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 90, 310, 30));
+
+        jLabel40.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel40.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/mostrarIcon.png"))); // NOI18N
+        jLabel40.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        JPanelPagoCompra.add(jLabel40, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 250, 80, 60));
+
+        jLabel41.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel41.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel41.setText("Nombre");
+        JPanelPagoCompra.add(jLabel41, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 90, 90, 30));
+
+        jLabel43.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel43.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/nuevaCompraIcon.png"))); // NOI18N
+        JPanelPagoCompra.add(jLabel43, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 470, 80, 80));
+
+        jLabel44.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel44.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel44.setText("Detalles de Compra");
+        JPanelPagoCompra.add(jLabel44, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 310, 180, 30));
+
+        jLabel45.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel45.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel45.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel45.setText("Agregar Pago");
+        JPanelPagoCompra.add(jLabel45, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 550, 150, 30));
+
+        jLabel47.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel47.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/agregarPagoIcon.png"))); // NOI18N
+        JPanelPagoCompra.add(jLabel47, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 470, 80, 80));
+
+        lblFondoCompraPago.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondoinicio.jpg"))); // NOI18N
+        lblFondoCompraPago.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 0, 1, 1, new java.awt.Color(0, 0, 0)));
+        JPanelPagoCompra.add(lblFondoCompraPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1400, 1000));
+
+        JPanelPrincipal.add(JPanelPagoCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 0, 1400, 1000));
 
         JPanelPrincipalDer.setBackground(new java.awt.Color(247, 247, 247));
         JPanelPrincipalDer.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 0, 1, 1, new java.awt.Color(0, 0, 0)));
@@ -1189,6 +1510,35 @@ public class Principal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_lblAceptarCompraMouseClicked
 
+    private void jLabel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseClicked
+        this.dispose();
+    }//GEN-LAST:event_jLabel10MouseClicked
+
+    private void lblRegistrarCompra1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRegistrarCompra1MouseClicked
+        JPanelPagoCompra.setVisible(true);
+        JPanelCliente.setVisible(false);
+    }//GEN-LAST:event_lblRegistrarCompra1MouseClicked
+
+    private void tablaCompraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaCompraMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tablaCompraMouseClicked
+
+    private void tablaPagoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaPagoMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tablaPagoMouseClicked
+
+    private void tablaCompraProductoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaCompraProductoMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tablaCompraProductoMouseClicked
+
+    private void lblNombreCliente1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblNombreCliente1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lblNombreCliente1ActionPerformed
+
+    private void lblApellidoCliente1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblApellidoCliente1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lblApellidoCliente1ActionPerformed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -1225,6 +1575,7 @@ public class Principal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel JPanelCliente;
     private javax.swing.JPanel JPanelCompra;
+    private javax.swing.JPanel JPanelPagoCompra;
     private javax.swing.JPanel JPanelPrincipal;
     private javax.swing.JPanel JPanelPrincipalDer;
     private javax.swing.JPanel JPanelPrincipalIzq;
@@ -1234,6 +1585,8 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
@@ -1245,7 +1598,9 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
@@ -1257,12 +1612,21 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
+    private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel36;
+    private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel40;
+    private javax.swing.JLabel jLabel41;
     private javax.swing.JLabel jLabel42;
+    private javax.swing.JLabel jLabel43;
+    private javax.swing.JLabel jLabel44;
+    private javax.swing.JLabel jLabel45;
     private javax.swing.JLabel jLabel46;
+    private javax.swing.JLabel jLabel47;
+    private javax.swing.JLabel jLabel48;
     private javax.swing.JLabel jLabel49;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel51;
@@ -1271,8 +1635,14 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel54;
     private javax.swing.JLabel jLabel55;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField6;
     private javax.swing.JLabel lblAceptarCompra;
@@ -1280,6 +1650,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel lblAgregarPago;
     private javax.swing.JTextField lblAnioCompra;
     private javax.swing.JTextField lblApellidoCliente;
+    private javax.swing.JTextField lblApellidoCliente1;
     private javax.swing.JLabel lblBalance;
     private javax.swing.JLabel lblBarraHerramientaClienteFondo;
     private javax.swing.JLabel lblCancelarCompra;
@@ -1287,10 +1658,12 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JTextField lblDiaCompra;
     private javax.swing.JLabel lblFondoCliente;
     private javax.swing.JLabel lblFondoCliente1;
+    private javax.swing.JLabel lblFondoCompraPago;
     private javax.swing.JTextField lblImporteTotal;
     private javax.swing.JTextField lblMesCompra;
     private javax.swing.JLabel lblNaturalogo;
     private javax.swing.JTextField lblNombreCliente;
+    private javax.swing.JTextField lblNombreCliente1;
     private javax.swing.JLabel lblPedidos;
     private javax.swing.JLabel lblProductos;
     private javax.swing.JLabel lblPromociones;
@@ -1309,6 +1682,9 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel lblminimizar;
     private javax.swing.JTable tablaCarrito;
     private javax.swing.JTable tablaClientes;
+    private javax.swing.JTable tablaCompra;
+    private javax.swing.JTable tablaCompraProducto;
+    private javax.swing.JTable tablaPago;
     private javax.swing.JTable tablaStockProductos;
     // End of variables declaration//GEN-END:variables
 }
