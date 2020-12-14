@@ -855,6 +855,7 @@ public class Principal extends javax.swing.JFrame {
         JPanelPrincipalDer.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         PanelPrinDerFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondoinicio.jpg"))); // NOI18N
+        PanelPrinDerFondo.setBorder(new javax.swing.border.MatteBorder(null));
         JPanelPrincipalDer.add(PanelPrinDerFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1400, 1000));
 
         JPanelPrincipal.add(JPanelPrincipalDer, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 0, 1400, 1000));
