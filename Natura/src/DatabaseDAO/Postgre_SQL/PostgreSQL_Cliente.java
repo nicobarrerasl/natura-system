@@ -1,7 +1,5 @@
 package DatabaseDAO.Postgre_SQL;
 import Clases.Cliente;
-import DatabaseDAO.clienteDAO;
-import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,8 +7,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
+import DatabaseDAO.DAO_Cliente;
 
-public class PostgreSQL_Cliente implements clienteDAO{
+public class PostgreSQL_Cliente implements DAO_Cliente{
     final String INSERT = "INSERT INTO Cliente(cliente_apellido, cliente_nombre, cliente_Fnac, cliente_tel, cliente_DV, cliente_ZV) VALUES (?, ?, ?, ?, ?, ?)";                          
     final String UPDATE = "UPDATE Cliente SET  cliente_apellido= ?, cliente_nombre= ?, cliente_Fnac= ?, cliente_tel= ?, cliente_DV= ?, cliente_ZV= ?, cliente_saldo= ? WHERE codCliente = ?";
     final String DELETE = "UPDATE Cliente SET status = 0 WHERE codCliente = ?";

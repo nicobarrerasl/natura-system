@@ -11,7 +11,7 @@ package Clases_Utilidad;
  */
 public class Control_vacio {
     
-    public boolean retorno (String a){
+    public static boolean retorno (String a){
         
         boolean ret = false; 
         if(a.equals("") || a.trim().isEmpty()){

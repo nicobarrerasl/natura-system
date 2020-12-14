@@ -3,21 +3,22 @@ package Interfaces;
 import Clases.*;
 import Clases_Utilidad.Control_vacio;
 import Clases_Utilidad.calcular_edad;
-import DatabaseDAO.Postgre_SQL.*;
-import DatabaseSingleton.PostgreSQL_Singleton;
+import DatabaseControlador.Controlador;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 public class Principal extends javax.swing.JFrame {
     
@@ -25,7 +26,7 @@ public class Principal extends javax.swing.JFrame {
     short codCliente;
     public static int cantidadPedido;
     Object[] datosProducto;
-    
+    final TableRowSorter<TableModel> sorter ;
     public Principal() {
         initComponents();
         JPanelCliente.setVisible(false);
@@ -64,6 +65,8 @@ public class Principal extends javax.swing.JFrame {
         tablaClientes.setAutoCreateRowSorter(true);
         tablaCarrito.setAutoCreateRowSorter(true);
         tablaStockProductos.setAutoCreateRowSorter(true);
+        sorter = new TableRowSorter<>(tablaClientes.getModel());
+        tablaClientes.setRowSorter(sorter);
     }
 
     @SuppressWarnings("unchecked")
@@ -104,7 +107,7 @@ public class Principal extends javax.swing.JFrame {
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        filtro = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaClientes = new javax.swing.JTable();
         jLabel53 = new javax.swing.JLabel();
@@ -113,6 +116,7 @@ public class Principal extends javax.swing.JFrame {
         jLabel34 = new javax.swing.JLabel();
         jLabel48 = new javax.swing.JLabel();
         lblBarraHerramientaClienteFondo = new javax.swing.JLabel();
+        filtroCB = new javax.swing.JComboBox<>();
         lblFondoCliente = new javax.swing.JLabel();
         JPanelCompra = new javax.swing.JPanel();
         jLabel20 = new javax.swing.JLabel();
@@ -430,17 +434,25 @@ public class Principal extends javax.swing.JFrame {
         jLabel19.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 1, 0, 0, new java.awt.Color(255, 255, 255)));
         JPanelCliente.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 10, 10, 46));
 
-        jTextField1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jTextField1.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
-        jTextField1.setOpaque(false);
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+
+        filtro.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        filtro.setForeground(new java.awt.Color(255, 255, 255));
+        filtro.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
+        filtro.setCaretColor(new java.awt.Color(255, 255, 255));
+        filtro.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        filtro.setOpaque(false);
+        filtro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                filtroActionPerformed(evt);
             }
         });
-        JPanelCliente.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 260, 450, 30));
+
+        filtro.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                filtroKeyTyped(evt);
+            }
+        });
+        JPanelCliente.add(filtro, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 260, 450, 30));
 
         tablaClientes.setBackground(new java.awt.Color(247, 247, 247));
         tablaClientes.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -541,6 +553,9 @@ public class Principal extends javax.swing.JFrame {
         lblBarraHerramientaClienteFondo.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 0, 1, 1, new java.awt.Color(0, 0, 0)));
         lblBarraHerramientaClienteFondo.setOpaque(true);
         JPanelCliente.add(lblBarraHerramientaClienteFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1120, 63));
+
+        filtroCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Apellido", "Nombre" }));
+        JPanelCliente.add(filtroCB, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 260, 140, 30));
 
         lblFondoCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondoinicio.jpg"))); // NOI18N
         lblFondoCliente.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 0, 1, 1, new java.awt.Color(0, 0, 0)));
@@ -1206,9 +1221,7 @@ public class Principal extends javax.swing.JFrame {
         JPanelCliente.setVisible(true);
         List<Cliente> a;
         try {
-            PostgreSQL_Cliente DAO_Cliente = new PostgreSQL_Cliente(PostgreSQL_Singleton.getInstance().getConnection());
-            a = DAO_Cliente.obtener_todos();
-
+            a = Controlador.cliente_traer_todos();
             DefaultTableModel tblModel = (DefaultTableModel) tablaClientes.getModel();
             tblModel.setRowCount(0);
             for (Cliente clt : a) {
@@ -1236,9 +1249,10 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_lblPedidosMouseClicked
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void filtroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filtroActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+
+    }//GEN-LAST:event_filtroActionPerformed
 
     private void lblRegistrarCompraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRegistrarCompraMouseClicked
         if(tablaClientes.getSelectedRow() == -1){
@@ -1252,8 +1266,7 @@ public class Principal extends javax.swing.JFrame {
             tablaCarrito.setAutoscrolls(true);
             List<Producto> a;
             try {
-                PostgreSQL_Producto DAO_Producto = new PostgreSQL_Producto (PostgreSQL_Singleton.getInstance().getConnection());
-                a = DAO_Producto.obtener_todos();
+                a = Controlador.producto_traer_todos();
 
                 DefaultTableModel tblModel = (DefaultTableModel) tablaStockProductos.getModel();
                 tblModel.setRowCount(0);
@@ -1364,8 +1377,7 @@ public class Principal extends javax.swing.JFrame {
         try {
             List<Cliente> a;
             /// Populate JTable named tablaClientes
-            PostgreSQL_Cliente DAO_Cliente = new PostgreSQL_Cliente (PostgreSQL_Singleton.getInstance().getConnection());
-            a = DAO_Cliente.obtener_todos();
+            a = Controlador.cliente_traer_todos();
             DefaultTableModel tblModel = (DefaultTableModel) tablaClientes.getModel();
             tblModel.setRowCount(0);
             for(Cliente clt : a) {
@@ -1388,8 +1400,19 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_lblactualizarMouseClicked
 
     private void lblRegistrarPagoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRegistrarPagoMouseClicked
-        FormularioPago p = new FormularioPago();
-        p.setVisible(true);
+        if(tablaClientes.getSelectedRow() == -1){
+            JOptionPane.showMessageDialog(null,"Necesita seleccionar un cliente");
+        }
+        else{
+            try {
+                int Fila = tablaClientes.getSelectedRow();
+                codCliente = (short) tablaClientes.getValueAt(Fila, 0);
+                FormularioPago p = new FormularioPago(Controlador.cliente_traer_uno(codCliente));
+                p.setVisible(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }//GEN-LAST:event_lblRegistrarPagoMouseClicked
 
     private void tablaCarritoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaCarritoMouseClicked
@@ -1445,14 +1468,6 @@ public class Principal extends javax.swing.JFrame {
         }
         else{
             try {
-                Connection con = PostgreSQL_Singleton.getInstance().getConnection();
-                
-                PostgreSQL_Compra         DaoCompra    = new PostgreSQL_Compra(con);
-                PostgreSQL_Producto       DaoProd      = new PostgreSQL_Producto(con);
-                PostgreSQL_CompraProducto DaoCompraP   = new PostgreSQL_CompraProducto(con);
-                PostgreSQL_Cliente        DaoCliente   = new PostgreSQL_Cliente(con);
-                
-                
 // -------------Atributos Compra :   short codCompra /  String  compra_fecha / float  compra_saldo/  Cliente cliente / ArrayList <Producto> prod
 //
 // -------------Atributos Producto :  int codProducto / String categoria /    String linea /        String  nombre /  float     precio /   short cantidad
@@ -1461,7 +1476,7 @@ public class Principal extends javax.swing.JFrame {
 //
 // ------------- CantFilas contiene la cantidad de filas, si hay 3 filas, CantFilas = 3
 
-                Cliente comprador = DaoCliente.obtener_uno(codCliente);
+                Cliente comprador = Controlador.cliente_traer_uno(codCliente);
                 
                 String fecha_compra = lblAnioCompra.getText() + "-" + lblMesCompra.getText() + "-" + lblDiaCompra.getText();
                 
@@ -1470,10 +1485,10 @@ public class Principal extends javax.swing.JFrame {
                 float Importe_Total = 0;
                 for(int d = 0;  d < CantFilas;  d++){
                     
-                    Producto nuevo = DaoProd.obtener_uno((int)tablaCarrito.getValueAt(d, 0));
+                    Producto nuevo = Controlador.producto_traer_uno((int)tablaCarrito.getValueAt(d, 0));
                     short cant = ((short)tablaCarrito.getValueAt(d, 2));
                     nuevo.setCantidad((short)(nuevo.getCantidad() - cant));
-                    DaoProd.modificar(nuevo);
+                    Controlador.producto_modificar(nuevo);
                     ArrayProd.add(nuevo); 
                     float valor_unidad= (float)tablaCarrito.getValueAt(d, 3);
                     Importe_Total += valor_unidad * cant;
@@ -1482,15 +1497,15 @@ public class Principal extends javax.swing.JFrame {
                 System.out.println(Importe_Total);
                 Compra compra = new Compra((short)0,fecha_compra,Importe_Total,comprador,ArrayProd);
                 
-                DaoCompra.insertar(compra);
-
-                short id = DaoCompra.lastid().shortValue(); // PROBAR SI DEVUELVE EL ID CORRECTO DE COMPRA
+                Controlador.compra_insertar(compra);
+                Long x = Controlador.compra_lastid();
+                short id = x.shortValue(); // PROBAR SI DEVUELVE EL ID CORRECTO DE COMPRA
                 for(int d = 0;  d < CantFilas;  d++){
                     CompraProducto f = new CompraProducto(id,ArrayProd.get(d).getCodProducto(),(short)tablaCarrito.getValueAt(d, 2));
-                    DaoCompraP.insertar(f);
+                    Controlador.comprap_insertar(f);
                 }
                 comprador.setSaldo(Importe_Total - Float.parseFloat(lblDescuento.getText())); // Hay que ver que pija devuelve eso
-                DaoCliente.modificar(comprador);
+                Controlador.cliente_modificar(comprador);
                 JOptionPane.showMessageDialog(this, "SE REALIZO LA COMPRA CORRECTAMENTE");
                 JPanelCompra.setVisible(false);
                 JPanelCliente.setVisible(true);
@@ -1502,9 +1517,8 @@ public class Principal extends javax.swing.JFrame {
             
             
         }
-        
-        
     }//GEN-LAST:event_lblAceptarCompraMouseClicked
+
 
     private void jLabel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseClicked
         this.dispose();
@@ -1534,6 +1548,23 @@ public class Principal extends javax.swing.JFrame {
     private void lblApellidoCliente1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblApellidoCliente1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_lblApellidoCliente1ActionPerformed
+
+    private void filtroKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_filtroKeyTyped
+        String text = filtro.getText();
+        if (text != null && !text.isEmpty()) {
+          switch (filtroCB.getSelectedIndex()){
+              case 0: sorter.setRowFilter(RowFilter.regexFilter("^(?i)" + text, 1)); break;// Apellido
+              case 1: sorter.setRowFilter(RowFilter.regexFilter("^(?i)" + text, 2)); break;// Nombre
+              //case 2: sorter.setRowFilter(RowFilter.numberFilter(ComparisonType.AFTER, Float.parseFloat(text), 8));break; // Saldo Mayor A, pos 8 en jtable
+              //case 3: sorter.setRowFilter(RowFilter.numberFilter(ComparisonType.BEFORE, Float.parseFloat(text), 8));break;
+              default: sorter.setRowFilter(RowFilter.regexFilter("^(?i)" + text, 1)); // Apellido
+          }
+          
+        } else {
+          sorter.setRowFilter(null);
+        }
+    }//GEN-LAST:event_filtroKeyTyped
+
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -1577,13 +1608,14 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JPanel JPanelPrincipalIzq;
     private javax.swing.JLabel PanelPrinDerFondo;
     private javax.swing.JScrollPane ScrollPaneCarrito;
+    private javax.swing.JTextField filtro;
+    private javax.swing.JComboBox<String> filtroCB;
     private javax.swing.JLabel fondoEtiquetaCliente;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
@@ -1638,7 +1670,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField6;
     private javax.swing.JLabel lblAceptarCompra;
     private javax.swing.JLabel lblAgregarCliente;

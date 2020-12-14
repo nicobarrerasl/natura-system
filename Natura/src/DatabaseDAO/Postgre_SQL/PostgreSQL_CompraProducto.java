@@ -1,7 +1,5 @@
 package DatabaseDAO.Postgre_SQL;
 import Clases.CompraProducto;
-import Clases.Producto;
-import DatabaseDAO.CompraProductoDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,8 +7,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
+import DatabaseDAO.DAO_CompraProducto;
 
-public class PostgreSQL_CompraProducto implements CompraProductoDAO{
+public class PostgreSQL_CompraProducto implements DAO_CompraProducto{
     
     final String INSERT = "INSERT INTO CompraProducto( codCompra, codProducto, cantidad) VALUES (?, ?, ?)";              // 3 ?  
     final String DELETE = "UPDATE CompraProducto SET status = 0 WHERE codProducto = ? AND codCompra = ?";
