@@ -76,6 +76,13 @@ public class Controlador {
         DAO_CP.insertar(nuevo);
     }
     
+    
+    
+    public static void pago_insertar(Pago nuevo) throws SQLException{
+        PostgreSQL_Pago DAO_Pago = new PostgreSQL_Pago (PostgreSQL_Singleton.getInstance().getConnection());
+        DAO_Pago.insertar(nuevo);
+    }
+    
 }
 
 
