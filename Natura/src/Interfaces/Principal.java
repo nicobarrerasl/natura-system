@@ -3,12 +3,10 @@ package Interfaces;
 import Clases.*;
 import Clases_Utilidad.Control_vacio;
 import Clases_Utilidad.calcular_edad;
-import DatabaseDAO.Postgre_SQL.*;
-import DatabaseSingleton.PostgreSQL_Singleton;
+import DatabaseControlador.Controlador;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -875,9 +873,7 @@ public class Principal extends javax.swing.JFrame {
         JPanelCliente.setVisible(true);
         List<Cliente> a;
         try {
-            PostgreSQL_Cliente DAO_Cliente = new PostgreSQL_Cliente(PostgreSQL_Singleton.getInstance().getConnection());
-            a = DAO_Cliente.obtener_todos();
-
+            a = Controlador.cliente_traer_todos();
             DefaultTableModel tblModel = (DefaultTableModel) tablaClientes.getModel();
             tblModel.setRowCount(0);
             for (Cliente clt : a) {
@@ -921,8 +917,7 @@ public class Principal extends javax.swing.JFrame {
             tablaCarrito.setAutoscrolls(true);
             List<Producto> a;
             try {
-                PostgreSQL_Producto DAO_Producto = new PostgreSQL_Producto (PostgreSQL_Singleton.getInstance().getConnection());
-                a = DAO_Producto.obtener_todos();
+                a = Controlador.producto_traer_todos();
 
                 DefaultTableModel tblModel = (DefaultTableModel) tablaStockProductos.getModel();
                 tblModel.setRowCount(0);
@@ -1033,8 +1028,7 @@ public class Principal extends javax.swing.JFrame {
         try {
             List<Cliente> a;
             /// Populate JTable named tablaClientes
-            PostgreSQL_Cliente DAO_Cliente = new PostgreSQL_Cliente (PostgreSQL_Singleton.getInstance().getConnection());
-            a = DAO_Cliente.obtener_todos();
+            a = Controlador.cliente_traer_todos();
             DefaultTableModel tblModel = (DefaultTableModel) tablaClientes.getModel();
             tblModel.setRowCount(0);
             for(Cliente clt : a) {
@@ -1113,14 +1107,6 @@ public class Principal extends javax.swing.JFrame {
         }
         else{
             try {
-                Connection con = PostgreSQL_Singleton.getInstance().getConnection();
-                
-                PostgreSQL_Compra         DaoCompra    = new PostgreSQL_Compra(con);
-                PostgreSQL_Producto       DaoProd      = new PostgreSQL_Producto(con);
-                PostgreSQL_CompraProducto DaoCompraP   = new PostgreSQL_CompraProducto(con);
-                PostgreSQL_Cliente        DaoCliente   = new PostgreSQL_Cliente(con);
-                
-                
 // -------------Atributos Compra :   short codCompra /  String  compra_fecha / float  compra_saldo/  Cliente cliente / ArrayList <Producto> prod
 //
 // -------------Atributos Producto :  int codProducto / String categoria /    String linea /        String  nombre /  float     precio /   short cantidad
@@ -1129,7 +1115,7 @@ public class Principal extends javax.swing.JFrame {
 //
 // ------------- CantFilas contiene la cantidad de filas, si hay 3 filas, CantFilas = 3
 
-                Cliente comprador = DaoCliente.obtener_uno(codCliente);
+                Cliente comprador = Controlador.cliente_traer_uno(codCliente);
                 
                 String fecha_compra = lblAnioCompra.getText() + "-" + lblMesCompra.getText() + "-" + lblDiaCompra.getText();
                 
@@ -1138,10 +1124,10 @@ public class Principal extends javax.swing.JFrame {
                 float Importe_Total = 0;
                 for(int d = 0;  d < CantFilas;  d++){
                     
-                    Producto nuevo = DaoProd.obtener_uno((int)tablaCarrito.getValueAt(d, 0));
+                    Producto nuevo = Controlador.producto_traer_uno((int)tablaCarrito.getValueAt(d, 0));
                     short cant = ((short)tablaCarrito.getValueAt(d, 2));
                     nuevo.setCantidad((short)(nuevo.getCantidad() - cant));
-                    DaoProd.modificar(nuevo);
+                    Controlador.producto_modificar(nuevo);
                     ArrayProd.add(nuevo); 
                     float valor_unidad= (float)tablaCarrito.getValueAt(d, 3);
                     Importe_Total += valor_unidad * cant;
@@ -1150,15 +1136,15 @@ public class Principal extends javax.swing.JFrame {
                 System.out.println(Importe_Total);
                 Compra compra = new Compra((short)0,fecha_compra,Importe_Total,comprador,ArrayProd);
                 
-                DaoCompra.insertar(compra);
-
-                short id = DaoCompra.lastid().shortValue(); // PROBAR SI DEVUELVE EL ID CORRECTO DE COMPRA
+                Controlador.compra_insertar(compra);
+                Long x = Controlador.compra_lastid();
+                short id = x.shortValue(); // PROBAR SI DEVUELVE EL ID CORRECTO DE COMPRA
                 for(int d = 0;  d < CantFilas;  d++){
                     CompraProducto f = new CompraProducto(id,ArrayProd.get(d).getCodProducto(),(short)tablaCarrito.getValueAt(d, 2));
-                    DaoCompraP.insertar(f);
+                    Controlador.comprap_insertar(f);
                 }
                 comprador.setSaldo(Importe_Total - Float.parseFloat(lblDescuento.getText())); // Hay que ver que pija devuelve eso
-                DaoCliente.modificar(comprador);
+                Controlador.cliente_modificar(comprador);
                 JOptionPane.showMessageDialog(this, "SE REALIZO LA COMPRA CORRECTAMENTE");
                 JPanelCompra.setVisible(false);
                 JPanelCliente.setVisible(true);

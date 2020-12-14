@@ -1,6 +1,5 @@
 package DatabaseDAO.Postgre_SQL;
 import Clases.Producto;
-import DatabaseDAO.productoDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,8 +7,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
+import DatabaseDAO.DAO_Producto;
 
-public class PostgreSQL_Producto implements productoDAO{
+public class PostgreSQL_Producto implements DAO_Producto{
     
     final String INSERT = "INSERT INTO Producto(codProducto, prod_cat, prod_linea, prod_nombre, prod_precio, prod_cant) VALUES (?, ?, ?, ?, ?, ?)";                          
     final String UPDATE = "UPDATE Producto SET  codProducto= ?, prod_cat= ?, prod_linea= ?, prod_nombre= ?, prod_precio= ?, prod_cant= ? WHERE codProducto = ?";
