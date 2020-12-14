@@ -7,8 +7,7 @@ package Interfaces;
 
 import Clases_Utilidad.*;
 import Clases.Cliente;
-import DatabaseDAO.Postgre_SQL.PostgreSQL_Cliente;
-import DatabaseSingleton.PostgreSQL_Singleton;
+import DatabaseControlador.Controlador;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -577,8 +576,7 @@ public class FormularioCliente extends javax.swing.JFrame {
             Cliente nuevo_cliente;
             nuevo_cliente = new Cliente(apel,nom,fnac,tel,dir,ZV);
             try {
-                PostgreSQL_Cliente DAO_Cliente = new PostgreSQL_Cliente (PostgreSQL_Singleton.getInstance().getConnection());
-                DAO_Cliente.insertar(nuevo_cliente);
+                Controlador.cliente_insertar(nuevo_cliente);
                 flag = 1;
             } catch (SQLException ex) {
                 Logger.getLogger(FormularioCliente.class.getName()).log(Level.SEVERE, null, ex);

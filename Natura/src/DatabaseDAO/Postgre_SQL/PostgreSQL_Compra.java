@@ -8,7 +8,6 @@ package DatabaseDAO.Postgre_SQL;
 import Clases.Cliente;
 import Clases.Compra;
 import Clases.Producto;
-import DatabaseDAO.compraDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,8 +15,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
+import DatabaseDAO.DAO_Compra;
 
-public class PostgreSQL_Compra implements compraDAO {
+public class PostgreSQL_Compra implements DAO_Compra {
     
     final String INSERT = "INSERT INTO Compra(compra_fecha, compra_saldo, codCliente) VALUES (?, ?, ?)";                          
     final String UPDATE = "UPDATE Compra SET  compra_fecha= ?, compra_saldo= ?, codCliente= ? WHERE codCompra = ?";
