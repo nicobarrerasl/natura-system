@@ -11,6 +11,7 @@ import DatabaseControlador.Controlador;
 import Memento.Caretaker;
 import Memento.Originator;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -30,6 +31,7 @@ public class FormularioCliente extends javax.swing.JFrame {
     public static Caretaker caretaker;
     public static Originator originator;
     public static int memento_index=0, memento_counter=0;
+    public static List<Cliente> clients;
     public FormularioCliente(Caretaker care, Originator ori) {
         initComponents();
         flagdia = 0;
@@ -45,7 +47,12 @@ public class FormularioCliente extends javax.swing.JFrame {
         w6.setVisible(false);    
         caretaker = care;
         originator = ori;
-        
+        contadorMementos.setText(memento_counter + "");
+        memento_index = memento_counter -1;
+        if(memento_counter >=1)
+            Rehacer.setEnabled(true);
+        else
+            Rehacer.setEnabled(false);
     }
     
     /**
@@ -95,10 +102,12 @@ public class FormularioCliente extends javax.swing.JFrame {
         jl_registrar = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
-        Borrador = new javax.swing.JLabel();
         Rehacer = new javax.swing.JLabel();
-        Deshacer = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
+        lblRehacer = new javax.swing.JLabel();
+        jSeparator6 = new javax.swing.JSeparator();
+        jSeparator7 = new javax.swing.JSeparator();
+        contadorMementos = new javax.swing.JLabel();
+        lblMem = new javax.swing.JLabel();
         fondoFormularioCliente = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -135,7 +144,7 @@ public class FormularioCliente extends javax.swing.JFrame {
 
         jSeparator3.setForeground(new java.awt.Color(255, 255, 255));
         jSeparator3.setFont(new java.awt.Font("Arial", 0, 3)); // NOI18N
-        jPanel1.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 390, 200, 10));
+        jPanel1.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 520, 200, 10));
 
         tf_dia.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         tf_dia.setForeground(new java.awt.Color(255, 255, 255));
@@ -162,7 +171,7 @@ public class FormularioCliente extends javax.swing.JFrame {
 
         jSeparator2.setForeground(new java.awt.Color(255, 255, 255));
         jSeparator2.setFont(new java.awt.Font("Arial", 0, 3)); // NOI18N
-        jPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 390, 200, 10));
+        jPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 520, 200, 10));
 
         lblminimizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/minimizarIconFC.png"))); // NOI18N
         lblminimizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -429,34 +438,33 @@ public class FormularioCliente extends javax.swing.JFrame {
         jLabel19.setText("Cancelar");
         jPanel1.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 760, 90, 30));
 
-        Borrador.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/aceptarIcon.png"))); // NOI18N
-        Borrador.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                BorradorMouseClicked(evt);
-            }
-        });
-        jPanel1.add(Borrador, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 570, -1, -1));
-
-        Rehacer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/actualizarIcon.png"))); // NOI18N
+        Rehacer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/recargarIcon.png"))); // NOI18N
         Rehacer.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 RehacerMouseClicked(evt);
             }
         });
-        jPanel1.add(Rehacer, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 580, -1, -1));
+        jPanel1.add(Rehacer, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 570, -1, -1));
 
-        Deshacer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cerrarIconFC.png"))); // NOI18N
-        Deshacer.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                DeshacerMouseClicked(evt);
-            }
-        });
-        jPanel1.add(Deshacer, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 570, 60, 60));
+        lblRehacer.setForeground(new java.awt.Color(255, 255, 255));
+        lblRehacer.setText("Recargar Datos Cancelados");
+        jPanel1.add(lblRehacer, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 630, -1, 40));
 
-        jLabel10.setFont(new java.awt.Font("Gadugi", 1, 14)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel10.setText("Deshacer               Rehacer         Guardar Borrador");
-        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 640, 410, -1));
+        jSeparator6.setForeground(new java.awt.Color(255, 255, 255));
+        jSeparator6.setFont(new java.awt.Font("Arial", 0, 3)); // NOI18N
+        jPanel1.add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 390, 200, 10));
+
+        jSeparator7.setForeground(new java.awt.Color(255, 255, 255));
+        jSeparator7.setFont(new java.awt.Font("Arial", 0, 3)); // NOI18N
+        jPanel1.add(jSeparator7, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 390, 200, 10));
+
+        contadorMementos.setForeground(new java.awt.Color(255, 255, 255));
+        contadorMementos.setText("0");
+        jPanel1.add(contadorMementos, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 590, -1, -1));
+
+        lblMem.setForeground(new java.awt.Color(255, 255, 255));
+        lblMem.setText("Formularios Recopilados: ");
+        jPanel1.add(lblMem, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 590, -1, -1));
 
         fondoFormularioCliente.setBackground(new java.awt.Color(255, 255, 255));
         fondoFormularioCliente.setForeground(new java.awt.Color(255, 255, 255));
@@ -509,6 +517,30 @@ public class FormularioCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_tf_caractActionPerformed
 
     private void jl_cancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jl_cancelarMouseClicked
+        String  apel = tf_Apellido.getText();
+        String  nom =  tf_Nombre.getText();
+        String  dia =  tf_dia.getText();
+        String mes =   tf_mes.getText();
+        String anio =  tf_anio.getText();
+        String  tel =  tf_tel.getText();
+        String  car =  tf_caract.getText();
+        String  dir =  tf_DV.getText();
+        String  ZV =   tf_ZV.getText();
+        String[] mementos = {apel,nom,dia,mes,anio,tel,car,dir,ZV};
+        boolean not_empty = false;
+        for(String z : mementos){
+            if(!Control_vacio.retorno(z))
+                not_empty = true;
+        }
+        if(not_empty){
+            originator.set(mementos);
+            caretaker.addMemento( originator.storeInMemento() );
+            memento_counter++;
+            memento_index = memento_counter -1;
+        }
+        
+
+        
         this.dispose();
     }//GEN-LAST:event_jl_cancelarMouseClicked
 
@@ -530,6 +562,27 @@ public class FormularioCliente extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,"Los campos marcados con asterisco son obligatorios");
         }
         else{
+            boolean isRepetido = false;
+            for(Cliente idx : clients){
+                if(idx.getApellido().equals(apel))
+                    if(idx.getNombre().equals(nom))
+                        isRepetido= true;
+            }
+            if(isRepetido){
+                int resp=JOptionPane.showConfirmDialog(null,"Ya existe el cliente " + apel + ", " + nom  + " ¿Desea continuar?");
+                switch (resp) {
+                    case JOptionPane.OK_OPTION:
+                        System.out.println("Selecciona opción Afirmativa");
+                        break;
+                    case JOptionPane.NO_OPTION:
+                        System.out.println("No selecciona una opción afirmativa");
+                        this.dispose();
+                        return;
+                    default:
+                        return;
+                }
+            }
+            
             Cliente nuevo_cliente;
             nuevo_cliente = new Cliente(apel,nom,fnac,tel,dir,ZV);
             try {
@@ -544,6 +597,7 @@ public class FormularioCliente extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null,"La alta del cliente " + apel + " fue exitosa");
             else
                 JOptionPane.showMessageDialog(null,"La alta del cliente " + apel + " no se pudo realizar");
+
         }
     }//GEN-LAST:event_jl_registrarMouseClicked
 
@@ -617,34 +671,9 @@ public class FormularioCliente extends javax.swing.JFrame {
         ((AbstractDocument)tf_Nombre.getDocument()).setDocumentFilter(new Filtro_CHAR());
     }//GEN-LAST:event_tf_NombreFocusGained
 
-    private void BorradorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BorradorMouseClicked
-        // TODO add your handling code here:
-        String  apel = tf_Apellido.getText();
-        String  nom =  tf_Nombre.getText();
-        String  dia = tf_dia.getText();
-        String mes = tf_mes.getText();
-        String anio = tf_anio.getText();
-        String  tel = tf_tel.getText(); // Caracteristica-Nro
-        String  car = tf_caract.getText();
-        String  dir =   tf_DV.getText();
-        String  ZV =   tf_ZV.getText();
-        String[] mementos = {apel,nom,dia,mes,anio,tel,car,dir,ZV};
-        originator.set(mementos);
-        caretaker.addMemento( originator.storeInMemento() );
-        memento_counter++;
-        memento_index++;
-        Rehacer.setEnabled(true);
-    }//GEN-LAST:event_BorradorMouseClicked
-
     private void RehacerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RehacerMouseClicked
         // TODO add your handling code here:
-        if((memento_counter - 1) > memento_index){
-
-                // Increment to the current Cliente displayed
-
-                memento_index++;
-
-                // Get the newer article saved and display it in JTextArea
+        if(memento_index>=0){
 
                 String[] datos = originator.restoreFromMemento( caretaker.getMemento(memento_index) );
 
@@ -658,50 +687,14 @@ public class FormularioCliente extends javax.swing.JFrame {
                 tf_DV.setText(datos[7]);
                 tf_ZV.setText(datos[8]);
                 // Make undo clickable
-
-                Deshacer.setEnabled(true);
-
-        } else {
-
-                // Don't allow user to click Redo
-
-                Rehacer.setEnabled(false);
+                memento_index--;
+                if(memento_index>=0)
+                    Rehacer.setEnabled(true);
+                else
+                    Rehacer.setEnabled(false);
 
         }
     }//GEN-LAST:event_RehacerMouseClicked
-
-    private void DeshacerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DeshacerMouseClicked
-        // TODO add your handling code here:
-        if(memento_index >= 1){
-						
-                // Decrement to the current Cliente displayed
-
-                memento_index--;
-
-                // Get the older memento saved and display it in Formulario
-
-                String[] datos = originator.restoreFromMemento( caretaker.getMemento(memento_index) );
-
-                tf_Apellido.setText(datos[0]);
-                tf_Nombre.setText(datos[1]);
-                tf_dia.setText(datos[2]);
-                tf_mes.setText(datos[3]);
-                tf_anio.setText(datos[4]);
-                tf_tel.setText(datos[5]);
-                tf_caract.setText(datos[6]);
-                tf_DV.setText(datos[7]);
-                tf_ZV.setText(datos[8]);
-                // Make Redo clickable
-                Rehacer.setEnabled(true);
-
-        } else {
-
-                // Don't allow user to click Undo
-
-                Deshacer.setEnabled(false);
-
-        }
-    }//GEN-LAST:event_DeshacerMouseClicked
 
     /**
      * @param args the command line arguments
@@ -710,12 +703,10 @@ public class FormularioCliente extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel Borrador;
-    private javax.swing.JLabel Deshacer;
     private javax.swing.JLabel Rehacer;
+    private javax.swing.JLabel contadorMementos;
     private javax.swing.JLabel fondoFormularioCliente;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel18;
@@ -733,9 +724,13 @@ public class FormularioCliente extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
+    private javax.swing.JSeparator jSeparator6;
+    private javax.swing.JSeparator jSeparator7;
     private javax.swing.JLabel jl_cancelar;
     private javax.swing.JLabel jl_cerrar;
     private javax.swing.JLabel jl_registrar;
+    private javax.swing.JLabel lblMem;
+    private javax.swing.JLabel lblRehacer;
     private javax.swing.JLabel lblTituloFC;
     private javax.swing.JLabel lblminimizar;
     private javax.swing.JTextField tf_Apellido;
