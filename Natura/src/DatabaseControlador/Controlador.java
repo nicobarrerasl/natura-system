@@ -94,6 +94,10 @@ public class Controlador {
         PostgreSQL_Pago DAO_Pago = new PostgreSQL_Pago (PostgreSQL_Singleton.getInstance().getConnection());
         return(DAO_Pago.obtener_por_cliente(id));
     }
+     
+    public static void cerrar_conexion() throws SQLException{
+        PostgreSQL_Singleton.getInstance().disconnect();
+    }
 }
 
 
