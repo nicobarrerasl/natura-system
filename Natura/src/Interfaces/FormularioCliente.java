@@ -8,6 +8,8 @@ package Interfaces;
 import Clases_Utilidad.*;
 import Clases.Cliente;
 import DatabaseControlador.Controlador;
+import Memento.Caretaker;
+import Memento.Originator;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,8 +25,12 @@ public class FormularioCliente extends javax.swing.JFrame {
     /**
      * Creates new form FormularioCliente
      */
+    //String[] memento;
     int flagdia,flagmes,flaganio,flagcaract,flagtel;
-    public FormularioCliente() {
+    public static Caretaker caretaker;
+    public static Originator originator;
+    public static int memento_index=0, memento_counter=0;
+    public FormularioCliente(Caretaker care, Originator ori) {
         initComponents();
         flagdia = 0;
         flagmes = 0;
@@ -36,7 +42,10 @@ public class FormularioCliente extends javax.swing.JFrame {
         w3.setVisible(false);
         w4.setVisible(false);
         w5.setVisible(false);
-        w6.setVisible(false);        
+        w6.setVisible(false);    
+        caretaker = care;
+        originator = ori;
+        
     }
     
     /**
@@ -72,21 +81,12 @@ public class FormularioCliente extends javax.swing.JFrame {
         jSeparator4 = new javax.swing.JSeparator();
         jLabel9 = new javax.swing.JLabel();
         jSeparator5 = new javax.swing.JSeparator();
-        jLabel10 = new javax.swing.JLabel();
-        tf_DT = new javax.swing.JTextField();
-        tf_ZT = new javax.swing.JTextField();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
         w1 = new javax.swing.JLabel();
         w2 = new javax.swing.JLabel();
         w3 = new javax.swing.JLabel();
         w4 = new javax.swing.JLabel();
         w5 = new javax.swing.JLabel();
         w6 = new javax.swing.JLabel();
-        tf_Ocup = new javax.swing.JTextField();
-        jSeparator6 = new javax.swing.JSeparator();
-        jLabel13 = new javax.swing.JLabel();
-        jSeparator7 = new javax.swing.JSeparator();
         jLabel14 = new javax.swing.JLabel();
         tf_DV = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
@@ -95,6 +95,10 @@ public class FormularioCliente extends javax.swing.JFrame {
         jl_registrar = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
+        Borrador = new javax.swing.JLabel();
+        Rehacer = new javax.swing.JLabel();
+        Deshacer = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
         fondoFormularioCliente = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -324,49 +328,10 @@ public class FormularioCliente extends javax.swing.JFrame {
         jSeparator5.setFont(new java.awt.Font("Arial", 0, 3)); // NOI18N
         jPanel1.add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 190, 200, 10));
 
-        jLabel10.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel10.setText("Direccion de Trabajo");
-        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 570, 150, 20));
-
-        tf_DT.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        tf_DT.setForeground(new java.awt.Color(255, 255, 255));
-        tf_DT.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        tf_DT.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
-        tf_DT.setOpaque(false);
-        tf_DT.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tf_DTActionPerformed(evt);
-            }
-        });
-        jPanel1.add(tf_DT, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 570, 390, 20));
-
-        tf_ZT.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        tf_ZT.setForeground(new java.awt.Color(255, 255, 255));
-        tf_ZT.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        tf_ZT.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
-        tf_ZT.setOpaque(false);
-        tf_ZT.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tf_ZTActionPerformed(evt);
-            }
-        });
-        jPanel1.add(tf_ZT, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 610, 390, 20));
-
-        jLabel11.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("Zona de Trabajo");
-        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 610, 150, 20));
-
-        jLabel12.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel12.setText("Ocupacion");
-        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 653, 150, -1));
-
         w1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         w1.setForeground(new java.awt.Color(255, 0, 0));
         w1.setText("*");
-        jPanel1.add(w1, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 220, 50, 20));
+        jPanel1.add(w1, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 220, 10, 30));
 
         w2.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         w2.setForeground(new java.awt.Color(255, 0, 51));
@@ -392,31 +357,6 @@ public class FormularioCliente extends javax.swing.JFrame {
         w6.setForeground(new java.awt.Color(255, 0, 51));
         w6.setText("*");
         jPanel1.add(w6, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 460, -1, -1));
-
-        tf_Ocup.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        tf_Ocup.setForeground(new java.awt.Color(255, 255, 255));
-        tf_Ocup.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        tf_Ocup.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
-        tf_Ocup.setOpaque(false);
-        tf_Ocup.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tf_OcupActionPerformed(evt);
-            }
-        });
-        jPanel1.add(tf_Ocup, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 650, 390, 20));
-
-        jSeparator6.setForeground(new java.awt.Color(255, 255, 255));
-        jSeparator6.setFont(new java.awt.Font("Arial", 0, 3)); // NOI18N
-        jPanel1.add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 530, 200, 10));
-
-        jLabel13.setFont(new java.awt.Font("Arial Black", 0, 18)); // NOI18N
-        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel13.setText("Datos de Trabajo");
-        jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 510, 180, 30));
-
-        jSeparator7.setForeground(new java.awt.Color(255, 255, 255));
-        jSeparator7.setFont(new java.awt.Font("Arial", 0, 3)); // NOI18N
-        jPanel1.add(jSeparator7, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 530, 200, 10));
 
         jLabel14.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(255, 255, 255));
@@ -489,6 +429,35 @@ public class FormularioCliente extends javax.swing.JFrame {
         jLabel19.setText("Cancelar");
         jPanel1.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 760, 90, 30));
 
+        Borrador.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/aceptarIcon.png"))); // NOI18N
+        Borrador.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BorradorMouseClicked(evt);
+            }
+        });
+        jPanel1.add(Borrador, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 570, -1, -1));
+
+        Rehacer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/actualizarIcon.png"))); // NOI18N
+        Rehacer.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                RehacerMouseClicked(evt);
+            }
+        });
+        jPanel1.add(Rehacer, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 580, -1, -1));
+
+        Deshacer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cerrarIconFC.png"))); // NOI18N
+        Deshacer.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                DeshacerMouseClicked(evt);
+            }
+        });
+        jPanel1.add(Deshacer, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 570, 60, 60));
+
+        jLabel10.setFont(new java.awt.Font("Gadugi", 1, 14)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setText("Deshacer               Rehacer         Guardar Borrador");
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 640, 410, -1));
+
         fondoFormularioCliente.setBackground(new java.awt.Color(255, 255, 255));
         fondoFormularioCliente.setForeground(new java.awt.Color(255, 255, 255));
         fondoFormularioCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondoFormCliente.png"))); // NOI18N
@@ -539,14 +508,6 @@ public class FormularioCliente extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_tf_caractActionPerformed
 
-    private void tf_DTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_DTActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tf_DTActionPerformed
-
-    private void tf_ZTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_ZTActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tf_ZTActionPerformed
-
     private void jl_cancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jl_cancelarMouseClicked
         this.dispose();
     }//GEN-LAST:event_jl_cancelarMouseClicked
@@ -559,11 +520,7 @@ public class FormularioCliente extends javax.swing.JFrame {
         String  tel =  tf_caract.getText()+ "-" + tf_tel.getText(); // Caracteristica-Nro
         String  dir =   tf_DV.getText();
         String  ZV =   tf_ZV.getText();
-        // String  DT =   tf_DT.getText();
-        // String  ZT =   tf_ZT.getText();
-        // String  ocup = tf_Ocup.getText();
-        Control_vacio a = new Control_vacio();
-        if(a.retorno(apel) || a.retorno(tf_anio.getText()) || a.retorno(tf_mes.getText()) || a.retorno(tf_dia.getText()) || a.retorno(tf_caract.getText()) || a.retorno(tf_tel.getText()) || a.retorno(nom) || a.retorno(dir) || a.retorno(ZV) ){
+        if(Control_vacio.retorno(apel) || Control_vacio.retorno(tf_anio.getText()) || Control_vacio.retorno(tf_mes.getText()) || Control_vacio.retorno(tf_dia.getText()) || Control_vacio.retorno(tf_caract.getText()) || Control_vacio.retorno(tf_tel.getText()) || Control_vacio.retorno(nom) || Control_vacio.retorno(dir) || Control_vacio.retorno(ZV) ){
             w1.setVisible(true);
             w2.setVisible(true);
             w3.setVisible(true);
@@ -597,10 +554,6 @@ public class FormularioCliente extends javax.swing.JFrame {
     private void tf_DVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_DVActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tf_DVActionPerformed
-
-    private void tf_OcupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_OcupActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tf_OcupActionPerformed
 
     private void tf_diaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tf_diaFocusGained
         // TODO add your handling code here:
@@ -664,48 +617,105 @@ public class FormularioCliente extends javax.swing.JFrame {
         ((AbstractDocument)tf_Nombre.getDocument()).setDocumentFilter(new Filtro_CHAR());
     }//GEN-LAST:event_tf_NombreFocusGained
 
+    private void BorradorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BorradorMouseClicked
+        // TODO add your handling code here:
+        String  apel = tf_Apellido.getText();
+        String  nom =  tf_Nombre.getText();
+        String  dia = tf_dia.getText();
+        String mes = tf_mes.getText();
+        String anio = tf_anio.getText();
+        String  tel = tf_tel.getText(); // Caracteristica-Nro
+        String  car = tf_caract.getText();
+        String  dir =   tf_DV.getText();
+        String  ZV =   tf_ZV.getText();
+        String[] mementos = {apel,nom,dia,mes,anio,tel,car,dir,ZV};
+        originator.set(mementos);
+        caretaker.addMemento( originator.storeInMemento() );
+        memento_counter++;
+        memento_index++;
+        Rehacer.setEnabled(true);
+    }//GEN-LAST:event_BorradorMouseClicked
+
+    private void RehacerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RehacerMouseClicked
+        // TODO add your handling code here:
+        if((memento_counter - 1) > memento_index){
+
+                // Increment to the current Cliente displayed
+
+                memento_index++;
+
+                // Get the newer article saved and display it in JTextArea
+
+                String[] datos = originator.restoreFromMemento( caretaker.getMemento(memento_index) );
+
+                tf_Apellido.setText(datos[0]);
+                tf_Nombre.setText(datos[1]);
+                tf_dia.setText(datos[2]);
+                tf_mes.setText(datos[3]);
+                tf_anio.setText(datos[4]);
+                tf_tel.setText(datos[5]);
+                tf_caract.setText(datos[6]);
+                tf_DV.setText(datos[7]);
+                tf_ZV.setText(datos[8]);
+                // Make undo clickable
+
+                Deshacer.setEnabled(true);
+
+        } else {
+
+                // Don't allow user to click Redo
+
+                Rehacer.setEnabled(false);
+
+        }
+    }//GEN-LAST:event_RehacerMouseClicked
+
+    private void DeshacerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DeshacerMouseClicked
+        // TODO add your handling code here:
+        if(memento_index >= 1){
+						
+                // Decrement to the current Cliente displayed
+
+                memento_index--;
+
+                // Get the older memento saved and display it in Formulario
+
+                String[] datos = originator.restoreFromMemento( caretaker.getMemento(memento_index) );
+
+                tf_Apellido.setText(datos[0]);
+                tf_Nombre.setText(datos[1]);
+                tf_dia.setText(datos[2]);
+                tf_mes.setText(datos[3]);
+                tf_anio.setText(datos[4]);
+                tf_tel.setText(datos[5]);
+                tf_caract.setText(datos[6]);
+                tf_DV.setText(datos[7]);
+                tf_ZV.setText(datos[8]);
+                // Make Redo clickable
+                Rehacer.setEnabled(true);
+
+        } else {
+
+                // Don't allow user to click Undo
+
+                Deshacer.setEnabled(false);
+
+        }
+    }//GEN-LAST:event_DeshacerMouseClicked
+
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FormularioCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FormularioCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FormularioCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FormularioCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FormularioCliente().setVisible(true);
-            }
-        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Borrador;
+    private javax.swing.JLabel Deshacer;
+    private javax.swing.JLabel Rehacer;
     private javax.swing.JLabel fondoFormularioCliente;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel18;
@@ -723,19 +733,14 @@ public class FormularioCliente extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
-    private javax.swing.JSeparator jSeparator6;
-    private javax.swing.JSeparator jSeparator7;
     private javax.swing.JLabel jl_cancelar;
     private javax.swing.JLabel jl_cerrar;
     private javax.swing.JLabel jl_registrar;
     private javax.swing.JLabel lblTituloFC;
     private javax.swing.JLabel lblminimizar;
     private javax.swing.JTextField tf_Apellido;
-    private javax.swing.JTextField tf_DT;
     private javax.swing.JTextField tf_DV;
     private javax.swing.JTextField tf_Nombre;
-    private javax.swing.JTextField tf_Ocup;
-    private javax.swing.JTextField tf_ZT;
     private javax.swing.JTextField tf_ZV;
     private javax.swing.JTextField tf_anio;
     private javax.swing.JTextField tf_caract;

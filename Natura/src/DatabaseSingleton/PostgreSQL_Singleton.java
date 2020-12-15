@@ -11,7 +11,7 @@ import java.sql.SQLException;
 
 public class PostgreSQL_Singleton {
 
-    private static PostgreSQL_Singleton instance;
+    private static PostgreSQL_Singleton instance = null;
     private static Connection connection;
     private static final String URL = "jdbc:postgresql://localhost:5432/Natura_DB";
     private static final String USER = "postgres";
@@ -21,6 +21,7 @@ public class PostgreSQL_Singleton {
         try {
             Class.forName("org.postgresql.Driver");
             connection = DriverManager.getConnection(URL, USER, PASS);
+            System.out.println("Connection to PostgreSQL: ON");
         } catch (ClassNotFoundException ex) {
             System.out.println("Database Connection Creation Failed : " + ex.getMessage());
         }
@@ -33,9 +34,16 @@ public class PostgreSQL_Singleton {
     public static PostgreSQL_Singleton getInstance() throws SQLException {
         if (instance == null) {
             instance = new PostgreSQL_Singleton();
-        } else if (instance.getConnection().isClosed()) {
-            connection = DriverManager.getConnection(URL, USER, PASS);
-        }
+        } 
         return instance;
+    }
+    public void disconnect(){
+        try{
+            connection.close();
+            System.out.println("Connection to PostgreSQL: OFF");
+        } catch (SQLException ex) {
+            System.out.println("Connection to PostgreSQL: Failed /n " + ex.getMessage());
+        }
+        
     }
 }

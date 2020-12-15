@@ -2,12 +2,18 @@ package Interfaces;
 
 import Clases.*;
 import Clases_Utilidad.Control_vacio;
+import Clases_Utilidad.Filtro_enteros;
 import Clases_Utilidad.calcular_edad;
 import DatabaseControlador.Controlador;
+import Memento.Caretaker;
+import Memento.Originator;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -19,6 +25,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
+import javax.swing.text.AbstractDocument;
 
 public class Principal extends javax.swing.JFrame {
     
@@ -27,6 +34,9 @@ public class Principal extends javax.swing.JFrame {
     public static int cantidadPedido;
     Object[] datosProducto;
     final TableRowSorter<TableModel> sorter ;
+    final TableRowSorter<TableModel> sorterStock ;
+    public static Caretaker global_care = new Caretaker();
+    public static Originator global_ori = new Originator();
     public Principal() {
         initComponents();
         JPanelCliente.setVisible(false);
@@ -65,8 +75,12 @@ public class Principal extends javax.swing.JFrame {
         tablaClientes.setAutoCreateRowSorter(true);
         tablaCarrito.setAutoCreateRowSorter(true);
         tablaStockProductos.setAutoCreateRowSorter(true);
+        
         sorter = new TableRowSorter<>(tablaClientes.getModel());
         tablaClientes.setRowSorter(sorter);
+        
+        sorterStock = new TableRowSorter<>(tablaStockProductos.getModel());
+        tablaStockProductos.setRowSorter(sorterStock);
     }
 
     @SuppressWarnings("unchecked")
@@ -128,9 +142,9 @@ public class Principal extends javax.swing.JFrame {
         jLabel27 = new javax.swing.JLabel();
         ScrollPaneCarrito = new javax.swing.JScrollPane();
         tablaCarrito = new javax.swing.JTable();
-        jTextField6 = new javax.swing.JTextField();
+        filtroCompra = new javax.swing.JTextField();
         jLabel28 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        cbFiltroCompra = new javax.swing.JComboBox<>();
         jLabel29 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tablaStockProductos = new javax.swing.JTable();
@@ -583,6 +597,7 @@ public class Principal extends javax.swing.JFrame {
         lblNombreCliente.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         lblNombreCliente.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
         lblNombreCliente.setCaretColor(new java.awt.Color(255, 255, 255));
+        lblNombreCliente.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         lblNombreCliente.setEnabled(false);
         lblNombreCliente.setOpaque(false);
         lblNombreCliente.addActionListener(new java.awt.event.ActionListener() {
@@ -602,6 +617,7 @@ public class Principal extends javax.swing.JFrame {
         lblImporteTotal.setText("0.0");
         lblImporteTotal.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
         lblImporteTotal.setCaretColor(new java.awt.Color(255, 255, 255));
+        lblImporteTotal.setEnabled(false);
         lblImporteTotal.setOpaque(false);
         lblImporteTotal.setSelectedTextColor(new java.awt.Color(255, 255, 255));
         lblImporteTotal.addActionListener(new java.awt.event.ActionListener() {
@@ -656,6 +672,11 @@ public class Principal extends javax.swing.JFrame {
         tablaCarrito.setSelectionBackground(new java.awt.Color(51, 204, 255));
         tablaCarrito.setShowVerticalLines(false);
         tablaCarrito.getTableHeader().setReorderingAllowed(false);
+        tablaCarrito.addContainerListener(new java.awt.event.ContainerAdapter() {
+            public void componentAdded(java.awt.event.ContainerEvent evt) {
+                tablaCarritoComponentAdded(evt);
+            }
+        });
         tablaCarrito.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tablaCarritoMouseClicked(evt);
@@ -676,29 +697,34 @@ public class Principal extends javax.swing.JFrame {
 
         JPanelCompra.add(ScrollPaneCarrito, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 60, 450, 160));
 
-        jTextField6.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jTextField6.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField6.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField6.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
-        jTextField6.setOpaque(false);
-        jTextField6.addActionListener(new java.awt.event.ActionListener() {
+        filtroCompra.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        filtroCompra.setForeground(new java.awt.Color(255, 255, 255));
+        filtroCompra.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        filtroCompra.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
+        filtroCompra.setOpaque(false);
+        filtroCompra.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField6ActionPerformed(evt);
+                filtroCompraActionPerformed(evt);
             }
         });
-        JPanelCompra.add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 360, 370, 30));
+        filtroCompra.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                filtroCompraKeyTyped(evt);
+            }
+        });
+        JPanelCompra.add(filtroCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 360, 370, 30));
 
         jLabel28.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel28.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/filtroIconWhite.png"))); // NOI18N
         JPanelCompra.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 360, -1, 30));
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Codigo", "Categoria", "Linea", "Nombre" }));
-        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+        cbFiltroCompra.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Codigo", "Categoria", "Linea", "Nombre" }));
+        cbFiltroCompra.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox2ActionPerformed(evt);
+                cbFiltroCompraActionPerformed(evt);
             }
         });
-        JPanelCompra.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 360, 100, 30));
+        JPanelCompra.add(cbFiltroCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 360, 100, 30));
 
         jLabel29.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
         JPanelCompra.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(7, 233, 1384, 10));
@@ -766,6 +792,11 @@ public class Principal extends javax.swing.JFrame {
         lblAnioCompra.setText("Año");
         lblAnioCompra.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
         lblAnioCompra.setOpaque(false);
+        lblAnioCompra.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblAnioCompraMouseClicked(evt);
+            }
+        });
         lblAnioCompra.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 lblAnioCompraActionPerformed(evt);
@@ -798,9 +829,27 @@ public class Principal extends javax.swing.JFrame {
         lblDescuento.setText("0.0");
         lblDescuento.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
         lblDescuento.setOpaque(false);
+        lblDescuento.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                lblDescuentoFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                lblDescuentoFocusLost(evt);
+            }
+        });
+        lblDescuento.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblDescuentoMouseClicked(evt);
+            }
+        });
         lblDescuento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 lblDescuentoActionPerformed(evt);
+            }
+        });
+        lblDescuento.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                lblDescuentoKeyReleased(evt);
             }
         });
         JPanelCompra.add(lblDescuento, new org.netbeans.lib.awtextra.AbsoluteConstraints(1200, 70, 120, 30));
@@ -842,6 +891,11 @@ public class Principal extends javax.swing.JFrame {
         lblDiaCompra.setText("Dia");
         lblDiaCompra.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
         lblDiaCompra.setOpaque(false);
+        lblDiaCompra.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblDiaCompraMouseClicked(evt);
+            }
+        });
         lblDiaCompra.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 lblDiaCompraActionPerformed(evt);
@@ -855,6 +909,11 @@ public class Principal extends javax.swing.JFrame {
         lblMesCompra.setText("Mes");
         lblMesCompra.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
         lblMesCompra.setOpaque(false);
+        lblMesCompra.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblMesCompraMouseClicked(evt);
+            }
+        });
         lblMesCompra.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 lblMesCompraActionPerformed(evt);
@@ -883,6 +942,7 @@ public class Principal extends javax.swing.JFrame {
         lblApellidoCliente.setForeground(new java.awt.Color(255, 255, 255));
         lblApellidoCliente.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         lblApellidoCliente.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
+        lblApellidoCliente.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         lblApellidoCliente.setEnabled(false);
         lblApellidoCliente.setOpaque(false);
         lblApellidoCliente.addActionListener(new java.awt.event.ActionListener() {
@@ -906,6 +966,11 @@ public class Principal extends javax.swing.JFrame {
         JPanelCompra.add(fondoEtiquetaCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1400, 250));
 
         lblAgregarPago.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/agregarPagoIcon.png"))); // NOI18N
+        lblAgregarPago.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblAgregarPagoMouseClicked(evt);
+            }
+        });
         JPanelCompra.add(lblAgregarPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 875, -1, -1));
 
         jLabel55.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -1210,11 +1275,17 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_lblPromocionesMouseClicked
 
     private void lblAgregarClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAgregarClienteMouseClicked
-        FormularioCliente formC = new FormularioCliente();
+        FormularioCliente formC = new FormularioCliente(global_care,global_ori);
         formC.setVisible(true);
+        
     }//GEN-LAST:event_lblAgregarClienteMouseClicked
 
     private void lblcerrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblcerrarMouseClicked
+        try {
+            Controlador.cerrar_conexion();
+        } catch (SQLException ex) {
+            System.out.println("Error al cerrar la conexion : /n" + ex.getMessage());
+        }
         System.exit(0);
     }//GEN-LAST:event_lblcerrarMouseClicked
 
@@ -1231,12 +1302,13 @@ public class Principal extends javax.swing.JFrame {
             a = Controlador.cliente_traer_todos();
             DefaultTableModel tblModel = (DefaultTableModel) tablaClientes.getModel();
             tblModel.setRowCount(0);
-            for (Cliente clt : a) {
+            a.stream().map((clt) -> {
                 int age = new calcular_edad().calculatePeriod(clt.getFechaNac());
                 Object[] datos = {clt.getCodCliente(), clt.getApellido(), clt.getNombre(), clt.getFechaNac(), age, clt.getTelefono(), clt.getDireccion(), clt.getZonaVivienda(), "$ " + clt.getSaldo()};
+                return datos;
+            }).forEachOrdered((datos) -> {
                 tblModel.addRow(datos);
-
-            }
+            });
             DefaultTableCellRenderer leftRenderer = new DefaultTableCellRenderer();
             leftRenderer.setHorizontalAlignment(SwingConstants.LEFT);
 
@@ -1272,6 +1344,10 @@ public class Principal extends javax.swing.JFrame {
             JPanelCompra.setVisible(true);
             JPanelCliente.setVisible(false);
             tablaCarrito.setAutoscrolls(true);
+            LocalDate ahora = LocalDate.now();
+            lblDiaCompra.setText(ahora.getDayOfMonth()+ "");
+            lblMesCompra.setText(ahora.getMonthValue()+ "");
+            lblAnioCompra.setText(ahora.getYear() + "");
             List<Producto> a;
             try {
                 a = Controlador.producto_traer_todos();
@@ -1283,7 +1359,6 @@ public class Principal extends javax.swing.JFrame {
                 for(Producto p : a) {       
                     Object[] datos = {p.getCodProducto(), p.getCategoria(), p.getLinea(), p.getNombre(), p.getPrecio(), p.getCantidad()};
                     tblModel.addRow(datos);
-
                 }
                 DefaultTableCellRenderer leftRenderer = new DefaultTableCellRenderer();
                 DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
@@ -1315,17 +1390,17 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_lblImporteTotalActionPerformed
 
-    private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
+    private void filtroCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filtroCompraActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField6ActionPerformed
+    }//GEN-LAST:event_filtroCompraActionPerformed
 
     private void lblAnioCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblAnioCompraActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_lblAnioCompraActionPerformed
 
-    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
+    private void cbFiltroCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbFiltroCompraActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox2ActionPerformed
+    }//GEN-LAST:event_cbFiltroCompraActionPerformed
 
     private void lblDescuentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblDescuentoActionPerformed
         // TODO add your handling code here:
@@ -1377,6 +1452,15 @@ public class Principal extends javax.swing.JFrame {
                 Object[] datos = {(int)tablaStockProductos.getValueAt(Fila, 0),(String)tablaStockProductos.getValueAt(Fila, 3), (short) 1, (float)tablaStockProductos.getValueAt(Fila, 4)};
                 tblModel.addRow(datos);
             }
+            Float acum = 0.0f;
+            for(int x = 0;x<tablaCarrito.getRowCount();x++){
+                
+                short cant = (short) tablaCarrito.getValueAt(x, 2);
+                float price = (Float)tablaCarrito.getValueAt(x, 3);
+                acum = acum + price*cant;
+            }
+            acum = acum - Float.parseFloat(lblDescuento.getText());
+            lblImporteTotal.setText(acum + "");
         }
         
     }//GEN-LAST:event_tablaStockProductosMouseClicked
@@ -1444,6 +1528,14 @@ public class Principal extends javax.swing.JFrame {
             if ((short) tablaCarrito.getValueAt((int) tablaCarrito.getSelectedRow(), 2) == 0) {
                 tblModel.removeRow((int) tablaCarrito.getSelectedRow());
             }
+            Float acum = 0.0f;
+            for(int x = 0;x<tablaCarrito.getRowCount();x++){
+                short cant = (short) tablaCarrito.getValueAt(x, 2);
+                float price = (Float)tablaCarrito.getValueAt(x, 3);
+                acum = acum + price*cant;
+            }
+            acum = acum - Float.parseFloat(lblDescuento.getText());
+            lblImporteTotal.setText(acum + "");
         }
 
     }//GEN-LAST:event_tablaCarritoMouseClicked
@@ -1465,10 +1557,8 @@ public class Principal extends javax.swing.JFrame {
         /// * control de que ingrese la fecha
         /// * Calcular el importe total
         /// * Tomar valor de descuento
-        Control_vacio a = new Control_vacio();
         int CantFilas = tablaCarrito.getRowCount();
-        if( a.retorno(lblDiaCompra.getText()) || a.retorno(lblMesCompra.getText()) || a.retorno(lblAnioCompra.getText()) ){
-            //w1.setVisible(true);
+        if( Control_vacio.retorno(lblDiaCompra.getText()) || Control_vacio.retorno(lblMesCompra.getText()) || Control_vacio.retorno(lblAnioCompra.getText()) ){
             JOptionPane.showMessageDialog(null,"Los campos marcados con asterisco son obligatorios");
         }
         else if( CantFilas == 0){
@@ -1575,8 +1665,8 @@ public class Principal extends javax.swing.JFrame {
                     tablaPago.getColumnModel().getColumn(i).setCellRenderer(leftRenderer);
                 }
                 
-                
-                
+                DefaultTableModel tblCP = (DefaultTableModel) tablaCompraProducto.getModel();
+                tblCP.setRowCount(0);
                 
                 
             } catch (SQLException ex) {
@@ -1608,19 +1698,25 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_lblNombreHistorialActionPerformed
 
     private void filtroKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_filtroKeyTyped
-        String text = filtro.getText();
-        if (text != null && !text.isEmpty()) {
-          switch (filtroCB.getSelectedIndex()){
-              case 0: sorter.setRowFilter(RowFilter.regexFilter("^(?i)" + text, 1)); break;// Apellido
-              case 1: sorter.setRowFilter(RowFilter.regexFilter("^(?i)" + text, 2)); break;// Nombre
-              //case 2: sorter.setRowFilter(RowFilter.numberFilter(ComparisonType.AFTER, Float.parseFloat(text), 8));break; // Saldo Mayor A, pos 8 en jtable
-              //case 3: sorter.setRowFilter(RowFilter.numberFilter(ComparisonType.BEFORE, Float.parseFloat(text), 8));break;
-              default: sorter.setRowFilter(RowFilter.regexFilter("^(?i)" + text, 1)); // Apellido
-          }
-          
-        } else {
-          sorter.setRowFilter(null);
-        }
+        filtro.addKeyListener(new KeyAdapter(){
+            @Override
+            public void keyReleased(KeyEvent ke){
+                String text = filtro.getText();
+                if (text != null && !text.isEmpty()) {
+                  switch (filtroCB.getSelectedIndex()){
+                      case 0: sorter.setRowFilter(RowFilter.regexFilter("^(?i)" + text, 1)); break;// Apellido
+                      case 1: sorter.setRowFilter(RowFilter.regexFilter("^(?i)" + text, 2)); break;// Nombre
+                      //case 2: sorter.setRowFilter(RowFilter.numberFilter(ComparisonType.AFTER, Float.parseFloat(text), 8));break; // Saldo Mayor A, pos 8 en jtable
+                      //case 3: sorter.setRowFilter(RowFilter.numberFilter(ComparisonType.BEFORE, Float.parseFloat(text), 8));break;
+                      default: sorter.setRowFilter(RowFilter.regexFilter("^(?i)" + text, 1)); // Apellido
+                  }
+
+                } else {
+                  sorter.setRowFilter(null);
+                }
+            }
+        });
+        
     }//GEN-LAST:event_filtroKeyTyped
 
     private void lblDetalleCompraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDetalleCompraMouseClicked
@@ -1650,6 +1746,89 @@ public class Principal extends javax.swing.JFrame {
        
         
     }//GEN-LAST:event_lblDetalleCompraMouseClicked
+
+    private void lblAnioCompraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAnioCompraMouseClicked
+        // TODO add your handling code here:
+        lblAnioCompra.setText("");
+    }//GEN-LAST:event_lblAnioCompraMouseClicked
+
+    private void lblMesCompraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMesCompraMouseClicked
+        lblMesCompra.setText("");
+    }//GEN-LAST:event_lblMesCompraMouseClicked
+
+    private void lblDiaCompraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDiaCompraMouseClicked
+        // TODO add your handling code here:
+        lblDiaCompra.setText("");
+    }//GEN-LAST:event_lblDiaCompraMouseClicked
+
+    private void lblAgregarPagoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAgregarPagoMouseClicked
+        if(tablaClientes.getSelectedRow() == -1){
+            JOptionPane.showMessageDialog(null,"Necesita seleccionar un cliente");
+        }
+        else{
+            try {
+                int Fila = tablaClientes.getSelectedRow();
+                codCliente = (short) tablaClientes.getValueAt(Fila, 0);
+                FormularioPago p = new FormularioPago(Controlador.cliente_traer_uno(codCliente));
+                p.setVisible(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_lblAgregarPagoMouseClicked
+
+    private void tablaCarritoComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_tablaCarritoComponentAdded
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_tablaCarritoComponentAdded
+
+    private void lblDescuentoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_lblDescuentoFocusGained
+        // TODO add your handling code here:
+        ((AbstractDocument)lblDescuento.getDocument()).setDocumentFilter(new Filtro_enteros());
+    }//GEN-LAST:event_lblDescuentoFocusGained
+
+    private void lblDescuentoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_lblDescuentoFocusLost
+        // TODO add your handling code here:
+        ((AbstractDocument)lblDescuento.getDocument()).setDocumentFilter(new Filtro_enteros());
+    }//GEN-LAST:event_lblDescuentoFocusLost
+
+    private void lblDescuentoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_lblDescuentoKeyReleased
+        // TODO add your handling code here:
+        Float acum = 0.0f;
+        for(int x = 0;x<tablaCarrito.getRowCount();x++){
+            short cant = (short) tablaCarrito.getValueAt(x, 2);
+            float price = (Float)tablaCarrito.getValueAt(x, 3);
+            acum = acum + price*cant;
+        }
+        acum = acum - Float.parseFloat(lblDescuento.getText());
+        lblImporteTotal.setText(acum + "");
+    }//GEN-LAST:event_lblDescuentoKeyReleased
+
+    private void filtroCompraKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_filtroCompraKeyTyped
+        filtroCompra.addKeyListener(new KeyAdapter(){
+            @Override
+            public void keyReleased(KeyEvent ke){
+                String text = filtroCompra.getText();
+                System.out.println(text);
+                if (!Control_vacio.retorno(text)) {
+                  switch (cbFiltroCompra.getSelectedIndex()){
+                      case 0:  sorterStock.setRowFilter(RowFilter.regexFilter("^(?i)" + text, 0)); break;// Cod
+                      case 1:  sorterStock.setRowFilter(RowFilter.regexFilter("^(?i)" + text, 1)); break;// Cat
+                      case 2:  sorterStock.setRowFilter(RowFilter.regexFilter("^(?i)" + text, 2)); break;// Linea
+                      case 3:  sorterStock.setRowFilter(RowFilter.regexFilter("^(?i)" + text, 3)); break;// Nomb
+                      default: sorterStock.setRowFilter(RowFilter.regexFilter("^(?i)" + text, 0)); // Cod
+                  }
+
+                } else {
+                  sorterStock.setRowFilter(null);
+                }
+            }
+        });
+    }//GEN-LAST:event_filtroCompraKeyTyped
+
+    private void lblDescuentoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDescuentoMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lblDescuentoMouseClicked
 
 
     public static void main(String args[]) {
@@ -1694,10 +1873,11 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JPanel JPanelPrincipalIzq;
     private javax.swing.JLabel PanelPrinDerFondo;
     private javax.swing.JScrollPane ScrollPaneCarrito;
+    private javax.swing.JComboBox<String> cbFiltroCompra;
     private javax.swing.JTextField filtro;
     private javax.swing.JComboBox<String> filtroCB;
+    private javax.swing.JTextField filtroCompra;
     private javax.swing.JLabel fondoEtiquetaCliente;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1756,7 +1936,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
-    private javax.swing.JTextField jTextField6;
     private javax.swing.JLabel lblAceptarCompra;
     private javax.swing.JLabel lblAgregarCliente;
     private javax.swing.JLabel lblAgregarPago;
