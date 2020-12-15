@@ -5,9 +5,12 @@
  */
 package natura;
 import Interfaces.Principal;
+import javax.swing.JOptionPane;
 
 public class Natura {
     public static void main(String[] args) {
+        String apel = "BArrera";
+        String nom = "Nicolas";
         Principal p = new Principal();
         p.setVisible(true);
     }

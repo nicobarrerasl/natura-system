@@ -3,6 +3,7 @@ package Interfaces;
 import Clases.*;
 import Clases_Utilidad.Control_vacio;
 import Clases_Utilidad.Filtro_enteros;
+import Clases_Utilidad.Filtro_float;
 import Clases_Utilidad.calcular_edad;
 import DatabaseControlador.Controlador;
 import Memento.Caretaker;
@@ -35,6 +36,7 @@ public class Principal extends javax.swing.JFrame {
     Object[] datosProducto;
     final TableRowSorter<TableModel> sorter ;
     final TableRowSorter<TableModel> sorterStock ;
+    List<Cliente> a;
     public static Caretaker global_care = new Caretaker();
     public static Originator global_ori = new Originator();
     public Principal() {
@@ -1277,6 +1279,7 @@ public class Principal extends javax.swing.JFrame {
     private void lblAgregarClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAgregarClienteMouseClicked
         FormularioCliente formC = new FormularioCliente(global_care,global_ori);
         formC.setVisible(true);
+        FormularioCliente.clients = a;
         
     }//GEN-LAST:event_lblAgregarClienteMouseClicked
 
@@ -1297,7 +1300,6 @@ public class Principal extends javax.swing.JFrame {
         JPanelPrincipalDer.setVisible(false);
         JPanelCompra.setVisible(false);
         JPanelCliente.setVisible(true);
-        List<Cliente> a;
         try {
             a = Controlador.cliente_traer_todos();
             DefaultTableModel tblModel = (DefaultTableModel) tablaClientes.getModel();
@@ -1467,7 +1469,6 @@ public class Principal extends javax.swing.JFrame {
 
     private void lblactualizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblactualizarMouseClicked
         try {
-            List<Cliente> a;
             /// Populate JTable named tablaClientes
             a = Controlador.cliente_traer_todos();
             DefaultTableModel tblModel = (DefaultTableModel) tablaClientes.getModel();
@@ -1592,7 +1593,6 @@ public class Principal extends javax.swing.JFrame {
                     Importe_Total += valor_unidad * cant;
                 }
                 
-                System.out.println(Importe_Total);
                 Compra compra = new Compra((short)0,fecha_compra,Importe_Total,comprador,ArrayProd);
                 
                 Controlador.compra_insertar(compra);
@@ -1784,12 +1784,12 @@ public class Principal extends javax.swing.JFrame {
 
     private void lblDescuentoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_lblDescuentoFocusGained
         // TODO add your handling code here:
-        ((AbstractDocument)lblDescuento.getDocument()).setDocumentFilter(new Filtro_enteros());
+        ((AbstractDocument)lblDescuento.getDocument()).setDocumentFilter(new Filtro_float());
     }//GEN-LAST:event_lblDescuentoFocusGained
 
     private void lblDescuentoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_lblDescuentoFocusLost
         // TODO add your handling code here:
-        ((AbstractDocument)lblDescuento.getDocument()).setDocumentFilter(new Filtro_enteros());
+        ((AbstractDocument)lblDescuento.getDocument()).setDocumentFilter(new Filtro_float());
     }//GEN-LAST:event_lblDescuentoFocusLost
 
     private void lblDescuentoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_lblDescuentoKeyReleased
@@ -1809,7 +1809,6 @@ public class Principal extends javax.swing.JFrame {
             @Override
             public void keyReleased(KeyEvent ke){
                 String text = filtroCompra.getText();
-                System.out.println(text);
                 if (!Control_vacio.retorno(text)) {
                   switch (cbFiltroCompra.getSelectedIndex()){
                       case 0:  sorterStock.setRowFilter(RowFilter.regexFilter("^(?i)" + text, 0)); break;// Cod
