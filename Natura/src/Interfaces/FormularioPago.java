@@ -125,6 +125,11 @@ public class FormularioPago extends javax.swing.JFrame {
         lblImporteTotal.setCaretColor(new java.awt.Color(255, 255, 255));
         lblImporteTotal.setOpaque(false);
         lblImporteTotal.setSelectedTextColor(new java.awt.Color(255, 255, 255));
+        lblImporteTotal.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblImporteTotalMouseClicked(evt);
+            }
+        });
         lblImporteTotal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 lblImporteTotalActionPerformed(evt);
@@ -429,6 +434,11 @@ public class FormularioPago extends javax.swing.JFrame {
         // TODO add your handling code here:
         lblAnioCompra.setText("");
     }//GEN-LAST:event_lblAnioCompraMouseClicked
+
+    private void lblImporteTotalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblImporteTotalMouseClicked
+        // TODO add your handling code here:
+        lblImporteTotal.setText("");
+    }//GEN-LAST:event_lblImporteTotalMouseClicked
 
     /**
      * @param args the command line arguments

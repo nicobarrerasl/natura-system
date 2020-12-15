@@ -74,6 +74,8 @@ public class Principal extends javax.swing.JFrame {
         tablaStockProductos.getTableHeader().setBackground(Color.BLACK);
         tablaStockProductos.getTableHeader().setForeground(Color.WHITE);
         tablaStockProductos.getTableHeader().setPreferredSize(new Dimension(40, 40));
+        
+        
         tablaClientes.setAutoCreateRowSorter(true);
         tablaCarrito.setAutoCreateRowSorter(true);
         tablaStockProductos.setAutoCreateRowSorter(true);
@@ -1301,6 +1303,7 @@ public class Principal extends javax.swing.JFrame {
         JPanelCompra.setVisible(false);
         JPanelCliente.setVisible(true);
         try {
+            lblImporteTotal.setText("0.0");
             a = Controlador.cliente_traer_todos();
             DefaultTableModel tblModel = (DefaultTableModel) tablaClientes.getModel();
             tblModel.setRowCount(0);
@@ -1319,7 +1322,7 @@ public class Principal extends javax.swing.JFrame {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex.getMessage());
         }
     }//GEN-LAST:event_lblclientesMouseClicked
 
@@ -1344,6 +1347,7 @@ public class Principal extends javax.swing.JFrame {
             
         
             JPanelCompra.setVisible(true);
+            lblDescuento.setText("0.0");
             JPanelCliente.setVisible(false);
             tablaCarrito.setAutoscrolls(true);
             LocalDate ahora = LocalDate.now();
@@ -1784,12 +1788,10 @@ public class Principal extends javax.swing.JFrame {
 
     private void lblDescuentoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_lblDescuentoFocusGained
         // TODO add your handling code here:
-        ((AbstractDocument)lblDescuento.getDocument()).setDocumentFilter(new Filtro_float());
     }//GEN-LAST:event_lblDescuentoFocusGained
 
     private void lblDescuentoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_lblDescuentoFocusLost
         // TODO add your handling code here:
-        ((AbstractDocument)lblDescuento.getDocument()).setDocumentFilter(new Filtro_float());
     }//GEN-LAST:event_lblDescuentoFocusLost
 
     private void lblDescuentoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_lblDescuentoKeyReleased
@@ -1800,7 +1802,13 @@ public class Principal extends javax.swing.JFrame {
             float price = (Float)tablaCarrito.getValueAt(x, 3);
             acum = acum + price*cant;
         }
-        acum = acum - Float.parseFloat(lblDescuento.getText());
+        Float desc = 0f;
+        try{
+            desc = Float.parseFloat(lblDescuento.getText());
+        }catch(NumberFormatException e){
+            System.out.println(e.getMessage());
+        }
+        acum = acum - desc;
         lblImporteTotal.setText(acum + "");
     }//GEN-LAST:event_lblDescuentoKeyReleased
 
@@ -1827,6 +1835,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void lblDescuentoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDescuentoMouseClicked
         // TODO add your handling code here:
+        lblDescuento.setText("");
     }//GEN-LAST:event_lblDescuentoMouseClicked
 
 
