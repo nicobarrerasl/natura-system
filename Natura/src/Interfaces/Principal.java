@@ -815,15 +815,15 @@ public class Principal extends javax.swing.JFrame {
         jLabel36.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 1, 0, 0, new java.awt.Color(255, 255, 255)));
         JPanelCompra.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(7, 7, 10, 235));
 
-        jLabel38.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel38.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel38.setForeground(new java.awt.Color(255, 255, 255));
         jLabel38.setText("Cancelar Compra");
-        JPanelCompra.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 960, -1, -1));
+        JPanelCompra.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 950, -1, -1));
 
-        jLabel39.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel39.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel39.setForeground(new java.awt.Color(255, 255, 255));
         jLabel39.setText("Registrar Compra");
-        JPanelCompra.add(jLabel39, new org.netbeans.lib.awtextra.AbsoluteConstraints(1240, 960, -1, -1));
+        JPanelCompra.add(jLabel39, new org.netbeans.lib.awtextra.AbsoluteConstraints(1210, 950, -1, -1));
 
         lblDescuento.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         lblDescuento.setForeground(new java.awt.Color(255, 255, 255));
@@ -866,7 +866,7 @@ public class Principal extends javax.swing.JFrame {
                 lblCancelarCompraMouseClicked(evt);
             }
         });
-        JPanelCompra.add(lblCancelarCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 870, -1, 80));
+        JPanelCompra.add(lblCancelarCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 870, -1, 80));
 
         lblAceptarCompra.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblAceptarCompra.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/registrarCompra.png"))); // NOI18N
@@ -876,7 +876,7 @@ public class Principal extends javax.swing.JFrame {
                 lblAceptarCompraMouseClicked(evt);
             }
         });
-        JPanelCompra.add(lblAceptarCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(1265, 870, -1, 80));
+        JPanelCompra.add(lblAceptarCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(1250, 870, -1, 80));
 
         jLabel46.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 0, 1, new java.awt.Color(255, 255, 255)));
         JPanelCompra.add(jLabel46, new org.netbeans.lib.awtextra.AbsoluteConstraints(1382, 53, 10, 190));
@@ -975,10 +975,10 @@ public class Principal extends javax.swing.JFrame {
         });
         JPanelCompra.add(lblAgregarPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 875, -1, -1));
 
-        jLabel55.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel55.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel55.setForeground(new java.awt.Color(255, 255, 255));
         jLabel55.setText("Agregar Pago");
-        JPanelCompra.add(jLabel55, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 960, -1, -1));
+        JPanelCompra.add(jLabel55, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 950, -1, -1));
 
         jLabel7.setFont(new java.awt.Font("Arial Black", 0, 15)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));

@@ -47,7 +47,6 @@ public class FormularioCliente extends javax.swing.JFrame {
         w6.setVisible(false);    
         caretaker = care;
         originator = ori;
-        contadorMementos.setText(memento_counter + "");
         memento_index = memento_counter -1;
         if(memento_counter >=1)
             Rehacer.setEnabled(true);
@@ -67,12 +66,9 @@ public class FormularioCliente extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         tf_tel = new javax.swing.JTextField();
-        jSeparator3 = new javax.swing.JSeparator();
         tf_dia = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jSeparator2 = new javax.swing.JSeparator();
         lblminimizar = new javax.swing.JLabel();
-        jl_cerrar = new javax.swing.JLabel();
         lblTituloFC = new javax.swing.JLabel();
         tf_Apellido = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
@@ -106,8 +102,10 @@ public class FormularioCliente extends javax.swing.JFrame {
         lblRehacer = new javax.swing.JLabel();
         jSeparator6 = new javax.swing.JSeparator();
         jSeparator7 = new javax.swing.JSeparator();
-        contadorMementos = new javax.swing.JLabel();
-        lblMem = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
         fondoFormularioCliente = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -142,10 +140,6 @@ public class FormularioCliente extends javax.swing.JFrame {
         });
         jPanel1.add(tf_tel, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 310, 180, 20));
 
-        jSeparator3.setForeground(new java.awt.Color(255, 255, 255));
-        jSeparator3.setFont(new java.awt.Font("Arial", 0, 3)); // NOI18N
-        jPanel1.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 520, 200, 10));
-
         tf_dia.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         tf_dia.setForeground(new java.awt.Color(255, 255, 255));
         tf_dia.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -169,10 +163,7 @@ public class FormularioCliente extends javax.swing.JFrame {
         jLabel5.setText("Telefono Particular");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 310, 150, 30));
 
-        jSeparator2.setForeground(new java.awt.Color(255, 255, 255));
-        jSeparator2.setFont(new java.awt.Font("Arial", 0, 3)); // NOI18N
-        jPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 520, 200, 10));
-
+        lblminimizar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblminimizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/minimizarIconFC.png"))); // NOI18N
         lblminimizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblminimizar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -181,17 +172,7 @@ public class FormularioCliente extends javax.swing.JFrame {
                 lblminimizarMouseClicked(evt);
             }
         });
-        jPanel1.add(lblminimizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 10, 30, 20));
-
-        jl_cerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cerrarIconFC.png"))); // NOI18N
-        jl_cerrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jl_cerrar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jl_cerrar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jl_cerrarMouseClicked(evt);
-            }
-        });
-        jPanel1.add(jl_cerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 10, 30, 20));
+        jPanel1.add(lblminimizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 10, 30, 20));
 
         lblTituloFC.setFont(new java.awt.Font("Arial Black", 0, 28)); // NOI18N
         lblTituloFC.setForeground(new java.awt.Color(255, 255, 255));
@@ -388,7 +369,7 @@ public class FormularioCliente extends javax.swing.JFrame {
         jLabel15.setForeground(new java.awt.Color(255, 255, 255));
         jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel15.setText("Registrar");
-        jPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(582, 758, 90, 30));
+        jPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 770, 90, 30));
 
         tf_ZV.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         tf_ZV.setForeground(new java.awt.Color(255, 255, 255));
@@ -412,7 +393,7 @@ public class FormularioCliente extends javax.swing.JFrame {
                 jl_cancelarMouseClicked(evt);
             }
         });
-        jPanel1.add(jl_cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 700, 60, 60));
+        jPanel1.add(jl_cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 710, 60, 60));
 
         jl_registrar.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jl_registrar.setForeground(new java.awt.Color(255, 255, 255));
@@ -425,7 +406,7 @@ public class FormularioCliente extends javax.swing.JFrame {
                 jl_registrarMouseClicked(evt);
             }
         });
-        jPanel1.add(jl_registrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 700, 60, 60));
+        jPanel1.add(jl_registrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 710, 60, 60));
 
         jLabel18.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(255, 255, 255));
@@ -436,7 +417,7 @@ public class FormularioCliente extends javax.swing.JFrame {
         jLabel19.setForeground(new java.awt.Color(255, 255, 255));
         jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel19.setText("Cancelar");
-        jPanel1.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 760, 90, 30));
+        jPanel1.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 770, 90, 30));
 
         Rehacer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/recargarIcon.png"))); // NOI18N
         Rehacer.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -444,11 +425,13 @@ public class FormularioCliente extends javax.swing.JFrame {
                 RehacerMouseClicked(evt);
             }
         });
-        jPanel1.add(Rehacer, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 570, -1, -1));
+        jPanel1.add(Rehacer, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 570, -1, -1));
 
+        lblRehacer.setFont(new java.awt.Font("Arial Black", 0, 14)); // NOI18N
         lblRehacer.setForeground(new java.awt.Color(255, 255, 255));
-        lblRehacer.setText("Recargar Datos Cancelados");
-        jPanel1.add(lblRehacer, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 630, -1, 40));
+        lblRehacer.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblRehacer.setText("Cargar ultimo");
+        jPanel1.add(lblRehacer, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 630, -1, 40));
 
         jSeparator6.setForeground(new java.awt.Color(255, 255, 255));
         jSeparator6.setFont(new java.awt.Font("Arial", 0, 3)); // NOI18N
@@ -458,13 +441,17 @@ public class FormularioCliente extends javax.swing.JFrame {
         jSeparator7.setFont(new java.awt.Font("Arial", 0, 3)); // NOI18N
         jPanel1.add(jSeparator7, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 390, 200, 10));
 
-        contadorMementos.setForeground(new java.awt.Color(255, 255, 255));
-        contadorMementos.setText("0");
-        jPanel1.add(contadorMementos, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 590, -1, -1));
+        jLabel16.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 1, 0, 0, new java.awt.Color(255, 255, 255)));
+        jPanel1.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 10, 690));
 
-        lblMem.setForeground(new java.awt.Color(255, 255, 255));
-        lblMem.setText("Formularios Recopilados: ");
-        jPanel1.add(lblMem, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 590, -1, -1));
+        jLabel10.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 0, 0, 0, new java.awt.Color(255, 255, 255)));
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 640, 10));
+
+        jLabel11.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 0, 1, new java.awt.Color(255, 255, 255)));
+        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 40, 10, 660));
+
+        jLabel17.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
+        jPanel1.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 778, 490, 10));
 
         fondoFormularioCliente.setBackground(new java.awt.Color(255, 255, 255));
         fondoFormularioCliente.setForeground(new java.awt.Color(255, 255, 255));
@@ -482,10 +469,6 @@ public class FormularioCliente extends javax.swing.JFrame {
     private void lblminimizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblminimizarMouseClicked
         this.setState(FormularioCliente.ICONIFIED);
     }//GEN-LAST:event_lblminimizarMouseClicked
-
-    private void jl_cerrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jl_cerrarMouseClicked
-        this.dispose();
-    }//GEN-LAST:event_jl_cerrarMouseClicked
 
     private void tf_ApellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_ApellidoActionPerformed
         // TODO add your handling code here:
@@ -704,11 +687,14 @@ public class FormularioCliente extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Rehacer;
-    private javax.swing.JLabel contadorMementos;
     private javax.swing.JLabel fondoFormularioCliente;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
@@ -720,16 +706,12 @@ public class FormularioCliente extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JLabel jl_cancelar;
-    private javax.swing.JLabel jl_cerrar;
     private javax.swing.JLabel jl_registrar;
-    private javax.swing.JLabel lblMem;
     private javax.swing.JLabel lblRehacer;
     private javax.swing.JLabel lblTituloFC;
     private javax.swing.JLabel lblminimizar;
