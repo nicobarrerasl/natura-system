@@ -11,6 +11,7 @@ import DatabaseControlador.Controlador;
 import Memento.Caretaker;
 import Memento.Originator;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -531,7 +532,7 @@ public class FormularioCliente extends javax.swing.JFrame {
         int    flag; // Este flag se utiliza para ver si se dio de alta o no, en caso afirmativo se cierra el panel, si no, se deja para arreglar los datos.
         String  apel = tf_Apellido.getText();
         String  nom =  tf_Nombre.getText();
-        String  fnac = tf_anio.getText() + "-" + tf_mes.getText() + "-" + tf_dia.getText(); // YYYY-MM-DD
+        String  fnac = Fecha.armar(tf_dia.getText(), tf_mes.getText(), tf_anio.getText()); // YYYY-MM-DD con ceros, o null si no es una fecha real
         String  tel =  tf_caract.getText()+ "-" + tf_tel.getText(); // Caracteristica-Nro
         String  dir =   tf_DV.getText();
         String  ZV =   tf_ZV.getText();
@@ -543,6 +544,9 @@ public class FormularioCliente extends javax.swing.JFrame {
             w5.setVisible(true);
             w6.setVisible(true);  
             JOptionPane.showMessageDialog(null,"Los campos marcados con asterisco son obligatorios");
+        }
+        else if(fnac == null || LocalDate.parse(fnac).isAfter(LocalDate.now())){
+            JOptionPane.showMessageDialog(null,"La fecha de nacimiento no es valida");
         }
         else{
             boolean isRepetido = false;

@@ -2,6 +2,7 @@ package Interfaces;
 
 import Clases.*;
 import Clases_Utilidad.Control_vacio;
+import Clases_Utilidad.Fecha;
 import Clases_Utilidad.Filtro_enteros;
 import Clases_Utilidad.Filtro_float;
 import Clases_Utilidad.calcular_edad;
@@ -11,8 +12,6 @@ import Memento.Originator;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -27,6 +26,9 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import javax.swing.text.AbstractDocument;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import java.util.regex.Pattern;
 
 public class Principal extends javax.swing.JFrame {
     
@@ -85,6 +87,79 @@ public class Principal extends javax.swing.JFrame {
         
         sorterStock = new TableRowSorter<>(tablaStockProductos.getModel());
         tablaStockProductos.setRowSorter(sorterStock);
+
+        // Un solo listener para el buscador: reacciona a cualquier cambio del texto (tipeo, pegar, borrar)
+        // y al cambiar entre Apellido / Nombre.
+        filtro.getDocument().addDocumentListener(new DocumentListener() {
+            @Override public void insertUpdate(DocumentEvent e)  { aplicarFiltroClientes(); }
+            @Override public void removeUpdate(DocumentEvent e)  { aplicarFiltroClientes(); }
+            @Override public void changedUpdate(DocumentEvent e) { aplicarFiltroClientes(); }
+        });
+        filtroCB.addActionListener(e -> aplicarFiltroClientes());
+        filtroCompra.getDocument().addDocumentListener(new DocumentListener() {
+            @Override public void insertUpdate(DocumentEvent e)  { aplicarFiltroProductos(); }
+            @Override public void removeUpdate(DocumentEvent e)  { aplicarFiltroProductos(); }
+            @Override public void changedUpdate(DocumentEvent e) { aplicarFiltroProductos(); }
+        });
+        cbFiltroCompra.addActionListener(e -> aplicarFiltroProductos());
+
+        // Descuento: solo importes validos, y el total se recalcula ante cualquier cambio
+        // (tipeo, pegar, o el click que lo vacia).
+        ((AbstractDocument) lblDescuento.getDocument()).setDocumentFilter(new Filtro_float());
+        lblDescuento.getDocument().addDocumentListener(new DocumentListener() {
+            @Override public void insertUpdate(DocumentEvent e)  { recalcularTotal(); }
+            @Override public void removeUpdate(DocumentEvent e)  { recalcularTotal(); }
+            @Override public void changedUpdate(DocumentEvent e) { recalcularTotal(); }
+        });
+    }
+
+    /** Filtra el stock de productos de la compra por Codigo / Categoria / Linea / Nombre (columnas 0 a 3). */
+    private void aplicarFiltroProductos() {
+        String text = filtroCompra.getText().trim();
+        if (text.isEmpty()) {
+            sorterStock.setRowFilter(null);
+            return;
+        }
+        int columna = Math.max(0, Math.min(3, cbFiltroCompra.getSelectedIndex()));
+        sorterStock.setRowFilter(RowFilter.regexFilter("(?i)^" + Pattern.quote(text), columna));
+    }
+
+    /** Descuento escrito por el usuario; vacio o incompleto (ej: ".") cuenta como 0. */
+    private float leerDescuento() {
+        try {
+            return Float.parseFloat(lblDescuento.getText().trim());
+        } catch (NumberFormatException ex) {
+            return 0f;
+        }
+    }
+
+    /** Total del carrito menos el descuento. */
+    private void recalcularTotal() {
+        float acum = 0f;
+        for (int x = 0; x < tablaCarrito.getRowCount(); x++) {
+            short cant = (short) tablaCarrito.getValueAt(x, 2);
+            float price = (Float) tablaCarrito.getValueAt(x, 3);
+            acum += price * cant;
+        }
+        lblImporteTotal.setText((acum - leerDescuento()) + "");
+    }
+
+    /** Filtra la tabla de clientes por el comienzo del apellido o del nombre, sin distinguir mayusculas. */
+    private void aplicarFiltroClientes() {
+        String text = filtro.getText().trim();
+        if (text.isEmpty()) {
+            sorter.setRowFilter(null);
+            return;
+        }
+        int columna = (filtroCB.getSelectedIndex() == 1) ? 2 : 1; // 1 = Apellido, 2 = Nombre
+        // Pattern.quote: lo que escribe el usuario se busca literal, "(" o "*" ya no rompen la regex.
+        sorter.setRowFilter(RowFilter.regexFilter("(?i)^" + Pattern.quote(text), columna));
+    }
+
+    /** Loguea el error de base y se lo muestra al usuario (los DAOs ya no lo esconden). */
+    private void errorBase(SQLException ex) {
+        Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        JOptionPane.showMessageDialog(this, "Error en la base de datos:\n" + ex.getMessage());
     }
 
     @SuppressWarnings("unchecked")
@@ -1308,7 +1383,7 @@ public class Principal extends javax.swing.JFrame {
             DefaultTableModel tblModel = (DefaultTableModel) tablaClientes.getModel();
             tblModel.setRowCount(0);
             a.stream().map((clt) -> {
-                int age = new calcular_edad().calculatePeriod(clt.getFechaNac());
+                Integer age = new calcular_edad().calculatePeriod(clt.getFechaNac());
                 Object[] datos = {clt.getCodCliente(), clt.getApellido(), clt.getNombre(), clt.getFechaNac(), age, clt.getTelefono(), clt.getDireccion(), clt.getZonaVivienda(), "$ " + clt.getSaldo()};
                 return datos;
             }).forEachOrdered((datos) -> {
@@ -1322,7 +1397,7 @@ public class Principal extends javax.swing.JFrame {
             }
 
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            errorBase(ex);
         }
     }//GEN-LAST:event_lblclientesMouseClicked
 
@@ -1362,7 +1437,8 @@ public class Principal extends javax.swing.JFrame {
                 tblModel.setRowCount(0);
                 DefaultTableModel tblModel2 = (DefaultTableModel) tablaCarrito.getModel();
                 tblModel2.setRowCount(0);
-                for(Producto p : a) {       
+                recalcularTotal(); // carrito vacio -> el total vuelve a 0 (antes quedaba el de la compra anterior)
+                for(Producto p : a) {
                     Object[] datos = {p.getCodProducto(), p.getCategoria(), p.getLinea(), p.getNombre(), p.getPrecio(), p.getCantidad()};
                     tblModel.addRow(datos);
                 }
@@ -1383,7 +1459,7 @@ public class Principal extends javax.swing.JFrame {
                 tablaStockProductos.getColumnModel().getColumn(5).setCellRenderer(centerRenderer);
                 tablaStockProductos.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
             } catch (SQLException ex) {
-                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+                errorBase(ex);
             }
         }
     }//GEN-LAST:event_lblRegistrarCompraMouseClicked
@@ -1458,15 +1534,7 @@ public class Principal extends javax.swing.JFrame {
                 Object[] datos = {(int)tablaStockProductos.getValueAt(Fila, 0),(String)tablaStockProductos.getValueAt(Fila, 3), (short) 1, (float)tablaStockProductos.getValueAt(Fila, 4)};
                 tblModel.addRow(datos);
             }
-            Float acum = 0.0f;
-            for(int x = 0;x<tablaCarrito.getRowCount();x++){
-                
-                short cant = (short) tablaCarrito.getValueAt(x, 2);
-                float price = (Float)tablaCarrito.getValueAt(x, 3);
-                acum = acum + price*cant;
-            }
-            acum = acum - Float.parseFloat(lblDescuento.getText());
-            lblImporteTotal.setText(acum + "");
+            recalcularTotal();
         }
         
     }//GEN-LAST:event_tablaStockProductosMouseClicked
@@ -1478,7 +1546,7 @@ public class Principal extends javax.swing.JFrame {
             DefaultTableModel tblModel = (DefaultTableModel) tablaClientes.getModel();
             tblModel.setRowCount(0);
             for(Cliente clt : a) {
-                int age = new calcular_edad().calculatePeriod(clt.getFechaNac());
+                Integer age = new calcular_edad().calculatePeriod(clt.getFechaNac());
                 Object[] datos = {clt.getCodCliente(), clt.getApellido(), clt.getNombre(), clt.getFechaNac(), age, clt.getTelefono(), clt.getDireccion(), clt.getZonaVivienda(), "$ " + clt.getSaldo()};
                 tblModel.addRow(datos);
 
@@ -1492,7 +1560,7 @@ public class Principal extends javax.swing.JFrame {
             }
             flag = 1;
         } catch (SQLException ex) {
-            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            errorBase(ex);
         }
     }//GEN-LAST:event_lblactualizarMouseClicked
 
@@ -1507,7 +1575,7 @@ public class Principal extends javax.swing.JFrame {
                 FormularioPago p = new FormularioPago(Controlador.cliente_traer_uno(codCliente));
                 p.setVisible(true);
             } catch (SQLException ex) {
-                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+                errorBase(ex);
             }
         }
     }//GEN-LAST:event_lblRegistrarPagoMouseClicked
@@ -1533,14 +1601,7 @@ public class Principal extends javax.swing.JFrame {
             if ((short) tablaCarrito.getValueAt((int) tablaCarrito.getSelectedRow(), 2) == 0) {
                 tblModel.removeRow((int) tablaCarrito.getSelectedRow());
             }
-            Float acum = 0.0f;
-            for(int x = 0;x<tablaCarrito.getRowCount();x++){
-                short cant = (short) tablaCarrito.getValueAt(x, 2);
-                float price = (Float)tablaCarrito.getValueAt(x, 3);
-                acum = acum + price*cant;
-            }
-            acum = acum - Float.parseFloat(lblDescuento.getText());
-            lblImporteTotal.setText(acum + "");
+            recalcularTotal();
         }
 
     }//GEN-LAST:event_tablaCarritoMouseClicked
@@ -1570,54 +1631,46 @@ public class Principal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,"El carrito esta vacio");
         }
         else{
-            try {
-// -------------Atributos Compra :   short codCompra /  String  compra_fecha / float  compra_saldo/  Cliente cliente / ArrayList <Producto> prod
-//
-// -------------Atributos Producto :  int codProducto / String categoria /    String linea /        String  nombre /  float     precio /   short cantidad
-//
-// -------------Atributos CompraProducto : short codCompra / int  codProducto / short cantidad
-//
-// ------------- CantFilas contiene la cantidad de filas, si hay 3 filas, CantFilas = 3
+            // Todo lo que puede fallar por datos mal cargados se valida ANTES de tocar la base.
+            String fecha_compra = Fecha.armar(lblDiaCompra.getText(), lblMesCompra.getText(), lblAnioCompra.getText());
+            if (fecha_compra == null) {
+                JOptionPane.showMessageDialog(null,"La fecha de la compra no es valida");
+                return;
+            }
 
-                Cliente comprador = Controlador.cliente_traer_uno(codCliente);
-                
-                String fecha_compra = lblAnioCompra.getText() + "-" + lblMesCompra.getText() + "-" + lblDiaCompra.getText();
-                
-                ArrayList <Producto> ArrayProd = new ArrayList();
-                
-                float Importe_Total = 0;
-                for(int d = 0;  d < CantFilas;  d++){
-                    
-                    Producto nuevo = Controlador.producto_traer_uno((int)tablaCarrito.getValueAt(d, 0));
-                    short cant = ((short)tablaCarrito.getValueAt(d, 2));
-                    nuevo.setCantidad((short)(nuevo.getCantidad() - cant));
-                    Controlador.producto_modificar(nuevo);
-                    ArrayProd.add(nuevo); 
-                    float valor_unidad= (float)tablaCarrito.getValueAt(d, 3);
-                    Importe_Total += valor_unidad * cant;
-                }
-                
-                Compra compra = new Compra((short)0,fecha_compra,Importe_Total,comprador,ArrayProd);
-                
-                Controlador.compra_insertar(compra);
-                Long x = Controlador.compra_lastid();
-                short id = x.shortValue(); // PROBAR SI DEVUELVE EL ID CORRECTO DE COMPRA
-                for(int d = 0;  d < CantFilas;  d++){
-                    CompraProducto f = new CompraProducto(id,ArrayProd.get(d).getCodProducto(),(short)tablaCarrito.getValueAt(d, 2));
-                    Controlador.comprap_insertar(f);
-                }
-                comprador.setSaldo(Importe_Total - Float.parseFloat(lblDescuento.getText())); // Hay que ver que pija devuelve eso
-                Controlador.cliente_modificar(comprador);
+            float Importe_Total = 0;
+            List<CompraProducto> items = new ArrayList<>();
+            for(int d = 0;  d < CantFilas;  d++){
+                int codProd = (int)tablaCarrito.getValueAt(d, 0);
+                short cant = (short)tablaCarrito.getValueAt(d, 2);
+                float valor_unidad = (float)tablaCarrito.getValueAt(d, 3);
+                Importe_Total += valor_unidad * cant;
+                items.add(new CompraProducto((short)0, codProd, cant));
+            }
+
+            float descuento;
+            String textoDescuento = lblDescuento.getText().trim();
+            try {
+                descuento = textoDescuento.isEmpty() ? 0f : Float.parseFloat(textoDescuento);
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null,"El descuento tiene que ser un numero");
+                return;
+            }
+            if (descuento < 0 || descuento > Importe_Total) {
+                JOptionPane.showMessageDialog(null,"El descuento tiene que estar entre 0 y el importe de la compra");
+                return;
+            }
+
+            try {
+                Compra compra = new Compra(fecha_compra, Importe_Total, new Cliente(codCliente), null);
+                Controlador.registrar_compra(compra, items, descuento);
                 JOptionPane.showMessageDialog(this, "SE REALIZO LA COMPRA CORRECTAMENTE");
                 JPanelCompra.setVisible(false);
                 JPanelCliente.setVisible(true);
-                
             } catch (SQLException ex) {
                 Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(this, "No se pudo registrar la compra, no se grabo nada.\n" + ex.getMessage());
             }
-            
-            
-            
         }
     }//GEN-LAST:event_lblAceptarCompraMouseClicked
 
@@ -1674,7 +1727,7 @@ public class Principal extends javax.swing.JFrame {
                 
                 
             } catch (SQLException ex) {
-                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+                errorBase(ex);
             }
             
         }
@@ -1702,25 +1755,8 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_lblNombreHistorialActionPerformed
 
     private void filtroKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_filtroKeyTyped
-        filtro.addKeyListener(new KeyAdapter(){
-            @Override
-            public void keyReleased(KeyEvent ke){
-                String text = filtro.getText();
-                if (text != null && !text.isEmpty()) {
-                  switch (filtroCB.getSelectedIndex()){
-                      case 0: sorter.setRowFilter(RowFilter.regexFilter("^(?i)" + text, 1)); break;// Apellido
-                      case 1: sorter.setRowFilter(RowFilter.regexFilter("^(?i)" + text, 2)); break;// Nombre
-                      //case 2: sorter.setRowFilter(RowFilter.numberFilter(ComparisonType.AFTER, Float.parseFloat(text), 8));break; // Saldo Mayor A, pos 8 en jtable
-                      //case 3: sorter.setRowFilter(RowFilter.numberFilter(ComparisonType.BEFORE, Float.parseFloat(text), 8));break;
-                      default: sorter.setRowFilter(RowFilter.regexFilter("^(?i)" + text, 1)); // Apellido
-                  }
-
-                } else {
-                  sorter.setRowFilter(null);
-                }
-            }
-        });
-        
+        // El filtrado lo hace el DocumentListener del constructor (aplicarFiltroClientes).
+        // Antes aca se agregaba un KeyListener nuevo por cada tecla.
     }//GEN-LAST:event_filtroKeyTyped
 
     private void lblDetalleCompraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDetalleCompraMouseClicked
@@ -1742,7 +1778,7 @@ public class Principal extends javax.swing.JFrame {
                     tblCompraP.addRow(cmpr1);
                 });
             } catch (SQLException ex) {
-                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+                errorBase(ex);
             }
             
         }
@@ -1776,7 +1812,7 @@ public class Principal extends javax.swing.JFrame {
                 FormularioPago p = new FormularioPago(Controlador.cliente_traer_uno(codCliente));
                 p.setVisible(true);
             } catch (SQLException ex) {
-                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+                errorBase(ex);
             }
         }
     }//GEN-LAST:event_lblAgregarPagoMouseClicked
@@ -1795,42 +1831,12 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_lblDescuentoFocusLost
 
     private void lblDescuentoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_lblDescuentoKeyReleased
-        // TODO add your handling code here:
-        Float acum = 0.0f;
-        for(int x = 0;x<tablaCarrito.getRowCount();x++){
-            short cant = (short) tablaCarrito.getValueAt(x, 2);
-            float price = (Float)tablaCarrito.getValueAt(x, 3);
-            acum = acum + price*cant;
-        }
-        Float desc = 0f;
-        try{
-            desc = Float.parseFloat(lblDescuento.getText());
-        }catch(NumberFormatException e){
-            System.out.println(e.getMessage());
-        }
-        acum = acum - desc;
-        lblImporteTotal.setText(acum + "");
+        // El total lo recalcula el DocumentListener de lblDescuento (ver constructor).
     }//GEN-LAST:event_lblDescuentoKeyReleased
 
     private void filtroCompraKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_filtroCompraKeyTyped
-        filtroCompra.addKeyListener(new KeyAdapter(){
-            @Override
-            public void keyReleased(KeyEvent ke){
-                String text = filtroCompra.getText();
-                if (!Control_vacio.retorno(text)) {
-                  switch (cbFiltroCompra.getSelectedIndex()){
-                      case 0:  sorterStock.setRowFilter(RowFilter.regexFilter("^(?i)" + text, 0)); break;// Cod
-                      case 1:  sorterStock.setRowFilter(RowFilter.regexFilter("^(?i)" + text, 1)); break;// Cat
-                      case 2:  sorterStock.setRowFilter(RowFilter.regexFilter("^(?i)" + text, 2)); break;// Linea
-                      case 3:  sorterStock.setRowFilter(RowFilter.regexFilter("^(?i)" + text, 3)); break;// Nomb
-                      default: sorterStock.setRowFilter(RowFilter.regexFilter("^(?i)" + text, 0)); // Cod
-                  }
-
-                } else {
-                  sorterStock.setRowFilter(null);
-                }
-            }
-        });
+        // El filtrado lo hace el DocumentListener del constructor (aplicarFiltroProductos).
+        // Antes aca se agregaba un KeyListener nuevo por cada tecla.
     }//GEN-LAST:event_filtroCompraKeyTyped
 
     private void lblDescuentoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDescuentoMouseClicked

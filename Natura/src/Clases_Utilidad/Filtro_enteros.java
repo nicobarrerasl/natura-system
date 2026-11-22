@@ -27,13 +27,10 @@ public class Filtro_enteros extends DocumentFilter {
       }
    }
 
+   // Solo digitos. El campo vacio es valido (antes no se podia borrar el ultimo digito)
+   // y no hay limite de tamanio de int (un telefono largo ya no queda trabado).
    private boolean test(String text) {
-      try {
-         Integer.parseInt(text);
-         return true;
-      } catch (NumberFormatException e) {
-         return false;
-      }
+      return text.matches("\\d*");
    }
 
    @Override
@@ -43,7 +40,7 @@ public class Filtro_enteros extends DocumentFilter {
       Document doc = fb.getDocument();
       StringBuilder sb = new StringBuilder();
       sb.append(doc.getText(0, doc.getLength()));
-      sb.replace(offset, offset + length, text);
+      sb.replace(offset, offset + length, text == null ? "" : text);
 
       if (test(sb.toString())) {
          super.replace(fb, offset, length, text, attrs);
