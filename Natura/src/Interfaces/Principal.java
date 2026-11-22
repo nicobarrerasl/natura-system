@@ -2,6 +2,7 @@ package Interfaces;
 
 import Clases.*;
 import Clases_Utilidad.Control_vacio;
+import Clases_Utilidad.Fecha;
 import Clases_Utilidad.Filtro_enteros;
 import Clases_Utilidad.Filtro_float;
 import Clases_Utilidad.calcular_edad;
@@ -85,6 +86,12 @@ public class Principal extends javax.swing.JFrame {
         
         sorterStock = new TableRowSorter<>(tablaStockProductos.getModel());
         tablaStockProductos.setRowSorter(sorterStock);
+    }
+
+    /** Loguea el error de base y se lo muestra al usuario (los DAOs ya no lo esconden). */
+    private void errorBase(SQLException ex) {
+        Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        JOptionPane.showMessageDialog(this, "Error en la base de datos:\n" + ex.getMessage());
     }
 
     @SuppressWarnings("unchecked")
@@ -1308,7 +1315,7 @@ public class Principal extends javax.swing.JFrame {
             DefaultTableModel tblModel = (DefaultTableModel) tablaClientes.getModel();
             tblModel.setRowCount(0);
             a.stream().map((clt) -> {
-                int age = new calcular_edad().calculatePeriod(clt.getFechaNac());
+                Integer age = new calcular_edad().calculatePeriod(clt.getFechaNac());
                 Object[] datos = {clt.getCodCliente(), clt.getApellido(), clt.getNombre(), clt.getFechaNac(), age, clt.getTelefono(), clt.getDireccion(), clt.getZonaVivienda(), "$ " + clt.getSaldo()};
                 return datos;
             }).forEachOrdered((datos) -> {
@@ -1322,7 +1329,7 @@ public class Principal extends javax.swing.JFrame {
             }
 
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            errorBase(ex);
         }
     }//GEN-LAST:event_lblclientesMouseClicked
 
@@ -1383,7 +1390,7 @@ public class Principal extends javax.swing.JFrame {
                 tablaStockProductos.getColumnModel().getColumn(5).setCellRenderer(centerRenderer);
                 tablaStockProductos.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
             } catch (SQLException ex) {
-                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+                errorBase(ex);
             }
         }
     }//GEN-LAST:event_lblRegistrarCompraMouseClicked
@@ -1478,7 +1485,7 @@ public class Principal extends javax.swing.JFrame {
             DefaultTableModel tblModel = (DefaultTableModel) tablaClientes.getModel();
             tblModel.setRowCount(0);
             for(Cliente clt : a) {
-                int age = new calcular_edad().calculatePeriod(clt.getFechaNac());
+                Integer age = new calcular_edad().calculatePeriod(clt.getFechaNac());
                 Object[] datos = {clt.getCodCliente(), clt.getApellido(), clt.getNombre(), clt.getFechaNac(), age, clt.getTelefono(), clt.getDireccion(), clt.getZonaVivienda(), "$ " + clt.getSaldo()};
                 tblModel.addRow(datos);
 
@@ -1492,7 +1499,7 @@ public class Principal extends javax.swing.JFrame {
             }
             flag = 1;
         } catch (SQLException ex) {
-            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            errorBase(ex);
         }
     }//GEN-LAST:event_lblactualizarMouseClicked
 
@@ -1507,7 +1514,7 @@ public class Principal extends javax.swing.JFrame {
                 FormularioPago p = new FormularioPago(Controlador.cliente_traer_uno(codCliente));
                 p.setVisible(true);
             } catch (SQLException ex) {
-                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+                errorBase(ex);
             }
         }
     }//GEN-LAST:event_lblRegistrarPagoMouseClicked
@@ -1570,54 +1577,46 @@ public class Principal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,"El carrito esta vacio");
         }
         else{
-            try {
-// -------------Atributos Compra :   short codCompra /  String  compra_fecha / float  compra_saldo/  Cliente cliente / ArrayList <Producto> prod
-//
-// -------------Atributos Producto :  int codProducto / String categoria /    String linea /        String  nombre /  float     precio /   short cantidad
-//
-// -------------Atributos CompraProducto : short codCompra / int  codProducto / short cantidad
-//
-// ------------- CantFilas contiene la cantidad de filas, si hay 3 filas, CantFilas = 3
+            // Todo lo que puede fallar por datos mal cargados se valida ANTES de tocar la base.
+            String fecha_compra = Fecha.armar(lblDiaCompra.getText(), lblMesCompra.getText(), lblAnioCompra.getText());
+            if (fecha_compra == null) {
+                JOptionPane.showMessageDialog(null,"La fecha de la compra no es valida");
+                return;
+            }
 
-                Cliente comprador = Controlador.cliente_traer_uno(codCliente);
-                
-                String fecha_compra = lblAnioCompra.getText() + "-" + lblMesCompra.getText() + "-" + lblDiaCompra.getText();
-                
-                ArrayList <Producto> ArrayProd = new ArrayList();
-                
-                float Importe_Total = 0;
-                for(int d = 0;  d < CantFilas;  d++){
-                    
-                    Producto nuevo = Controlador.producto_traer_uno((int)tablaCarrito.getValueAt(d, 0));
-                    short cant = ((short)tablaCarrito.getValueAt(d, 2));
-                    nuevo.setCantidad((short)(nuevo.getCantidad() - cant));
-                    Controlador.producto_modificar(nuevo);
-                    ArrayProd.add(nuevo); 
-                    float valor_unidad= (float)tablaCarrito.getValueAt(d, 3);
-                    Importe_Total += valor_unidad * cant;
-                }
-                
-                Compra compra = new Compra((short)0,fecha_compra,Importe_Total,comprador,ArrayProd);
-                
-                Controlador.compra_insertar(compra);
-                Long x = Controlador.compra_lastid();
-                short id = x.shortValue(); // PROBAR SI DEVUELVE EL ID CORRECTO DE COMPRA
-                for(int d = 0;  d < CantFilas;  d++){
-                    CompraProducto f = new CompraProducto(id,ArrayProd.get(d).getCodProducto(),(short)tablaCarrito.getValueAt(d, 2));
-                    Controlador.comprap_insertar(f);
-                }
-                comprador.setSaldo(Importe_Total - Float.parseFloat(lblDescuento.getText())); // Hay que ver que pija devuelve eso
-                Controlador.cliente_modificar(comprador);
+            float Importe_Total = 0;
+            List<CompraProducto> items = new ArrayList<>();
+            for(int d = 0;  d < CantFilas;  d++){
+                int codProd = (int)tablaCarrito.getValueAt(d, 0);
+                short cant = (short)tablaCarrito.getValueAt(d, 2);
+                float valor_unidad = (float)tablaCarrito.getValueAt(d, 3);
+                Importe_Total += valor_unidad * cant;
+                items.add(new CompraProducto((short)0, codProd, cant));
+            }
+
+            float descuento;
+            String textoDescuento = lblDescuento.getText().trim();
+            try {
+                descuento = textoDescuento.isEmpty() ? 0f : Float.parseFloat(textoDescuento);
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null,"El descuento tiene que ser un numero");
+                return;
+            }
+            if (descuento < 0 || descuento > Importe_Total) {
+                JOptionPane.showMessageDialog(null,"El descuento tiene que estar entre 0 y el importe de la compra");
+                return;
+            }
+
+            try {
+                Compra compra = new Compra(fecha_compra, Importe_Total, new Cliente(codCliente), null);
+                Controlador.registrar_compra(compra, items, descuento);
                 JOptionPane.showMessageDialog(this, "SE REALIZO LA COMPRA CORRECTAMENTE");
                 JPanelCompra.setVisible(false);
                 JPanelCliente.setVisible(true);
-                
             } catch (SQLException ex) {
                 Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(this, "No se pudo registrar la compra, no se grabo nada.\n" + ex.getMessage());
             }
-            
-            
-            
         }
     }//GEN-LAST:event_lblAceptarCompraMouseClicked
 
@@ -1674,7 +1673,7 @@ public class Principal extends javax.swing.JFrame {
                 
                 
             } catch (SQLException ex) {
-                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+                errorBase(ex);
             }
             
         }
@@ -1742,7 +1741,7 @@ public class Principal extends javax.swing.JFrame {
                     tblCompraP.addRow(cmpr1);
                 });
             } catch (SQLException ex) {
-                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+                errorBase(ex);
             }
             
         }
@@ -1776,7 +1775,7 @@ public class Principal extends javax.swing.JFrame {
                 FormularioPago p = new FormularioPago(Controlador.cliente_traer_uno(codCliente));
                 p.setVisible(true);
             } catch (SQLException ex) {
-                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+                errorBase(ex);
             }
         }
     }//GEN-LAST:event_lblAgregarPagoMouseClicked

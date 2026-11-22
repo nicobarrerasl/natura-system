@@ -12,78 +12,44 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 public class PostgreSQL_Pago implements DAO_Pago{
-    
-    final String INSERT = "INSERT INTO Pago(pago_fecha, pago_saldo, codCliente) VALUES (?, ?, ?)";                          
-    final String UPDATE = "UPDATE Pago SET  codPago= ?, pago_fecha= ?, pago_saldo= ?, codCliente= ? WHERE codPago = ?";
+
+    final String INSERT = "INSERT INTO Pago(pago_fecha, pago_saldo, codCliente) VALUES (?, ?, ?)";
+    final String UPDATE = "UPDATE Pago SET  pago_fecha= ?, pago_saldo= ?, codCliente= ? WHERE codPago = ?";
     final String DELETE = "UPDATE Pago SET status = 0 WHERE codPago = ?";
-    final String GETALL = "SELECT * FROM Pago WHERE status = 1"; 
+    final String GETALL = "SELECT * FROM Pago WHERE status = 1";
     final String GETONE = "SELECT * FROM Pago WHERE codPago = ? AND status = 1";
     final String GETBYCUSTOMER = "SELECT * FROM Pago WHERE codcliente = ? AND status = 1";
-    final String ERR    = "ERROR EN QUERY:DB";
     private final Connection conn;
     public PostgreSQL_Pago(Connection conn){
         this.conn = conn;
     }
 
     @Override
-    public void insertar(Pago a) {
-        PreparedStatement stat;
-        try{
-            stat = conn.prepareStatement(INSERT);
+    public void insertar(Pago a) throws SQLException {
+        try (PreparedStatement stat = conn.prepareStatement(INSERT)) {
             stat.setString(1,  a.getPago_fecha());
             stat.setFloat(2,  a.getPago_saldo());
             stat.setShort(3,  a.getCliente().getCodCliente());
-            
-            if(stat.executeUpdate()== 0){
-                // ERROR
-            }
-            
-            stat.close();
-        }
-        catch(SQLException ex){
-            System.out.println("Fallo en ALTA Pago");
-            System.out.println(ex.getMessage());
-            JOptionPane.showMessageDialog(null,ERR);
+            stat.executeUpdate();
         }
     }
 
     @Override
-    public void eliminar(Pago a) {
-        PreparedStatement stat;
-        try{
-            stat = conn.prepareStatement(DELETE);
+    public void eliminar(Pago a) throws SQLException {
+        try (PreparedStatement stat = conn.prepareStatement(DELETE)) {
             stat.setShort(1,  a.getCodPago().shortValue());
-            if(stat.executeUpdate()== 0){
-                // ERROR
-            }
-            stat.close();
-        }
-        catch(SQLException ex){
-            System.out.println("Fallo en ELIMINACION Pago");
-            System.out.println(ex.getMessage());
-            JOptionPane.showMessageDialog(null,ERR);
+            stat.executeUpdate();
         }
     }
 
     @Override
-    public void modificar(Pago a) {
-        PreparedStatement stat;
-        try{
-            stat = conn.prepareStatement(UPDATE);
-            stat.setShort   (1,  a.getCodPago().shortValue());
-            stat.setString  (2,  a.getPago_fecha());
-            stat.setFloat   (3,  a.getPago_saldo());
-            stat.setShort   (4,  a.getCliente().getCodCliente());
-
-            if(stat.executeUpdate()== 0){
-                // ERROR
-            }
-            stat.close();
-        }
-        catch(SQLException ex){
-            System.out.println("Fallo en UPDATE Pago");
-            System.out.println(ex.getMessage());
-            JOptionPane.showMessageDialog(null,ERR);
+    public void modificar(Pago a) throws SQLException {
+        try (PreparedStatement stat = conn.prepareStatement(UPDATE)) {
+            stat.setString  (1,  a.getPago_fecha());
+            stat.setFloat   (2,  a.getPago_saldo());
+            stat.setShort   (3,  a.getCliente().getCodCliente());
+            stat.setShort   (4,  a.getCodPago().shortValue());
+            stat.executeUpdate();
         }
     }
 
@@ -96,75 +62,46 @@ public class PostgreSQL_Pago implements DAO_Pago{
         Pago pago = new Pago(cod,fec,sal,cliente);
         return pago;
     }
-    
+
     @Override
-    public List<Pago> obtener_todos() {
-        PreparedStatement stat;
-        ResultSet rs;
+    public List<Pago> obtener_todos() throws SQLException {
         List<Pago> a = new ArrayList<>();
-        try{
-            stat = conn.prepareStatement(GETALL);
-            rs = stat.executeQuery(); 
+        try (PreparedStatement stat = conn.prepareStatement(GETALL);
+             ResultSet rs = stat.executeQuery()) {
             while(rs.next()){
                 a.add(convertir(rs));
             }
-            rs.close();
-            stat.close();
-
-        }catch(SQLException ex){
-            System.out.println("Fallo en Obtener_todos Pago");
-            System.out.println(ex.getMessage());
-            JOptionPane.showMessageDialog(null,ERR);
         }
         return a;
     }
 
     @Override
-    public Pago obtener_uno(Long id) {
-        PreparedStatement stat;
-        ResultSet rs;
+    public Pago obtener_uno(Long id) throws SQLException {
         Pago a = null;
-        try{
-            stat = conn.prepareStatement(GETONE);
+        try (PreparedStatement stat = conn.prepareStatement(GETONE)) {
             stat.setShort(1,id.shortValue());
-            rs = stat.executeQuery(); 
-            if(rs.next()){
-               a = convertir(rs); 
-            } else{
-                JOptionPane.showMessageDialog(null,"Resultado VACIO obtener_uno Pago");
+            try (ResultSet rs = stat.executeQuery()) {
+                if(rs.next()){
+                   a = convertir(rs);
+                } else{
+                    JOptionPane.showMessageDialog(null,"Resultado VACIO obtener_uno Pago");
+                }
             }
-            rs.close();
-            stat.close();
-        }catch(SQLException ex){
-            System.out.println("Fallo en obtener 1 Pago");
-            System.out.println(ex.getMessage());
-            JOptionPane.showMessageDialog(null,ERR);
         }
         return a;
     }
-    
-    public List<Pago> obtener_por_cliente(Short codcliente) {
-        
-        PreparedStatement stat;
-        ResultSet rs;
-        List<Pago> a = new ArrayList<>();
-        try{
-            stat = conn.prepareStatement(GETBYCUSTOMER);
-            stat.setShort(1,codcliente);
-            rs = stat.executeQuery(); 
-            while(rs.next()){
-                a.add(convertir(rs));
-            }
-            rs.close();
-            stat.close();
 
-        }catch(SQLException ex){
-            System.out.println("Fallo en Obtener_por_cliente");
-            System.out.println(ex.getMessage());
-            JOptionPane.showMessageDialog(null,ERR);
+    public List<Pago> obtener_por_cliente(Short codcliente) throws SQLException {
+        List<Pago> a = new ArrayList<>();
+        try (PreparedStatement stat = conn.prepareStatement(GETBYCUSTOMER)) {
+            stat.setShort(1,codcliente);
+            try (ResultSet rs = stat.executeQuery()) {
+                while(rs.next()){
+                    a.add(convertir(rs));
+                }
+            }
         }
         return a;
-        
     }
-    
+
 }

@@ -8,6 +8,7 @@ package Interfaces;
 import Clases.Cliente;
 import Clases.Pago;
 import Clases_Utilidad.Control_vacio;
+import Clases_Utilidad.Fecha;
 import DatabaseControlador.Controlador;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -23,7 +24,8 @@ public class FormularioPago extends javax.swing.JFrame {
     /**
      * Creates new form FormularioPago
      */
-    public static Cliente cliente_pago;
+    // De instancia (no static): cada ventana de pago recuerda a SU cliente.
+    private final Cliente cliente_pago;
     public FormularioPago(Cliente cliente) {
         initComponents();
         cliente_pago = cliente;
@@ -387,16 +389,31 @@ public class FormularioPago extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,"Necesita ingresar un importe");
         }
         else{
-            String fecha = a[2] + "-" + a[1] + "-" + a[0];
-            Pago nuevo_pago = new Pago(fecha,Float.parseFloat(a[3]),cliente_pago);
+            String fecha = Fecha.armar(a[0], a[1], a[2]);
+            if (fecha == null) {
+                JOptionPane.showMessageDialog(null,"La fecha del pago no es valida");
+                return;
+            }
+            float importe;
             try {
-                Controlador.pago_insertar(nuevo_pago);
+                importe = Float.parseFloat(a[3].trim());
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null,"El importe tiene que ser un numero");
+                return;
+            }
+            if (importe <= 0) {
+                JOptionPane.showMessageDialog(null,"El importe tiene que ser mayor a cero");
+                return;
+            }
+            Pago nuevo_pago = new Pago(fecha,importe,cliente_pago);
+            try {
+                // Inserta el pago y lo resta del saldo actual en la base, todo junto o nada.
+                Controlador.registrar_pago(nuevo_pago);
                 JOptionPane.showMessageDialog(null,"Pago con importe $" + a[3] + " registrado");
-                cliente_pago.setSaldo(cliente_pago.getSaldo() - Float.parseFloat(a[3]));
-                Controlador.cliente_modificar(cliente_pago);
                 this.dispose();
             } catch (SQLException ex) {
                 Logger.getLogger(FormularioPago.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null,"No se pudo registrar el pago, no se grabo nada.\n" + ex.getMessage());
             }
         }
     }//GEN-LAST:event_lblAceptarMouseClicked
