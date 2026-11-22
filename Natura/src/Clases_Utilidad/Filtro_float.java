@@ -27,13 +27,11 @@ public class Filtro_float extends DocumentFilter {
       }
    }
 
+   // Importe sin signo con hasta 2 decimales: "", "12", "12.", "12.5", ".5".
+   // El vacio es valido (se puede borrar todo) y ya no pasan "NaN", "1e5" o "Infinity",
+   // que Float.parseFloat si aceptaba.
    private boolean test(String text) {
-      try {
-         Float.parseFloat(text);
-         return true;
-      } catch (NumberFormatException e) {
-         return false;
-      }
+      return text.matches("\\d*(\\.\\d{0,2})?");
    }
 
    @Override
@@ -43,7 +41,7 @@ public class Filtro_float extends DocumentFilter {
       Document doc = fb.getDocument();
       StringBuilder sb = new StringBuilder();
       sb.append(doc.getText(0, doc.getLength()));
-      sb.replace(offset, offset + length, text);
+      sb.replace(offset, offset + length, text == null ? "" : text);
 
       if (test(sb.toString())) {
          super.replace(fb, offset, length, text, attrs);

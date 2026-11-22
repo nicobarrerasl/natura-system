@@ -9,6 +9,8 @@ import Clases.Cliente;
 import Clases.Pago;
 import Clases_Utilidad.Control_vacio;
 import Clases_Utilidad.Fecha;
+import Clases_Utilidad.Filtro_float;
+import javax.swing.text.AbstractDocument;
 import DatabaseControlador.Controlador;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -32,6 +34,8 @@ public class FormularioPago extends javax.swing.JFrame {
         lblNombre.setText(cliente_pago.getNombre());
         lblApellido.setText(cliente_pago.getApellido());
         lblSaldo.setText(Float.toString(cliente_pago.getSaldo()));
+        // Importe: solo numeros con hasta 2 decimales
+        ((AbstractDocument) lblImporteTotal.getDocument()).setDocumentFilter(new Filtro_float());
     }
     
     /**

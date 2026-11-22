@@ -12,8 +12,6 @@ import Memento.Originator;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -28,6 +26,9 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import javax.swing.text.AbstractDocument;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import java.util.regex.Pattern;
 
 public class Principal extends javax.swing.JFrame {
     
@@ -86,6 +87,73 @@ public class Principal extends javax.swing.JFrame {
         
         sorterStock = new TableRowSorter<>(tablaStockProductos.getModel());
         tablaStockProductos.setRowSorter(sorterStock);
+
+        // Un solo listener para el buscador: reacciona a cualquier cambio del texto (tipeo, pegar, borrar)
+        // y al cambiar entre Apellido / Nombre.
+        filtro.getDocument().addDocumentListener(new DocumentListener() {
+            @Override public void insertUpdate(DocumentEvent e)  { aplicarFiltroClientes(); }
+            @Override public void removeUpdate(DocumentEvent e)  { aplicarFiltroClientes(); }
+            @Override public void changedUpdate(DocumentEvent e) { aplicarFiltroClientes(); }
+        });
+        filtroCB.addActionListener(e -> aplicarFiltroClientes());
+        filtroCompra.getDocument().addDocumentListener(new DocumentListener() {
+            @Override public void insertUpdate(DocumentEvent e)  { aplicarFiltroProductos(); }
+            @Override public void removeUpdate(DocumentEvent e)  { aplicarFiltroProductos(); }
+            @Override public void changedUpdate(DocumentEvent e) { aplicarFiltroProductos(); }
+        });
+        cbFiltroCompra.addActionListener(e -> aplicarFiltroProductos());
+
+        // Descuento: solo importes validos, y el total se recalcula ante cualquier cambio
+        // (tipeo, pegar, o el click que lo vacia).
+        ((AbstractDocument) lblDescuento.getDocument()).setDocumentFilter(new Filtro_float());
+        lblDescuento.getDocument().addDocumentListener(new DocumentListener() {
+            @Override public void insertUpdate(DocumentEvent e)  { recalcularTotal(); }
+            @Override public void removeUpdate(DocumentEvent e)  { recalcularTotal(); }
+            @Override public void changedUpdate(DocumentEvent e) { recalcularTotal(); }
+        });
+    }
+
+    /** Filtra el stock de productos de la compra por Codigo / Categoria / Linea / Nombre (columnas 0 a 3). */
+    private void aplicarFiltroProductos() {
+        String text = filtroCompra.getText().trim();
+        if (text.isEmpty()) {
+            sorterStock.setRowFilter(null);
+            return;
+        }
+        int columna = Math.max(0, Math.min(3, cbFiltroCompra.getSelectedIndex()));
+        sorterStock.setRowFilter(RowFilter.regexFilter("(?i)^" + Pattern.quote(text), columna));
+    }
+
+    /** Descuento escrito por el usuario; vacio o incompleto (ej: ".") cuenta como 0. */
+    private float leerDescuento() {
+        try {
+            return Float.parseFloat(lblDescuento.getText().trim());
+        } catch (NumberFormatException ex) {
+            return 0f;
+        }
+    }
+
+    /** Total del carrito menos el descuento. */
+    private void recalcularTotal() {
+        float acum = 0f;
+        for (int x = 0; x < tablaCarrito.getRowCount(); x++) {
+            short cant = (short) tablaCarrito.getValueAt(x, 2);
+            float price = (Float) tablaCarrito.getValueAt(x, 3);
+            acum += price * cant;
+        }
+        lblImporteTotal.setText((acum - leerDescuento()) + "");
+    }
+
+    /** Filtra la tabla de clientes por el comienzo del apellido o del nombre, sin distinguir mayusculas. */
+    private void aplicarFiltroClientes() {
+        String text = filtro.getText().trim();
+        if (text.isEmpty()) {
+            sorter.setRowFilter(null);
+            return;
+        }
+        int columna = (filtroCB.getSelectedIndex() == 1) ? 2 : 1; // 1 = Apellido, 2 = Nombre
+        // Pattern.quote: lo que escribe el usuario se busca literal, "(" o "*" ya no rompen la regex.
+        sorter.setRowFilter(RowFilter.regexFilter("(?i)^" + Pattern.quote(text), columna));
     }
 
     /** Loguea el error de base y se lo muestra al usuario (los DAOs ya no lo esconden). */
@@ -1369,7 +1437,8 @@ public class Principal extends javax.swing.JFrame {
                 tblModel.setRowCount(0);
                 DefaultTableModel tblModel2 = (DefaultTableModel) tablaCarrito.getModel();
                 tblModel2.setRowCount(0);
-                for(Producto p : a) {       
+                recalcularTotal(); // carrito vacio -> el total vuelve a 0 (antes quedaba el de la compra anterior)
+                for(Producto p : a) {
                     Object[] datos = {p.getCodProducto(), p.getCategoria(), p.getLinea(), p.getNombre(), p.getPrecio(), p.getCantidad()};
                     tblModel.addRow(datos);
                 }
@@ -1465,15 +1534,7 @@ public class Principal extends javax.swing.JFrame {
                 Object[] datos = {(int)tablaStockProductos.getValueAt(Fila, 0),(String)tablaStockProductos.getValueAt(Fila, 3), (short) 1, (float)tablaStockProductos.getValueAt(Fila, 4)};
                 tblModel.addRow(datos);
             }
-            Float acum = 0.0f;
-            for(int x = 0;x<tablaCarrito.getRowCount();x++){
-                
-                short cant = (short) tablaCarrito.getValueAt(x, 2);
-                float price = (Float)tablaCarrito.getValueAt(x, 3);
-                acum = acum + price*cant;
-            }
-            acum = acum - Float.parseFloat(lblDescuento.getText());
-            lblImporteTotal.setText(acum + "");
+            recalcularTotal();
         }
         
     }//GEN-LAST:event_tablaStockProductosMouseClicked
@@ -1540,14 +1601,7 @@ public class Principal extends javax.swing.JFrame {
             if ((short) tablaCarrito.getValueAt((int) tablaCarrito.getSelectedRow(), 2) == 0) {
                 tblModel.removeRow((int) tablaCarrito.getSelectedRow());
             }
-            Float acum = 0.0f;
-            for(int x = 0;x<tablaCarrito.getRowCount();x++){
-                short cant = (short) tablaCarrito.getValueAt(x, 2);
-                float price = (Float)tablaCarrito.getValueAt(x, 3);
-                acum = acum + price*cant;
-            }
-            acum = acum - Float.parseFloat(lblDescuento.getText());
-            lblImporteTotal.setText(acum + "");
+            recalcularTotal();
         }
 
     }//GEN-LAST:event_tablaCarritoMouseClicked
@@ -1701,25 +1755,8 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_lblNombreHistorialActionPerformed
 
     private void filtroKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_filtroKeyTyped
-        filtro.addKeyListener(new KeyAdapter(){
-            @Override
-            public void keyReleased(KeyEvent ke){
-                String text = filtro.getText();
-                if (text != null && !text.isEmpty()) {
-                  switch (filtroCB.getSelectedIndex()){
-                      case 0: sorter.setRowFilter(RowFilter.regexFilter("^(?i)" + text, 1)); break;// Apellido
-                      case 1: sorter.setRowFilter(RowFilter.regexFilter("^(?i)" + text, 2)); break;// Nombre
-                      //case 2: sorter.setRowFilter(RowFilter.numberFilter(ComparisonType.AFTER, Float.parseFloat(text), 8));break; // Saldo Mayor A, pos 8 en jtable
-                      //case 3: sorter.setRowFilter(RowFilter.numberFilter(ComparisonType.BEFORE, Float.parseFloat(text), 8));break;
-                      default: sorter.setRowFilter(RowFilter.regexFilter("^(?i)" + text, 1)); // Apellido
-                  }
-
-                } else {
-                  sorter.setRowFilter(null);
-                }
-            }
-        });
-        
+        // El filtrado lo hace el DocumentListener del constructor (aplicarFiltroClientes).
+        // Antes aca se agregaba un KeyListener nuevo por cada tecla.
     }//GEN-LAST:event_filtroKeyTyped
 
     private void lblDetalleCompraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDetalleCompraMouseClicked
@@ -1794,42 +1831,12 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_lblDescuentoFocusLost
 
     private void lblDescuentoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_lblDescuentoKeyReleased
-        // TODO add your handling code here:
-        Float acum = 0.0f;
-        for(int x = 0;x<tablaCarrito.getRowCount();x++){
-            short cant = (short) tablaCarrito.getValueAt(x, 2);
-            float price = (Float)tablaCarrito.getValueAt(x, 3);
-            acum = acum + price*cant;
-        }
-        Float desc = 0f;
-        try{
-            desc = Float.parseFloat(lblDescuento.getText());
-        }catch(NumberFormatException e){
-            System.out.println(e.getMessage());
-        }
-        acum = acum - desc;
-        lblImporteTotal.setText(acum + "");
+        // El total lo recalcula el DocumentListener de lblDescuento (ver constructor).
     }//GEN-LAST:event_lblDescuentoKeyReleased
 
     private void filtroCompraKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_filtroCompraKeyTyped
-        filtroCompra.addKeyListener(new KeyAdapter(){
-            @Override
-            public void keyReleased(KeyEvent ke){
-                String text = filtroCompra.getText();
-                if (!Control_vacio.retorno(text)) {
-                  switch (cbFiltroCompra.getSelectedIndex()){
-                      case 0:  sorterStock.setRowFilter(RowFilter.regexFilter("^(?i)" + text, 0)); break;// Cod
-                      case 1:  sorterStock.setRowFilter(RowFilter.regexFilter("^(?i)" + text, 1)); break;// Cat
-                      case 2:  sorterStock.setRowFilter(RowFilter.regexFilter("^(?i)" + text, 2)); break;// Linea
-                      case 3:  sorterStock.setRowFilter(RowFilter.regexFilter("^(?i)" + text, 3)); break;// Nomb
-                      default: sorterStock.setRowFilter(RowFilter.regexFilter("^(?i)" + text, 0)); // Cod
-                  }
-
-                } else {
-                  sorterStock.setRowFilter(null);
-                }
-            }
-        });
+        // El filtrado lo hace el DocumentListener del constructor (aplicarFiltroProductos).
+        // Antes aca se agregaba un KeyListener nuevo por cada tecla.
     }//GEN-LAST:event_filtroCompraKeyTyped
 
     private void lblDescuentoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDescuentoMouseClicked
